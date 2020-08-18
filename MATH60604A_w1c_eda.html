@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Statistical modelling</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="    Dr. Léo Belzile   HEC Montréal" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"f454685f87d44dab80a2ee1749e21079","expires":14}</script>
+    <script src="libs/himalaya/himalaya.js"></script>
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <link href="libs/editable/editable.css" rel="stylesheet" />
+    <script src="libs/editable/editable.js"></script>
+    <script src="libs/xaringanExtra-webcam/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="slides-style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Statistical modelling
+## #1.c Exploratory Data Analysis
+### <br> <br> Dr. Léo Belzile <br> HEC Montréal
+
+---
+
+
+
+
+
+layout: true
+  
+&lt;div class="my-footer"&gt;
+&lt;span&gt;
+&lt;a href="https://lbelzile.github.io/modstat/" target="_blank"&gt;&lt;b&gt;Modélisation statistique&lt;/b&gt;&lt;/a&gt; - Dr. Léo Belzile, HEC Montréal
+&lt;/span&gt;
+&lt;/div&gt; 
+
+---
+
+
+
+
+
+
+
+
+# Type of data
+
+Data base typically comprise many different *variable types*.
+
+Distinguishing between the later is needed for
+
+- correct model choice,
+- proper graphical representation,
+- interpretation of effects.
+
+---
+
+
+## Numerical variables
+
+&lt;img src="img/EDA/continuous_discrete.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+
+.center[
+.small[
+Drawing by Allison Horst of continuous (left) and discrete (right) numerical variables.
+]
+]
+
+---
+
+## Categorical variables
+
+&lt;img src="img/EDA/nominal_ordinal_binary.png" width="70%" style="display: block; margin: auto;" /&gt;
+.center[
+.small[
+Drawing by Allison Horst of nominal (left), ordinal (middle) and binary (right) categorical variables.
+]
+]
+
+---
+
+## Graphics and data
+
+
+&gt; *The simple graph has brought more information to the data analyst's mind than any other device.*  
+.right[— John Tukey]
+
+--
+
+### What is a good graph?
+
+&gt; *Graphical excellence consists of complex ideas communicated with clarity, precision, and efficiency ... Graphical excellence is that which gives to the viewer the greatest number of ideas in the shortest time with the least ink in the smallest space.*  
+.right[— Tufte, 1983]
+
+
+---
+
+## Grammar of graphics
+
+&gt; Wilkinson, L. (2005), *The Grammar of Graphics(2nd ed.)* Statistics and Computing, New York: Springer.
+
+
+- Elements (layers):
+    - data
+    - mapping (variables -&gt; aesthetics)
+    - geometric objects
+    - transformations
+    - positioning
+- Scale / guide
+- Coordinates (facets, coordinate system)
+
+
+---
+
+Some golden rules for effective visualization
+
+
+### Rule 1: the choice of graphic depends on the variable type
+
+
+--
+&lt;br&gt;
+
+#### One variable
+
+
+.midi[
+- continuous: histogram/density plot
+- discrete: bar plot
+- categorical: bar plot (frequency or percentage)
+]
+
+--
+
+#### Two variables
+.midi[
+- continuous: scatterplot
+- categorical: bar plots (one group via color), heatmap
+- continuous `\(\times\)` categorical: box-and-whisker plot, violin plot
+]
+
+---
+
+.panelset[
+
+
+.panel[.panel-name[**R** graph]
+
+.center[.small[Renfe data: bar plot of ticket class]]
+&lt;img src="MATH60604A_w1c_eda_files/figure-html/renfe_barplot-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+]
+.panel[.panel-name[**R** code]
+
+#### One categorical variable: bar plot
+
+
+```r
+ggplot(data = renfe, 
+       aes(x = forcats::fct_infreq(classe))) + 
+  geom_bar() +
+  geom_text(stat='count', aes(label=..count..), vjust=-0.5) +
+  labs(x = "class", 
+       y = "count")  +
+  scale_y_continuous(expand = c(.125, 0)) + 
+  theme(panel.grid.major.x = element_blank())
+```
+.small[
+- Order values by frequency.
+- If the labels are too long, rotate the axis (`+ coord_flip()`).
+]
+]
+
+.panel[.panel-name[**SAS** graph]
+
+
+&lt;img src="img/EDA/EDA_sas_g1.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.panel[.panel-name[**SAS** code]
+
+
+```sas
+proc sgplot data=statmod.renfe;
+vbar class / categoryorder=respdesc;
+xaxis label="ticket class";
+run;
+```
+
+]
+
+]
+
+---
+
+.panelset[
+
+.panel[.panel-name[**R** graph]
+
+.center[
+.small[Renfe data: histogram of Promo ticket price
+]
+]
+&lt;img src="MATH60604A_w1c_eda_files/figure-html/renfe_hist-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+]
+.panel[.panel-name[**R** code]
+
+#### Une seule variable continue: histogramme et/ou densité 
+
+
+```r
+renfe %&gt;% subset(fare == "Promo") %&gt;%
+  ggplot(aes(x = price)) + 
+    geom_histogram(aes(y = ..density..), bins = 30) +
+    geom_density() + 
+    geom_rug(sides = "b") + 
+    labs(x = "price of Promo tickets (in euros)", 
+         y = "density") 
+```
+
+]
+
+
+.panel[.panel-name[**SAS** graph]
+
+&lt;img src="img/EDA/EDA_sas_g2.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.panel[.panel-name[**SAS** code]
+
+
+```sas
+data renfe_promo;
+set statmod.renfe;
+where fare="Promo";
+run;
+
+proc sgplot data=renfe_promo noautolegend;
+histogram price;
+density price / type=kernel;
+xaxis label = "Promo ticket price (in euros)";
+run;
+```
+]
+
+
+]
+
+---
+
+.panelset[
+.panel[.panel-name[**R** graph]
+
+.center[
+.small[
+Renfe data: box-and-whiskers plot of Promo tickets price as a function of class
+]
+]
+
+&lt;img src="MATH60604A_w1c_eda_files/figure-html/renfe_boxplot-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+]
+.panel[.panel-name[**R** code]
+
+
+#### Two variables (continuous and categorical): boxplot
+
+
+```r
+renfe %&gt;% subset(fare == "Promo") %&gt;%
+    ggplot(aes(y = price, x = class, col = type)) + 
+    geom_boxplot() + 
+    labs(y = "price (in euros)", col = "train type") + 
+    theme(legend.position = "bottom") +
+    scale_colour_viridis_d()
+```
+
+.small[
+
+- We added a categorical variable (`type`) through use of colour.
+- Use an appropriate color palette (for color-blind people and for black and white printing).
+]
+
+]
+
+
+.panel[.panel-name[**SAS** graph]
+
+&lt;img src="img/EDA/EDA_sas_g3.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.panel[.panel-name[**SAS** code]
+
+
+```sas
+proc sgplot data=renfe_promo;
+vbox price / category=class group=type;
+yaxis label = "price (in euros)";
+run;
+```
+]
+
+
+]
+---
+
+.panelset[
+
+.panel[.panel-name[**R** graph]
+
+.center[
+.small[
+Renfe data: scatterplot of ticket price as a function of travel time for high speed trains
+]
+]
+
+&lt;img src="MATH60604A_w1c_eda_files/figure-html/renfe_nuagepts-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+]
+.panel[.panel-name[**R** code]
+
+
+#### Two variables (continuous) and one categorical variable: scatterplot
+
+
+
+```r
+renfe %&gt;% subset(type != "REXPRESS") %&gt;%
+    ggplot(aes(x = duration, y = price, col = type)) + 
+    geom_point() + 
+    labs(y = "price (in euros)", 
+         x = "travel duration (in minutes)",
+         col = "train type") + 
+    theme(legend.position = "bottom") +
+    scale_colour_viridis_d()
+```
+
+.midi[
+What is wrong with the previous display?
+
+
+How could we fix the graph?
+]
+
+]
+
+.panel[.panel-name[**SAS** graph]
+
+&lt;img src="img/EDA/EDA_sas_g4.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.panel[.panel-name[**SAS** code]
+
+
+```sas
+data renfe_ave;
+set statmod.renfe;
+where type NE "REXPRESS";
+run;
+
+proc sgplot data=renfe_ave;
+scatter y=price x=duration / group=type;
+xaxis label="travel duration (in minutes)";
+yaxis label="price (in euros)";
+run;
+```
+]
+
+]
+
+---
+
+
+
+
+
+### Rule 2: A graph tells a story by itself
+
+Your graphic must be standalone with the legend.
+
+- some visualization choices are more effective/adequate than others
+- include both variable name **and** units if ambiguous
+- add a description in the text and cross-reference
+- pay attention to scale (adequate font size for legibility) 
+
+---
+
+### Rule 3: pay attention to human visual perception
+
+Avoid junk chart
+
++ ratio length/width
++ spacing between bands
++ axis limits (with or without zero)
++ choice of color (grayscale, color-blind friendly palettes)
++ comparing areas is difficult
++ avoid 3D graphs / rotation
+
+---
+
+
+# Graphical exploratory data analysis
+
+
+&gt; *Numerical quantities focus on expected values, graphical summaries on unexpected values.*   
+.right[— John Tukey]
+
+- Ask questions related to the data
+- Look for answers using graphs
+- Infirm or confirm your intuitions
+- Refine questions based on preliminary findings
+- Rince and repeat
+- Write a summary of key findings
+
+
+---
+
+.discussion[]
+
+Perform and exploratory data analysis of the `diamonds` dataset in small groups.
+
+.pull-left[
+### Questions
+
+.can-edit[-]
+]
+.pull-right[
+### Summary
+
+.can-edit[-]
+
+]
+---
+### References
+
+- [*Fundamentals of Data Visualization* par Claus O. Wilke](https://serialmentor.com/dataviz/)
+- [Chapter 3 of _**R** for Data Science_ by Garrett Grolemund and Hadley Wickham](https://r4ds.had.co.nz/)
+- [Chapter 1 of *Data Visualization: A practical introduction* by Kieran Healy](https://socviz.co/lookatdata.html#lookatdata)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"slideNumberFormat": "<div class=\"progress-bar-container\">   <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">   </div> </div>"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

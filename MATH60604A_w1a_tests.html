@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Statistical modelling</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="    Dr. Léo Belzile   HEC Montréal" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x510f293afcb4932b68e7c2c6964066b","expires":14}</script>
+    <script src="libs/himalaya/himalaya.js"></script>
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <link href="libs/editable/editable.css" rel="stylesheet" />
+    <script src="libs/editable/editable.js"></script>
+    <script src="libs/xaringanExtra-webcam/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="slides-style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Statistical modelling
+## #1.a Hypothesis tests
+### <br> <br> Dr. Léo Belzile <br> HEC Montréal
+
+---
+
+
+
+
+
+layout: true
+  
+&lt;div class="my-footer"&gt;
+&lt;span&gt;
+&lt;a href="https://lbelzile.github.io/modstat/" target="_blank"&gt;&lt;b&gt;Modélisation statistique&lt;/b&gt;&lt;/a&gt; - Dr. Léo Belzile, HEC Montréal
+&lt;/span&gt;
+&lt;/div&gt; 
+
+---
+
+
+
+
+
+
+
+
+
+# Hypothesis testing
+
+.center[**Trial analogy**]
+
+&lt;img src="img/tests/01-intro-12_Angry_Men_scene.jpg" width="65%" style="display: block; margin: auto;" /&gt;
+.figcaption[Screenshot of the courtoom drama _Twelve Angry Men_ (1957)]
+
+---
+
+### Recipe
+
+An hypothesis test is a binary decision rule
+
+Below are the different steps to undertake:
+--
+
+1. Define the variables of interest
+2. Formulate the alternative and the null hypotheses, `\(\mathscr{H}_a\)` and `\(\mathscr{H}_0\)`
+3. Choose the test statistic and compute the latter on the sample
+4. Compare the numerical value with the null distribution
+5. Obtain the *p*-value
+6. Conclude in the setting of the problem
+
+---
+
+### Tech3Lab
+
+
+&lt;img src="img/tests/01-intro-Tech3.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Texting while walking: a dangerous habit?
+
+
+&lt;img src="img/tests/01-intro-texter.jpg" width="85%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Study details
+
+- 35 participants took part in the study. 
+- Each person had to walk on a treadmill in front of a screen where obstacles were projected.
+- In one of the sessions, the subjects walked while talking on a cell
+phone, whereas in another session, they walked while texting.
+- The order of these sessions was determined *at random*.
+- Different obstacles were randomly projected during the session.
+- We are only interested in one kind of scenario: a cyclist riding towards the participant.
+
+---
+
+### Characteristics
+
+- Population: adults
+- Sample: 35 individuals
+- Variables:
+  - Time to perceive an obstacle: quantitative
+  - Distraction type (cellphone call or texting): nominal variable
+
+
+
+- Variable of interest: time (in seconds) that it takes for a person to notice the obstacle when walking while texting or talking on a cell phone (measure through an encephalogram)
+
+---
+
+### \#1. Define the variables of interest
+
+- `\(\mu_{\texttt{c}}\)` be the average reaction time (in seconds) during a call (`c`)
+- `\(\mu_{\texttt{t}}\)` be the average reaction time (in seconds) while texting (`t`)
+
+--
+
+### \#2. Formulate the null and alternative hypothesis
+
+- Hypothèse of interest: texting increases distraction?
+    - `\(\mathscr{H}_a: \mu_{\texttt{t}} &gt; \mu_{\texttt{c}}\)` (one-sided)
+- Null hypothesis (Devil's advocate)
+    - `\(\mathscr{H}_0: \mu_{\texttt{t}} \leq  \mu_{\texttt{c}}\)`
+
+Express the hypothesis in terms of the difference
+`\begin{align*}
+\mathscr{H}_a: \mu_{\texttt{t}} - \mu_{\texttt{c}}&gt;0.
+\end{align*}`
+
+---
+
+### \#3. Choisir la statistique de test
+
+We compare the difference of the mean reaction time
+
+- one-sample _t_-test for `\(\texttt{t}-\texttt{c}\)` (paired _t_-test) 
+`\begin{align*}
+T_D=\frac{\overline{D}-\mu_0}{\mathsf{se}(\overline{D})}
+\end{align*}`
+- `\(\overline{D}\)` is the mean difference in the sample. 
+- Under `\(\mathscr{H}_0: \mu_0=\mu_{\texttt{t}}-\mu_{\texttt{c}}=0\)`.
+- The standard error of `\(\overline{D}\)` is `\(\mathsf{se}(\overline{D})=S_D/\sqrt{n}\)`, where `\(S_D\)` is the standard deviation of the variables `\(D_i\)` and `\(n\)` the sample size.
+
+
+---
+
+.panelset[
+.panel[.panel-name[**SAS** code]
+
+
+```sas
+proc ttest data=statmod.distraction side=u;
+paired t*c;
+run;
+```
+
+]
+.panel[.panel-name[**SAS** output]
+.pull-left[
+&lt;img src="img/tests/tests_sas_g1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+.pull-right[
+&lt;img src="img/tests/tests_sas_g2.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+]
+.panel[.panel-name[**R** code]
+
+```r
+data(distraction, package = "hecstatmod")
+with(distraction,
+     t.test(t-c, alternative = "greater", mu = 0) 
+     )
+```
+]
+.panel[.panel-name[**R** output]
+
+
+```
+## 
+## 	One Sample t-test
+## 
+## data:  t - c
+## t = 2.91, df = 34, p-value = 0.0032
+## alternative hypothesis: true mean is greater than 0
+## 95 percent confidence interval:
+##  0.13092     Inf
+## sample estimates:
+## mean of x 
+##   0.31297
+```
+]
+
+
+
+]
+
+---
+
+### \#4. Compare the statistic with the null distribution
+
+The null distribution is Student-_t_ with 34 degrees of freedom, `\(\mathsf{St}_{34}\)`. 
+
+We are only interested in the probability that `\(T_D &gt; 2.91\)` under `\(\mathscr{H}_0\)`.
+
+--
+
+### \#5. Obtain a *p*-value
+
+The _p_-value is `\(0.0032\)`, which is smaller than `\(\alpha=5\%\)`.
+
+### \#6. Conclude in the setting of the problem
+
+We reject `\(\mathscr{H}_0\)`, meaning that the reaction time is significantly higher when texting than talking on the cellphone while walking.
+
+The estimated mean difference is `\(0.313\)` seconds.
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"slideNumberFormat": "<div class=\"progress-bar-container\">   <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">   </div> </div>"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

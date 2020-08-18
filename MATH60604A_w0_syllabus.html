@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Statistical modelling</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="    Dr. Léo Belzile   HEC Montréal" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x770a34cc7d94804a5acfd64cea7f767","expires":14}</script>
+    <script src="libs/himalaya/himalaya.js"></script>
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <link href="libs/editable/editable.css" rel="stylesheet" />
+    <script src="libs/editable/editable.js"></script>
+    <script src="libs/xaringanExtra-webcam/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="slides-style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Statistical modelling
+## Syllabus
+### <br> <br> Dr. Léo Belzile <br> HEC Montréal
+
+---
+
+
+
+
+
+layout: true
+  
+&lt;div class="my-footer"&gt;
+&lt;span&gt;
+&lt;a href="https://lbelzile.github.io/modstat/" target="_blank"&gt;&lt;b&gt;Modélisation statistique&lt;/b&gt;&lt;/a&gt; - Dr. Léo Belzile, HEC Montréal
+&lt;/span&gt;
+&lt;/div&gt; 
+
+---
+
+
+
+
+
+
+
+
+# Welcome
+
+
+.pull-left-narrow[
+&lt;img src="img/intro/leo_belzile_photo.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+.pull-right-wide[
+.midi[
+- Assistant professor of Decision Sciences
+- I study extreme value analysis (floods, heatwaves, etc.)
+- I am best reached by *email*: [`leo.belzile@hec.ca`](mailto:leo.belzile@hec.ca)
+
+
+[Let's meet](https://etherpad.wikimedia.org/p/3IXOgvBHSr-hn4pV6AoC)
+- Where are you from?
+- Academic background?
+- Current city/region or country?
+- What are your expectations for this course?
+]
+]
+
+---
+
+# Organization
+
+- Weekly meetings via **Zoom** (Wednesday, 15:30-18:30 Montreal time).
+- All of the course material can be downloaded from the course website: [`https://lbelzile.github.io/statmod/`](https://lbelzile.github.io/statmod/)
+.midi[
+- course notes
+- video records
+- **R** package with datasets and quiz
+- exercises and solutions
+- **SAS**/**R** demos
+    ]
+- Submit your assignments/projects via *ZoneCours*
+- Ask course-related questions on **Piazza**: [`piazza.com/hec.ca/fall2020/math60604a`](piazza.com/hec.ca/fall2020/math60604a)
+
+---
+
+# Course content
+
+
+&gt; *All models are wrong, but some are useful.* 
+.right[— Georges Box]
+
+
+1. Basic principles in inference and statistical modelling
+2. Linear models
+3. Generalized linear models
+4. Models for longitudinal data and correlated data
+5. Linear mixed models
+6. Introduction to survival analysis
+
+---
+
+
+
+# Grading
+
+- Three assignments, each worth 15% (premier devoir en équipes)
+    - short questions (multiple choices)
+    - programming questions
+    - data analysis
+--
+- Data analysis project (25%)
+    - create your own assignment!
+--
+- Final exam (30%, format TBD depending on HEC directives) 
+ 
+---
+
+## Pedagogical innovation (because pandemic)
+
+.center[
+&lt;img src="img/intro/flipped_classroom_heidiseibold.jpg" width="80%" style="display: block; margin: auto;" /&gt;
+.small[
+Flipped class (drawing by Heidi Seibold, under CC-BY 4.0 license)
+]
+]
+
+
+---
+
+
+.question[
+What is the format of the course?
+]
+
+--
+.pull-left[
+At home:
+- reading course notes
+- slides with videos 
+- quiz
+- exercises (with solutions)
+]
+
+--
+
+.pull-right[
+In class:
+- weekly summary
+- question period
+- group workshop and discussions
+]
+
+---
+
+.question[
+What is the workload for this course?
+]
+
+--
+
+- 3 credits = 135 hours of work
+- an average of 9 hours per week
+- do not estimate the initial time investment:
+    - installing required software
+    - learning programming basics
+    - getting up to speed with prerequisites 
+
+---
+
+.question[
+What is the target audience?
+]
+
+--
+
+Students enrolled in the Data Science and Business Analytics M.Sc program. 
+
+Students admitted normally have a bachelor in
+ - engineering
+ - physics or 
+ - mathematics.
+
+Basic knowledge of calculus and linear algebra is assumed.
+
+---
+
+.question[
+What are the prerequisites?
+]
+
+--
+
+A first course in probability/statistic covering the following notions:
+
+.pull-left[
++ probability axioms and combinatorics
++ random variables
+    + moments (expectation, variance, correlation)
+    + discrete distributions: Bernoulli, binomial, Poisson
+    + continuous distributions: uniform, exponential, normal
+]
+
+.pull-right[
++ descriptive statistics
++ hypothesis tests
++ comparison of means and proportions (one and two samples)
++ simple linear regression
+]
+
+---
+
+.question[
+Will there be programming?
+]
+
+--
+.sample-answer[
+*Yes*. We will cover the basics of **SAS** (and **R**) to fit models and visualized data.
+]
+
+- The code will be provided only for the exercises and the workshops.
+- You must submit your code along with your assignments.
+
+---
+
+.question[
+What software will we use in class?
+]
+
+According to the official course outline, **SAS** (Base/Stat). You must install the software on your computer. A tutorial (video recorded) will teach you the basics.
+
+--
+
+- This is the only course in your program that uses this programming language. Why bother with it, then?
+.midi[
+- comparative advantage if you know multiple programming languages.
+- frequently used by business
+    - they maintain databases with **SAS**
+    - the software costs a lot of money ($ $ $)
+    - stable, the company offers support (unlike open source)
+    - code legacy blocks evolution towards modern languages (Python, R, etc.)
+]
+
+---
+
+I recommand (in particular for Unix system)[ **SAS University Edition**](https://www.sas.com/en_us/software/university-edition.html) (run using a virtual machine through a web browser)
+
+.center[
+&lt;img src="img/intro/SASUE.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+
+.midi[
+IT services at HEC provide a copy of the software via their platform for Windows  [(free license, but they charge ~35$ for the download)](https://www.hec.ca/dti/assistance/pedagogie/logiciels_enseignes/Procedure-SAS.pdf).
+]
+
+---
+
+### **R**
+
+I am avid support of open-access software and of **R**, a programming language written by the community
+
+ - its free!
+ - multi-platform support
+ - download from [cran.r-project.org](https://cran.r-project.org/)
+ - used in the course notes
+ - I recommand the IDE [**RStudio**](https://rstudio.com/)
+ 
+---
+
+.question[
+What are the prof expectations?
+]
+
+--
+
+- Active participation in class: students are expected to be in class (even virtually)
+.midi[
+- if this is impossible, let me know
+- small-group discussions
+- ask questions! there is no silly question
+]
+--
+
+- Autonomy: you are sole responsible for your learning.
+.midi[
+- stay up to date and do your readings 
+- don't stay in the dark: ask questions (to me or your peers)!
+]
+--
+
+- Feedback: problems or unclear explanations? let me know asap
+.midi[
+- online semester = friction points (internet connection, lack of human contact, etc.)
+- many tools = longer period to adapt to uncharted territory
+]
+---
+
+# Inclusive and respectful environment
+
+Even if the class is virtual, be respectful. Harassment, discriminatory views, etc. are not tolerated.
+
+--
+
+Let me know if
+
+- I can do something to improve the course experience for you or other students
+- a statement or attitude makes you unconfortable
+- your name/prefered pronoun/gender differs from the information provided on *HEC en ligne*
+- your performance is affected by external factors: I will do my past to help you or direct you to external ressources.
+
+---
+
+# Plagiarism
+
+Please don't. You must notably provide your code (and data) so I can reproduce *exactly* your analyses.
+.midi[
+- `.txt` file, UTF8 encoding (otherwise, you won't be able to submit your work on *Zonecours*)
+- follow the instructions for naming scripts/files
+(hint: `\(\neq\)` `mycode.sas`)
+- if you take and adapt code from elsewhere (e.g., `StackOverflow`), cite your sources!
+- you must program yourself your code for individual assignments (discussion with peers is okay, but code sharing, copy paste or similar wording is punishable)
+
+]
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"slideNumberFormat": "<div class=\"progress-bar-container\">   <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">   </div> </div> "
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
