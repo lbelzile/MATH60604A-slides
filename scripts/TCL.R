@@ -62,7 +62,7 @@ ggplot() +
   geom_function(fun = "densmixt", xlim = c(0, 45), n = 1001) + 
   geom_vline(xintercept = mug, col = "red") +
   theme_minimal() +
-  ylab("densité") + xlab("x")
+  ylab("density") + xlab("x")
 ggsave(filename = "densite.pdf", width = 8, height = 5)
 
 nsamp <- 20
@@ -87,7 +87,7 @@ p <- ggplot(dat, aes(x = x)) +
                     state_length = 9) + 
   ease_aes('cubic-in-out') + 
   enter_fade() +
-  ggtitle('Échantillon {closest_state}', subtitle = "n = 10")
+  ggtitle('Sample {closest_state}', subtitle = "n = 10")
 anim_save(p, filename = "clt_mean_10.gif")
 
 
@@ -115,7 +115,7 @@ p <- ggplot(dat, aes(x = x)) +
                     state_length = 9) + 
   ease_aes('cubic-in-out') + 
   enter_fade() +
-  ggtitle('Échantillon {closest_state}', subtitle = "n=100")
+  ggtitle('Sample {closest_state}', subtitle = "n=100")
 anim_save(p, filename = "clt_mean_100.gif")
 
 
@@ -144,7 +144,7 @@ p <- ggplot(dat, aes(x = x)) +
                     state_length = 9) + 
   ease_aes('cubic-in-out') + 
   enter_fade() +
-  ggtitle('Échantillon {closest_state}', subtitle = "n=1000")
+  ggtitle('Sample {closest_state}', subtitle = "n=1000")
 anim_save(p, filename = "clt_mean_1000.gif")
 
 
@@ -155,21 +155,21 @@ ggplot(data = data.frame(x = replicate(n = 10000, mean(sampmixt(10))))) +
   geom_function(fun = "dnorm", args = list(mean = mug, sd = sigmag/sqrt(10)), 
                 n = 1001, col = viridis(n = 3)[1]) + 
   theme_minimal() +
-  ylab("densité") + xlab("x")
+  ylab("density") + xlab("x")
 ggsave(filename = "densmean10.pdf", width = 8, height = 5)
 ggplot(data = data.frame(x = replicate(n = 10000, mean(sampmixt(100))))) +
   geom_histogram(aes(x, y = ..density..), binwidth = 6/50) +
   geom_function(fun = "dnorm", args = list(mean = mug, sd = sigmag/10), 
                  n = 1001, col = viridis(n = 3)[2]) + 
   theme_minimal() +
-  ylab("densité") + xlab("x")
+  ylab("density") + xlab("x")
 ggsave(filename = "densmean100.pdf", width = 8, height = 5)
 ggplot(data = data.frame(x = replicate(n = 10000, mean(sampmixt(1000))))) +
   geom_histogram(aes(x, y = ..density..), binwidth = 1/50, alpha = 0.4) +
   geom_function(fun = "dnorm", args = list(mean = mug, sd = sigmag/sqrt(1000)), 
                 n = 1001, col = viridis(n = 3)[3]) + 
   theme_minimal() +
-  ylab("densité") + xlab("x")
+  ylab("density") + xlab("x")
 
 x0 <- seq(0, 26, length.out = 1001)
 ggplot(dat = data.frame(x = rep(x0, 3),
@@ -184,5 +184,5 @@ ggplot(dat = data.frame(x = rep(x0, 3),
   scale_colour_viridis_d() + 
   xlim(c(0,22)) + 
   ylim(c(0,1.5)) +
-  ylab("densité") + xlab("x") 
+  ylab("density") + xlab("x") 
 ggsave(filename = "densmean1000.pdf", width = 8, height = 5)

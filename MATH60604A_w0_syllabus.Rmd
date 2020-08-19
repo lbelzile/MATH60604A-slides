@@ -63,7 +63,7 @@ knitr::include_graphics("img/intro/leo_belzile_photo.png")
 .midi[
 - Assistant professor of Decision Sciences
 - I study extreme value analysis (floods, heatwaves, etc.)
-- I am best reached by *email*: [`leo.belzile@hec.ca`](mailto:leo.belzile@hec.ca)
+
 
 
 [Let's meet](https://etherpad.wikimedia.org/p/3IXOgvBHSr-hn4pV6AoC)
@@ -89,6 +89,7 @@ knitr::include_graphics("img/intro/leo_belzile_photo.png")
     ]
 - Submit your assignments/projects via *ZoneCours*
 - Ask course-related questions on **Piazza**: [`piazza.com/hec.ca/fall2020/math60604a`](piazza.com/hec.ca/fall2020/math60604a)
+- For other matters, I am best reached by *email*: [`leo.belzile@hec.ca`](mailto:leo.belzile@hec.ca)
 
 ---
 
@@ -112,7 +113,7 @@ knitr::include_graphics("img/intro/leo_belzile_photo.png")
 
 # Grading
 
-- Three assignments, each worth 15% (premier devoir en équipes)
+- Three assignments, each worth 15% (partly in teams)
     - short questions (multiple choices)
     - programming questions
     - data analysis
@@ -124,7 +125,7 @@ knitr::include_graphics("img/intro/leo_belzile_photo.png")
  
 ---
 
-## Pedagogical innovation (because pandemic)
+## Flipped classroom
 
 .center[
 ```{r fig.align="center", echo=FALSE, out.width="80%"}
@@ -228,9 +229,15 @@ Will there be programming?
 .sample-answer[
 *Yes*. We will cover the basics of **SAS** (and **R**) to fit models and visualized data.
 ]
+- I will provide code only for exercises and slides.
 
-- The code will be provided only for the exercises and the workshops.
-- You must submit your code along with your assignments.
+You must provide your code otherwise for assignments/group projects
+
+- I should be able to reproduce *exactly* your analyses.
+- submit as a `.txt` file (otherwise, you won't be able to submit your work on *Zonecours*) 
+- use UTF8 encoding 
+- follow the instructions for naming scripts/files
+(hint: $\neq$ `mycode.sas`)
 
 ---
 
@@ -317,19 +324,17 @@ Even if the class is virtual, be respectful. Harassment, discriminatory views, e
 Let me know if
 
 - I can do something to improve the course experience for you or other students
-- a statement or attitude makes you unconfortable
+- a statement or attitude makes you uncomfortable
 - your name/prefered pronoun/gender differs from the information provided on *HEC en ligne*
-- your performance is affected by external factors: I will do my past to help you or direct you to external ressources.
+- your performance is affected by external factors: I will do my past to help you or direct you to external resources.
 
 ---
 
 # Plagiarism
 
-Please don't. You must notably provide your code (and data) so I can reproduce *exactly* your analyses.
+Please don't. 
+
 .midi[
-- `.txt` file, UTF8 encoding (otherwise, you won't be able to submit your work on *Zonecours*)
-- follow the instructions for naming scripts/files
-(hint: $\neq$ `mycode.sas`)
 - if you take and adapt code from elsewhere (e.g., `StackOverflow`), cite your sources!
 - you must program yourself your code for individual assignments (discussion with peers is okay, but code sharing, copy paste or similar wording is punishable)
 

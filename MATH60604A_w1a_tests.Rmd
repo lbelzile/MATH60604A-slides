@@ -143,19 +143,19 @@ phone, whereas in another session, they walked while texting.
 
 ### \#2. Formulate the null and alternative hypothesis
 
-- Hypothèse of interest: texting increases distraction?
+- Hypothesis of interest: does texting increases distraction?
     - $\mathscr{H}_a: \mu_{\texttt{t}} > \mu_{\texttt{c}}$ (one-sided)
 - Null hypothesis (Devil's advocate)
     - $\mathscr{H}_0: \mu_{\texttt{t}} \leq  \mu_{\texttt{c}}$
 
-Express the hypothesis in terms of the difference
+Express the hypothesis in terms of the difference of means
 \begin{align*}
 \mathscr{H}_a: \mu_{\texttt{t}} - \mu_{\texttt{c}}>0.
 \end{align*}
 
 ---
 
-### \#3. Choisir la statistique de test
+### \#3.Choose the test statistic 
 
 We compare the difference of the mean reaction time
 
