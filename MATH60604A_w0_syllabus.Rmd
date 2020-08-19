@@ -275,7 +275,11 @@ IT services at HEC provide a copy of the software via their platform for Windows
 
 ---
 
-### **R**
+.left[
+```{r fig.align="center", echo=FALSE, alt = "R", out.width="20%"}
+knitr::include_graphics("img/intro/rlang.png")
+```
+]
 
 I am avid support of open-access software and of **R**, a programming language written by the community
 
@@ -284,6 +288,7 @@ I am avid support of open-access software and of **R**, a programming language w
  - download from [cran.r-project.org](https://cran.r-project.org/)
  - used in the course notes
  - I recommand the IDE [**RStudio**](https://rstudio.com/)
+ 
  
 ---
 
