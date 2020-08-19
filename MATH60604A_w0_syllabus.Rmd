@@ -172,7 +172,7 @@ What is the workload for this course?
 
 - 3 credits = 135 hours of work
 - an average of 9 hours per week
-- do not estimate the initial time investment:
+- do not underestimate the initial time investment:
     - installing required software
     - learning programming basics
     - getting up to speed with prerequisites 
@@ -245,7 +245,7 @@ You must provide your code otherwise for assignments/group projects
 What software will we use in class?
 ]
 
-According to the official course outline, **SAS** (Base/Stat). You must install the software on your computer. A tutorial (video recorded) will teach you the basics.
+According to the official course outline, **SAS** (Base/Stat). A tutorial (video recorded) will teach you the basics.
 
 --
 
@@ -261,11 +261,15 @@ According to the official course outline, **SAS** (Base/Stat). You must install 
 
 ---
 
-I recommand (in particular for Unix system)[ **SAS University Edition**](https://www.sas.com/en_us/software/university-edition.html) (run using a virtual machine through a web browser)
+We will work with **SAS®** OnDemand for Academics: Studio. 
+
+- [No need to install! works out of the box + cross-platform support]
+
+Alternatively, you could install [**SAS University Edition**](https://www.sas.com/en_us/software/university-edition.html), but this service is being discontinued.
 
 .center[
-```{r fig.align="center", echo=FALSE, alt = "SAS University Edition", out.width="60%"}
-knitr::include_graphics("img/intro/SASUE.png")
+```{r fig.align="center", echo=FALSE, alt = "SAS OnDemand for Academics: Studio", out.width="60%"}
+knitr::include_graphics("img/intro/SASONDEMAND.png")
 ```
 ]
 
@@ -337,7 +341,7 @@ Let me know if
 
 # Plagiarism
 
-Please don't. 
+Please don't. There are consequences and its an insult to your intelligence. Ask for help if necessary!
 
 .midi[
 - if you take and adapt code from elsewhere (e.g., `StackOverflow`), cite your sources!

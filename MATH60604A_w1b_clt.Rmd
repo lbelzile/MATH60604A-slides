@@ -86,7 +86,7 @@ If $n$ is large, the mean $\overline{Y}_n$ approximately follows a normal distri
 
 # Central Limit Theorem (formal)
 
-Let $Y_1, \ldots, Y_n$ be independent and identically distributed random variables with distribution $F$ and finite variance and let $\overline{Y}_n = \sum_{i=1}^n Y_i$ denote the sample mean.
+Let $Y_1, \ldots, Y_n$ be independent and identically distributed random variables with distribution $F$ and finite variance and let $\overline{Y}_n = n^{-1}\sum_{i=1}^n Y_i$ denote the sample mean.
 
 For any $y \in \mathbb{R}$, the mean converges in distribution to a normal distribution, i.e.,
 \begin{align*}
@@ -194,14 +194,16 @@ knitr::include_graphics("img/CLT/densmeansupp.png")
 Normal approximation of the mean for different sample sizes.
 ]
 ]
----
+<!-- --- -->
 
-## Application
+<!-- ## Application -->
 
-The one-sample _t_-test statistic is
-\begin{align*}
-\frac{\overline{Y}_n - \mu_0}{S_n} \stackrel{\cdot}{\sim} \mathsf{St}_{n-1},
-\end{align*}
-where $S_n=(n-1)^{-1}\sum_{i=1}^n (Y_i-\overline{Y}_n)^2$ is the unbiased estimator of the variance.
+<!-- The one-sample _t_-test statistic is -->
+<!-- \begin{align*} -->
+<!-- T_n =\frac{\overline{Y}_n - \mu_0}{S_n}, -->
+<!-- \end{align*} -->
+<!-- where $S_n=(n-1)^{-1}\sum_{i=1}^n (Y_i-\overline{Y}_n)^2$ is the unbiased estimator of the variance. -->
 
-The asymptotic null distributions $\overline{Y}_n \stackrel{\cdot}{\sim}\mathsf{No}(\mu, \sigma^2/n)$ and $(n-1)S_n/\sigma^2 \stackrel{\cdot}{\sim} \chi^2_{n-1}$ follow from the central limit theorem.
+<!-- The asymptotic null distributions $\overline{Y}_n \stackrel{\cdot}{\sim}\mathsf{No}(\mu, \sigma^2/n)$ and $(n-1)S_n/\sigma^2 \stackrel{\cdot}{\sim} \chi^2_{n-1}$ follow from the central limit theorem. -->
+
+<!-- If $\mathscr{H}_0: \mu=\mu_0$, then $T_n\stackrel{\cdot}{\sim} \mathsf{St}_{n-1}$. -->

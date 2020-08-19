@@ -265,7 +265,7 @@ renfe %>% subset(fare == "Promo") %>%
 ]
 .panel[.panel-name[**R** code]
 
-#### Une seule variable continue: histogramme et/ou densité 
+#### One continuous variable: histogram/density
 
 ```{r renfe_hist_code, eval = FALSE, echo = TRUE}
 renfe %>% subset(fare == "Promo") %>%
@@ -398,7 +398,7 @@ renfe %>% subset(type != "REXPRESS") %>%
 .panel[.panel-name[**R** code]
 
 
-#### Two variables (continuous) and one categorical variable: scatterplot
+#### Two continuous variables and one categorical variable: scatterplot
 
 
 ```{r renfe_nuagepts_code, echo = TRUE, eval = FALSE}
