@@ -488,28 +488,12 @@ Avoid junk chart
 - Look for answers using graphs
 - Infirm or confirm your intuitions
 - Refine questions based on preliminary findings
-- Rince and repeat
+- Rinse and repeat
 - Write a summary of key findings
 
 
 ---
 
-.discussion[]
-
-Perform and exploratory data analysis of the `diamonds` dataset in small groups.
-
-.pull-left[
-### Questions
-
-.can-edit[-]
-]
-.pull-right[
-### Summary
-
-.can-edit[-]
-
-]
----
 ### References
 
 - [*Fundamentals of Data Visualization* par Claus O. Wilke](https://serialmentor.com/dataviz/)
