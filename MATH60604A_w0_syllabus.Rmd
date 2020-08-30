@@ -62,15 +62,9 @@ knitr::include_graphics("img/intro/leo_belzile_photo.png")
 .pull-right-wide[
 .midi[
 - Assistant professor of Decision Sciences
+- PhD degree from EPFL
 - I study extreme value analysis (floods, heatwaves, etc.)
 
-
-
-[Let's meet](https://etherpad.wikimedia.org/p/3IXOgvBHSr-hn4pV6AoC)
-- Where are you from?
-- Academic background?
-- Current city/region or country?
-- What are your expectations for this course?
 ]
 ]
 
