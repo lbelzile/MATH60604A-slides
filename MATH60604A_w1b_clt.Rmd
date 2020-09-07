@@ -34,11 +34,11 @@ style_duo_accent(
 
 
 ```{r load-packages, message=FALSE, echo=FALSE}
-knitr::opts_chunk$set(echo = TRUE, 
-                      message = FALSE, 
-                      warning = FALSE, 
-                      out.width = '70%', 
-                      fig.align = 'center', 
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE,
+                      out.width = '70%',
+                      fig.align = 'center',
                       tidy = FALSE)
 options(scipen = 1, digits = 3)
 library(ggplot2, warn.conflicts = FALSE, quietly = TRUE)
@@ -62,7 +62,7 @@ xaringanExtra::use_extra_styles(
 
 When we perform an hypothesis test, we need to know the behaviour of the statistic under the null hypothesis in order to draw a conclusion (reject/fail to reject $\mathscr{H}_0$)
 
-The test statistic is often 
+The test statistic is often
 - a Wald statistic (mean or maximum likelihood estimator)
 
 Under regularity conditions and for $n$ sufficiently large, the null distribution is approximately normal. Why?
@@ -100,7 +100,7 @@ where $\Phi(y)$ is the distribution function of $\mathsf{No}(0, 1)$.
 Let's represent graphically the central limit theorem by drawing samples repeatedly from the following distribution (left truncated, multimodal, etc.)
 
 ```{r fig.align="center", echo=FALSE, out.width="70%"}
-knitr::include_graphics("img/CLT/densite.png")
+knitr::include_graphics("img/c1/CLT/densite.png")
 ```
 
 ---
@@ -108,7 +108,7 @@ knitr::include_graphics("img/CLT/densite.png")
 Let's draw $20$ random samples of size $n=10$.
 
 ```{r fig.align="center", echo=FALSE, out.width="40%"}
-knitr::include_graphics("img/CLT/clt_mean_10.gif")
+knitr::include_graphics("img/c1/CLT/clt_mean_10.gif")
 ```
 
 .center[
@@ -122,7 +122,7 @@ Dot plot of random sample of size $n=10$ and sample mean (vertical red line)
 If we increase the sample size to $n=100$, the variability of the sample mean decreases.
 
 ```{r fig.align="center", echo=FALSE,  out.width="40%"}
-knitr::include_graphics("img/CLT/clt_mean_100.gif")
+knitr::include_graphics("img/c1/CLT/clt_mean_100.gif")
 ```
 
 .center[
@@ -136,7 +136,7 @@ Dot plot of random sample of size $n=100$ and sample mean (vertical red line)
 Same thing, this time with $n=1000$ observations per sample.
 
 ```{r fig.align="center", echo=FALSE, out.width="40%"}
-knitr::include_graphics("img/CLT/clt_mean_1000.gif")
+knitr::include_graphics("img/c1/CLT/clt_mean_1000.gif")
 ```
 .center[
 .midi[
@@ -149,7 +149,7 @@ Dot plot of random sample of size $n=1000$ and sample mean (vertical red line)
 If we draw an histogram of the means (vertical red lines), what do we obtain?
 
 ```{r fig.align="center", echo=FALSE, out.width="60%"}
-knitr::include_graphics("img/CLT/densmean10.png")
+knitr::include_graphics("img/c1/CLT/densmean10.png")
 ```
 
 .center[
@@ -162,7 +162,7 @@ Histogram of the empirical distribution of sample means of $n=10$ observations a
 The quality of the CLT approximation improves when the sample size $n$ increases
 
 ```{r fig.align="center", echo=FALSE,  out.width="60%"}
-knitr::include_graphics("img/CLT/densmean100.png")
+knitr::include_graphics("img/c1/CLT/densmean100.png")
 ```
 .center[
 .midi[
@@ -174,7 +174,7 @@ Histogram of the empirical distribution of sample means of $n=100$ observations 
 
 Convergence is faster near the mean than in the tails of the distribution.
 ```{r fig.align="center", echo=FALSE, out.width="60%"}
-knitr::include_graphics("img/CLT/densmean1000.png")
+knitr::include_graphics("img/c1/CLT/densmean1000.png")
 ```
 
 .center[
@@ -187,7 +187,7 @@ Histogram of the empirical distribution of sample means of $n=1000$ observations
 The variance of the sample mean $\overline{Y}_n$ when $\mathsf{Va}(Y_i)=\sigma^2 (i=1, \ldots, n)$ is roughly $\sigma^2/n$.
 
 ```{r fig.align="center", echo=FALSE, out.width="60%"}
-knitr::include_graphics("img/CLT/densmeansupp.png")
+knitr::include_graphics("img/c1/CLT/densmeansupp.png")
 ```
 .center[
 .midi[

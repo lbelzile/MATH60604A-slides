@@ -15,7 +15,7 @@ output:
           <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
           </div>
         </div>
-        
+
 ---
 
 ```{r set-theme, include=FALSE}
@@ -32,11 +32,11 @@ style_duo_accent(
 
 
 ```{r load-packages, message=FALSE, echo=FALSE}
-knitr::opts_chunk$set(echo = TRUE, 
-                      message = FALSE, 
-                      warning = FALSE, 
-                      out.width = '70%', 
-                      fig.align = 'center', 
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE,
+                      out.width = '70%',
+                      fig.align = 'center',
                       tidy = FALSE)
 options(scipen = 1, digits = 3)
 library(ggplot2, warn.conflicts = FALSE, quietly = TRUE)
@@ -47,13 +47,13 @@ theme_set(theme_minimal())
 xaringanExtra::use_xaringan_extra(c("tile_view", "editable","panelset", "tachyons","webcam"))
 
 ```
- 
+
 # Welcome
 
 
 .pull-left-narrow[
 ```{r fig.align="center", echo=FALSE, alt="Leo", out.width="80%"}
-knitr::include_graphics("img/intro/leo_belzile_photo.png")
+knitr::include_graphics("img/c1/intro/leo_belzile_photo.png")
 ```
 ]
 .pull-right-wide[
@@ -96,7 +96,7 @@ A breakout room is used for sessions in small groups.
 We will practice Breakout rooms, which are small group session.
 
 
-**Icebreaking activity**: introduce yourself to classmates and give five facts about yourself, e.g., 
+**Icebreaking activity**: introduce yourself to classmates and give five facts about yourself, e.g.,
   - I live in Tunisia
   - I am a mountain climber
   - I own a labrador named Daisy
@@ -143,7 +143,7 @@ Statistical inference is about drawing conclusion for population based on a repr
 ---
 
 ```{r fig.align="center", echo=FALSE, alt="Null distribution", out.height="70%"}
-knitr::include_graphics("img/w1/infer_null.png")
+knitr::include_graphics("img/c1/w1/infer_null.png")
 ```
 .small[
 *Often, the null hypothesis is derived by making assumptions about the underlying distribution of the data.*
@@ -168,7 +168,7 @@ Two variables:
 ### Improving graphs
 
 ```{r fig.align="center", echo=FALSE, alt="Fix your graph", out.height="70%"}
-knitr::include_graphics("img/w1/advisor_email.png")
+knitr::include_graphics("img/c1/w1/advisor_email.png")
 ```
 .center[
 .tiny[
@@ -192,14 +192,14 @@ knitr::include_graphics("img/w1/advisor_email.png")
 
 ---
 
-### Workshop 
+### Workshop
 
 Download the `.zip` folder containing 30 graphs.
 
 - Does the graph tell a story (i.e., is it standalone?)
 - What are the variables and the mapping?
 - Variable type: is the choice of geometry adequate?
-- Is the graph complete? 
+- Is the graph complete?
 - Highlight good features and improvement points
 
 ---
@@ -208,14 +208,14 @@ Download the `.zip` folder containing 30 graphs.
 
 Pick a graph and repeat this commentary exercise
 
-Good sources include 
+Good sources include
 
-- the Twitter handles: 
+- the Twitter handles:
     - BBC [`@BBCNewsGraphics`]
     - Washington Post [`@PostGraphics`]
     - New York Times [`@nytgraphics`]
     - etc.
-- newspaper and magazine 
+- newspaper and magazine
 - data providers, e.g.,  [US Census](https://www.census.gov/library/visualizations/)
 
 

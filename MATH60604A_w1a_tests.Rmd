@@ -34,11 +34,11 @@ style_duo_accent(
 
 
 ```{r load-packages, message=FALSE, echo=FALSE}
-knitr::opts_chunk$set(echo = TRUE, 
-                      message = FALSE, 
-                      warning = FALSE, 
-                      out.width = '70%', 
-                      fig.align = 'center', 
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE,
+                      out.width = '70%',
+                      fig.align = 'center',
                       tidy = FALSE)
 options(scipen = 1, digits = 5)
 library(ggplot2, warn.conflicts = FALSE, quietly = TRUE)
@@ -67,7 +67,7 @@ xaringanExtra::use_extra_styles(
 .center[**Trial analogy**]
 
 ```{r twelveangrymen, echo = FALSE, out.width="65%"}
-knitr::include_graphics('img/tests/01-intro-12_Angry_Men_scene.jpg')
+knitr::include_graphics('img/c1/tests/01-intro-12_Angry_Men_scene.jpg')
 ```
 .figcaption[Screenshot of the courtoom drama _Twelve Angry Men_ (1957)]
 
@@ -93,7 +93,7 @@ Below are the different steps to undertake:
 
 
 ```{r tech3lab, echo = FALSE, out.width="85%"}
-knitr::include_graphics('img/tests/01-intro-Tech3.png')
+knitr::include_graphics('img/c1/tests/01-intro-Tech3.png')
 ```
 
 
@@ -103,14 +103,14 @@ knitr::include_graphics('img/tests/01-intro-Tech3.png')
 
 
 ```{r texter, echo = FALSE, out.width="85%"}
-knitr::include_graphics('img/tests/01-intro-texter.jpg')
+knitr::include_graphics('img/c1/tests/01-intro-texter.jpg')
 ```
 
 ---
 
 ### Study details
 
-- 35 participants took part in the study. 
+- 35 participants took part in the study.
 - Each person had to walk on a treadmill in front of a screen where obstacles were projected.
 - In one of the sessions, the subjects walked while talking on a cell
 phone, whereas in another session, they walked while texting.
@@ -155,15 +155,15 @@ Express the hypothesis in terms of the difference of means
 
 ---
 
-### \#3.Choose the test statistic 
+### \#3.Choose the test statistic
 
 We compare the difference of the mean reaction time
 
-- one-sample _t_-test for $\texttt{t}-\texttt{c}$ (paired _t_-test) 
+- one-sample _t_-test for $\texttt{t}-\texttt{c}$ (paired _t_-test)
 \begin{align*}
 T_D=\frac{\overline{D}-\mu_0}{\mathsf{se}(\overline{D})}
 \end{align*}
-- $\overline{D}$ is the mean difference in the sample. 
+- $\overline{D}$ is the mean difference in the sample.
 - Under $\mathscr{H}_0: \mu_0=\mu_{\texttt{t}}-\mu_{\texttt{c}}=0$.
 - The standard error of $\overline{D}$ is $\mathsf{se}(\overline{D})=S_D/\sqrt{n}$, where $S_D$ is the standard deviation of the variables $D_i$ and $n$ the sample size.
 
@@ -183,12 +183,12 @@ run;
 .panel[.panel-name[**SAS** output]
 .pull-left[
 ```{r distraction_SAS1, echo = FALSE, out.width="100%"}
-knitr::include_graphics('img/tests/tests_sas_g1.png')
+knitr::include_graphics('img/c1/tests/tests_sas_g1.png')
 ```
 ]
 .pull-right[
 ```{r distraction_SAS2, echo = FALSE, out.width="100%"}
-knitr::include_graphics('img/tests/tests_sas_g2.png')
+knitr::include_graphics('img/c1/tests/tests_sas_g2.png')
 ```
 ]
 
@@ -197,7 +197,7 @@ knitr::include_graphics('img/tests/tests_sas_g2.png')
 ```{r distraction_code, eval = FALSE, echo = TRUE}
 data(distraction, package = "hecstatmod")
 with(distraction,
-     t.test(t-c, alternative = "greater", mu = 0) 
+     t.test(t-c, alternative = "greater", mu = 0)
      )
 ```
 ]
@@ -207,7 +207,7 @@ with(distraction,
 url <- "https://lbelzile.bitbucket.io/MATH60604/distraction.sas7bdat"
 distraction <- haven::read_sas(url)
 with(distraction,
-     t.test(t-c, alternative = "greater", mu = 0) 
+     t.test(t-c, alternative = "greater", mu = 0)
      )
 ```
 ]
@@ -220,7 +220,7 @@ with(distraction,
 
 ### \#4. Compare the statistic with the null distribution
 
-The null distribution is Student-_t_ with 34 degrees of freedom, $\mathsf{St}_{34}$. 
+The null distribution is Student-_t_ with 34 degrees of freedom, $\mathsf{St}_{34}$.
 
 We are only interested in the probability that $T_D > 2.91$ under $\mathscr{H}_0$.
 
@@ -235,4 +235,3 @@ The _p_-value is $0.0032$, which is smaller than $\alpha=5\%$.
 We reject $\mathscr{H}_0$, meaning that the reaction time is significantly higher when texting than talking on the cellphone while walking.
 
 The estimated mean difference is $0.313$ seconds.
-

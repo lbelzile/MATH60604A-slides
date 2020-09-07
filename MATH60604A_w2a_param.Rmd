@@ -1,0 +1,369 @@
+---
+title: "Statistical modelling"
+subtitle: "\\#2.a Parameter interpretation in the linear model"
+author: "<br> <br> Dr. Léo Belzile <br> HEC Montréal"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["xaringan-themer.css", "slides-style.css"]
+    nature:
+      highlightStyle: NULL
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
+---
+
+
+
+
+```{r set-theme, include=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color      = "#003C71", # pantone classic blue
+  secondary_color    = "#009FDF", # pantone baby blue
+  header_font_google = google_font("Raleway","700"),
+  text_font_google   = google_font("Raleway", "400", "400i"),
+  code_font_google   = google_font("Source Code Pro"),
+  text_font_size     = "30px"
+)
+```
+
+
+```{r load-packages, message=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      message = FALSE, 
+                      warning = FALSE, 
+                      out.width = '70%', 
+                      fig.align = 'center', 
+                      tidy = FALSE)
+
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view", "editable","panelset", "webcam"))
+
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         
+  mute_unhighlighted_code = TRUE  
+)
+```
+
+## Interpretation of coefficients of the mean model
+
+We consider the linear model
+\begin{align*}
+Y = \beta_0 + \beta_1\mathrm{X}_1 + \cdots + \beta_p\mathrm{X}_p + \varepsilon,
+\end{align*}
+where $\varepsilon$ is a mean zero error term.
+
+
+### Interpretation of the parameters
+
+- $\beta_0$ is the value when all of $\mathrm{X}_1, \ldots, \mathrm{X}_p$ are zero.
+- $\beta_j$ $(1 \leq j \leq p)$ is the mean change of $Y$ when  $\mathrm{X}_j$ increases by one unit, *ceteris paribus*.
+  - provided no higher order terms or nonlinear functions of $\mathrm{X}_j$, interactions, etc.
+
+
+---
+
+## `intention` data
+
+-  In a study performed at Tech3Lab, subjects navigated a website that contained, among other things, an advertisement for candies.
+- During the site navigation, an eye-tracker measured the location on the screen on which the subject's eyes were fixated.
+- The tracker also recorded whether the subject looked at the ad and for how long it was in sight.
+- A facial expression analysis software (FaceReader) was used to guess the subject's emotions when the ad was in sight. 
+- At the end of the study, a questionnaire measured the subject's intention to buy this type of candy and sociodemographic variables.
+
+---
+
+## Study objectives
+
+Evaluate whether 
+
+1. there is a link between the duration of fixation on the advertisement and the intention to buy and 
+2. whether perceived emotion is linked to the intention to buy. 
+
+
+Only the 120 subjects that had seen the ad in question are included in the data `intention`.
+
+---
+
+## Data description
+
+-  `intention`:  discrete variable ranging between `2` and `14`; larger values indicate higher interest in buying the product. Specifically, the score was constructed by summing the response of two questions, both measured using a Likert scale ranging from strongly disagree (`1`) to strongly agree (`7`).
+-  `fixation`: the total duration of fixation on the ad (in seconds).
+-  `emotion`: a measure of reaction during fixation; the ratio of the probability of showing a positive emotion to the probability of showing a negative emotion.
+
+---
+
+-  `sex`: sex of subject, either man (`0`) or woman (`1`).
+-  `age`: age (in years).
+-  `marital`: civil status, either single (`0`) or in a relationship (`1`).
+-  `revenue`: categorical variable indicating the subject's annual income; one of 
+(`1`) $[0,  20\ 000]$;
+(`2`) $[20\ 000,  60\ 000]$;
+(`3`) $60\ 000$ and above.
+-  `educ`: categorical variable indicating the highest educational achievement, either
+(`1`) high school or lower;
+(`2`) college;
+(`3`) university degree.
+
+
+
+---
+
+## Exploratory data analysis
+
+.panelset[
+
+.panel[.panel-name[**SAS** code]
+```{sas, eval = FALSE}
+proc means data=statmod.intention mean std min max maxdec=2;
+var intention sex age marital fixation emotion;
+run;
+
+proc freq data=statmod.intention;
+tables intention revenue educ;
+run;
+
+ *Repeat this for other variables;
+proc sgplot data=statmod.intention;
+histogram intention emotion;
+run;
+
+```
+]
+
+.panel[.panel-name[SAS output (1)]
+
+```{r intention_EDA_1, echo = FALSE, out.width="55%"}
+knitr::include_graphics('img/c2/slides3-e1.png')
+```
+
+]
+.panel[.panel-name[SAS output (2)]
+
+```{r intention_EDA_2, echo = FALSE, out.width="60%"}
+knitr::include_graphics('img/c2/slides3-e2.png')
+```
+
+]
+]
+---
+
+## Regression terminology
+
+- **response variable** ( $Y$ ): variable of interest
+- **explanatory** variables, **covariates** or **predictors** ( $\mathbf{X}$ ): the variables that are potentially associated with $Y$.
+
+
+In our example,
+
+- the response variable $Y$ is `intention`;
+- the explanatory variables are $\mathbf{X}$: `fixation`, `emotion`, `sex`, `age`, `revenue`, `educ`, `marital`.
+
+
+We want to measure the effect of `fixation` and `emotion` on the `intention` to buy, while adjusting for sociodemographic variables.
+
+---
+
+### Simple linear regression
+
+Consider a linear model with $\texttt{fixation}$ as only covariate.
+
+.panelset[
+
+.panel[.panel-name[**SAS** code]
+
+```{sas, eval = FALSE}
+proc sgplot data=statmod.intention noautolegend;
+scatter y=intention x=fixation;
+reg y=intention x=fixation;
+yaxis label="buying intention";
+xaxis label="fixation time (in seconds)";
+run;
+
+proc glm data=statmod.intention;
+ *Only print coefficients table;
+ods select ParameterEstimates;
+model intention=fixation;
+run;
+```
+
+]
+
+
+.panel[.panel-name[Scatterplot]
+
+```{r intention_EDA_3, echo = FALSE, out.width="50%"}
+knitr::include_graphics('img/c2/slides3-e3b.png')
+```
+]
+
+.panel[.panel-name[Parameter estimates]
+
+```{r intention_fixation, echo = FALSE, out.width="60%"}
+knitr::include_graphics('img/c2/slides3-e5.png')
+```
+
+The fitted regression line is 
+
+\begin{align*}
+\widehat{\texttt{intention}} = 6.45 + 1.14 \texttt{fixation}
+\end{align*}
+
+Caveats?
+]
+]
+
+---
+
+
+
+<!-- -  **slope** $\widehat{\beta}_1=1.14$: for every additional second of \texttt{fixation}, the intention score increases *on average* by $1.14$. The longer a person fixates on an ad, the higher their intention of buying the product. -->
+<!-- -  **intercept** $\widehat{\beta}_0=6.45$: the mean intention score for individuals who did not look at the ad (i.e., when $\texttt{fixation}=0$)  (but only people who looked at the ad were included in the dataset). -->
+
+<!-- Caveats? (consider the fitted value for $\texttt{fixation}=7$). -->
+
+
+
+## Specification of categorical variables in **SAS**
+
+- The **SAS** command `class` creates categorical variables that are interpreted as collection of indicators by the software.
+- The baseline category is specified using `ref`. 
+- The **SAS** default is the first value encountered.
+- In **R**, the analog is `factor`; the baseline is the first value in alphabetical or numerical order.
+
+---
+
+## Binary explanatory variable
+
+Consider a linear model with $\texttt{sex}$ as only covariate.
+
+
+.panelset[
+
+
+.panel[.panel-name[**SAS** code]
+
+```{sas, eval = FALSE}
+proc glm data=statmod.intention;
+ods select ParameterEstimates;
+model intention=sex;
+run;
+
+/* If not coded 0/1, use class command */
+proc glm data=statmod.intention;
+class sex(ref="0");
+model intention=sex / ss3 solution;
+run;
+```
+
+]
+
+
+.panel[.panel-name[Parameter estimates]
+
+The postulated model is
+\begin{align*}
+\texttt{intention} = \beta_0 + \beta_1 \texttt{sex} + \varepsilon
+\end{align*}
+
+```{r e6, out.width = '55%', echo = FALSE}
+knitr::include_graphics('img/c2/slides3-e6.png')
+```
+
+]
+.panel[.panel-name[Interpretation]
+
+-  The mean intention to buy for men is $7.55$ points
+-  The mean intention to buy for women is $8.92$ points.
+-  The estimate of the slope is $\widehat{\beta}_1=1.37$, so the mean intention to buy score is $1.37$ units higher for women than for men. 
+
+]
+]
+
+---
+
+## Categorical explanatory variables
+
+-  The variables $\texttt{revenue}$ and $\texttt{educ}$ are categorical, each with three levels.
+-  A categorical variable with $k$ levels requires $k-1$ explanatory variables $\mathbf{X}$ in the model. For example, consider
+  -  `educ1 = 1` if $\texttt{educ = 1}$ and zero otherwise.
+  -  `educ2 = 1` if $\texttt{educ = 2}$ and zero otherwise.
+
+Because the model includes an intercept, we don't need a third variable, since it would be redundant
+
+|`educ` | intercept | `educ1` | `educ2`|
+|:--:|:--:|:--:|:--:|
+| `1` | $1$ | $1$ | $0$ |
+| `2` | $1$ | $0$ | $1$ |
+| `3` | $1$ | $0$ | $0$ |
+
+-  When $\texttt{educ}=3$ (baseline), both indicator variables are zero. 
+
+---
+
+## **SAS** code to fit the model with dummies
+
+To fit the model, we include the two indicator variables in place of $\texttt{educ}$.
+
+
+.panelset[
+
+
+.panel[.panel-name[**SAS** code (1)]
+
+```{sas, eval = FALSE}
+data intention; 
+set statmod.intention; 
+educ1=(educ=1); 
+educ2=(educ=2); 
+run;
+
+proc glm data=intention; 
+ods select ParameterEstimates;
+model intention=educ1 educ2; 
+run;
+
+ /* Alternative way with `class` */
+proc glm data=statmod.intention; 
+ods select ParameterEstimates;
+class educ(ref="3"); 
+model intention=educ; 
+run;
+```
+
+]
+.panel[.panel-name[SAS output (1)]
+
+
+```{r e7, out.width = '55%', echo = FALSE}
+knitr::include_graphics('img/c2/slides3-e7.png')
+```
+]
+.panel[.panel-name[SAS output (2)]
+
+
+```{r e8, out.width = '55%', echo = FALSE}
+knitr::include_graphics('img/c2/slides3-e8.png')
+```
+
+
+The results are identical to those obtained by creating the indicator variables by hand.
+
+]
+]
+
+---
+
+## Interpretation of the contrasts
+
+-  The estimated means of each of the three groups are $8.77, 8.71$, and $7.11$ for education groups $\texttt{1}$, $\texttt{2}$ and $\texttt{3}$, respectively.
+-  We can see that the mean of $\texttt{intention}$ is $1.65$ points higher for $\texttt{educ}=\texttt{1}$ than for $\texttt{educ}=\texttt{3}$, etc.
+-  To get the comparison between $\texttt{educ}=\texttt{1}$ and $\texttt{educ}=\texttt{2}$, we would need to refit the model after changing the reference category (exercise).

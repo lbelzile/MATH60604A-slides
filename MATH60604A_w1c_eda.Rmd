@@ -34,11 +34,11 @@ style_duo_accent(
 
 
 ```{r load-packages, message=FALSE, echo=FALSE}
-knitr::opts_chunk$set(echo = TRUE, 
-                      message = FALSE, 
-                      warning = FALSE, 
-                      out.width = '70%', 
-                      fig.align = 'center', 
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE,
+                      out.width = '70%',
+                      fig.align = 'center',
                       tidy = FALSE)
 options(scipen = 1, digits = 3)
 library(ggplot2, warn.conflicts = FALSE, quietly = TRUE)
@@ -53,7 +53,7 @@ scale_fill_discrete <- scale_fill_viridis_d
 url <- "https://lbelzile.bitbucket.io/MATH60604A/renfe.sas7bdat"
 renfe <- haven::read_sas(url)
 #Identifier les variables catégorielles
-renfe <- renfe %>% 
+renfe <- renfe %>%
   mutate(dest = factor(recode(dest, "0" = "Barcelone-Madrid",
                "1" = "Madrid-Barcelone")),
          type = factor(type),
@@ -95,7 +95,7 @@ Distinguishing between the later is needed for
 ## Numerical variables
 
 ```{r variablesquanti, echo = FALSE, out.width="55%"}
-knitr::include_graphics('img/EDA/continuous_discrete.png')
+knitr::include_graphics('img/c1/EDA/continuous_discrete.png')
 ```
 
 
@@ -110,7 +110,7 @@ Drawing by Allison Horst of continuous (left) and discrete (right) numerical var
 ## Categorical variables
 
 ```{r variablescateg, echo = FALSE}
-knitr::include_graphics('img/EDA/nominal_ordinal_binary.png')
+knitr::include_graphics('img/c1/EDA/nominal_ordinal_binary.png')
 ```
 .center[
 .small[
@@ -189,13 +189,13 @@ Some golden rules for effective visualization
 
 .center[.small[Renfe data: bar plot of ticket class]]
 ```{r renfe_barplot, eval = TRUE, echo = FALSE}
-ggplot(data = renfe, 
-       aes(x = forcats::fct_infreq(class))) + 
+ggplot(data = renfe,
+       aes(x = forcats::fct_infreq(class))) +
   geom_bar() +
   geom_text(stat='count', aes(label=..count..), vjust=-0.5) +
-  labs(x = "class", 
+  labs(x = "class",
        y = "count")  +
-  scale_y_continuous(expand = c(.125, 0)) + 
+  scale_y_continuous(expand = c(.125, 0)) +
   theme(panel.grid.major.x = element_blank())
 ```
 
@@ -205,13 +205,13 @@ ggplot(data = renfe,
 #### One categorical variable: bar plot
 
 ```{r renfe_barplot_code, eval = FALSE, echo = TRUE}
-ggplot(data = renfe, 
-       aes(x = forcats::fct_infreq(classe))) + 
+ggplot(data = renfe,
+       aes(x = forcats::fct_infreq(classe))) +
   geom_bar() +
   geom_text(stat='count', aes(label=..count..), vjust=-0.5) +
-  labs(x = "class", 
+  labs(x = "class",
        y = "count")  +
-  scale_y_continuous(expand = c(.125, 0)) + 
+  scale_y_continuous(expand = c(.125, 0)) +
   theme(panel.grid.major.x = element_blank())
 ```
 .small[
@@ -224,7 +224,7 @@ ggplot(data = renfe,
 
 
 ```{r renfe_barplot_sas, echo = FALSE, out.width="55%"}
-knitr::include_graphics('img/EDA/EDA_sas_g1.png')
+knitr::include_graphics('img/c1/EDA/EDA_sas_g1.png')
 ```
 
 ]
@@ -254,12 +254,12 @@ run;
 ]
 ```{r renfe_hist, eval = TRUE, echo = FALSE, fig.width = 8, fig.height = 4.2}
 renfe %>% subset(fare == "Promo") %>%
-  ggplot(aes(x = price)) + 
+  ggplot(aes(x = price)) +
     geom_histogram(aes(y = ..density..), bins = 30) +
-    geom_density() + 
-    geom_rug(sides = "b") + 
-    labs(x = "price of Promo tickets (in euros)", 
-         y = "density") 
+    geom_density() +
+    geom_rug(sides = "b") +
+    labs(x = "price of Promo tickets (in euros)",
+         y = "density")
 ```
 
 ]
@@ -269,12 +269,12 @@ renfe %>% subset(fare == "Promo") %>%
 
 ```{r renfe_hist_code, eval = FALSE, echo = TRUE}
 renfe %>% subset(fare == "Promo") %>%
-  ggplot(aes(x = price)) + 
+  ggplot(aes(x = price)) +
     geom_histogram(aes(y = ..density..), bins = 30) +
-    geom_density() + 
-    geom_rug(sides = "b") + 
-    labs(x = "price of Promo tickets (in euros)", 
-         y = "density") 
+    geom_density() +
+    geom_rug(sides = "b") +
+    labs(x = "price of Promo tickets (in euros)",
+         y = "density")
 ```
 
 ]
@@ -283,7 +283,7 @@ renfe %>% subset(fare == "Promo") %>%
 .panel[.panel-name[**SAS** graph]
 
 ```{r renfe_hist_sas, echo = FALSE, out.width="55%"}
-knitr::include_graphics('img/EDA/EDA_sas_g2.png')
+knitr::include_graphics('img/c1/EDA/EDA_sas_g2.png')
 ```
 
 ]
@@ -320,9 +320,9 @@ Renfe data: box-and-whiskers plot of Promo tickets price as a function of class
 
 ```{r renfe_boxplot, cache = TRUE, echo = FALSE, out.width="55%"}
 renfe %>% subset(fare == "Promo") %>%
-    ggplot(aes(y = price, x = class, col = type)) + 
-    geom_boxplot() + 
-    labs(y = "price (in euros)", col = "train type") + 
+    ggplot(aes(y = price, x = class, col = type)) +
+    geom_boxplot() +
+    labs(y = "price (in euros)", col = "train type") +
     theme(legend.position = "bottom") +
     scale_colour_viridis_d()
 ```
@@ -335,9 +335,9 @@ renfe %>% subset(fare == "Promo") %>%
 
 ```{r renfe_boxplot_code, echo = TRUE, eval = FALSE}
 renfe %>% subset(fare == "Promo") %>%
-    ggplot(aes(y = price, x = class, col = type)) + 
-    geom_boxplot() + 
-    labs(y = "price (in euros)", col = "train type") + 
+    ggplot(aes(y = price, x = class, col = type)) +
+    geom_boxplot() +
+    labs(y = "price (in euros)", col = "train type") +
     theme(legend.position = "bottom") +
     scale_colour_viridis_d()
 ```
@@ -354,7 +354,7 @@ renfe %>% subset(fare == "Promo") %>%
 .panel[.panel-name[**SAS** graph]
 
 ```{r renfe_boxplot_sas, echo = FALSE, out.width="55%"}
-knitr::include_graphics('img/EDA/EDA_sas_g3.png')
+knitr::include_graphics('img/c1/EDA/EDA_sas_g3.png')
 ```
 
 ]
@@ -385,11 +385,11 @@ Renfe data: scatterplot of ticket price as a function of travel time for high sp
 
 ```{r renfe_nuagepts, cache = TRUE, echo = FALSE, out.width="55%"}
 renfe %>% subset(type != "REXPRESS") %>%
-    ggplot(aes(x = duration, y = price, col = type)) + 
-    geom_point() + 
-    labs(y = "price (in euros)", 
+    ggplot(aes(x = duration, y = price, col = type)) +
+    geom_point() +
+    labs(y = "price (in euros)",
          x = "travel duration (in minutes)",
-         col = "train type") + 
+         col = "train type") +
     theme(legend.position = "bottom") +
     scale_colour_viridis_d()
 ```
@@ -403,11 +403,11 @@ renfe %>% subset(type != "REXPRESS") %>%
 
 ```{r renfe_nuagepts_code, echo = TRUE, eval = FALSE}
 renfe %>% subset(type != "REXPRESS") %>%
-    ggplot(aes(x = duration, y = price, col = type)) + 
-    geom_point() + 
-    labs(y = "price (in euros)", 
+    ggplot(aes(x = duration, y = price, col = type)) +
+    geom_point() +
+    labs(y = "price (in euros)",
          x = "travel duration (in minutes)",
-         col = "train type") + 
+         col = "train type") +
     theme(legend.position = "bottom") +
     scale_colour_viridis_d()
 ```
@@ -424,7 +424,7 @@ How could we fix the graph?
 .panel[.panel-name[**SAS** graph]
 
 ```{r renfe_nuagepts_sas, echo = FALSE, out.width="55%"}
-knitr::include_graphics('img/EDA/EDA_sas_g4.png')
+knitr::include_graphics('img/c1/EDA/EDA_sas_g4.png')
 ```
 
 ]
@@ -460,7 +460,7 @@ Your graphic must be standalone with the legend.
 - some visualization choices are more effective/adequate than others
 - include both variable name **and** units if ambiguous
 - add a description in the text and cross-reference
-- pay attention to scale (adequate font size for legibility) 
+- pay attention to scale (adequate font size for legibility)
 
 ---
 
