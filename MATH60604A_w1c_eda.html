@@ -11,7 +11,7 @@
     <script src="libs/tile-view/tile-view.js"></script>
     <link href="libs/panelset/panelset.css" rel="stylesheet" />
     <script src="libs/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"f8440a6bde7c4b50be3c355f69d0aed6","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"fa9d65b6355847d993fb736de53aafad","expires":14}</script>
     <script src="libs/himalaya/himalaya.js"></script>
     <script src="libs/js-cookie/js.cookie.js"></script>
     <link href="libs/editable/editable.css" rel="stylesheet" />
@@ -72,7 +72,7 @@ Distinguishing between the later is needed for
 
 ## Numerical variables
 
-&lt;img src="img/EDA/continuous_discrete.png" width="55%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/EDA/continuous_discrete.png" width="55%" style="display: block; margin: auto;" /&gt;
 
 
 .center[
@@ -85,7 +85,7 @@ Drawing by Allison Horst of continuous (left) and discrete (right) numerical var
 
 ## Categorical variables
 
-&lt;img src="img/EDA/nominal_ordinal_binary.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/EDA/nominal_ordinal_binary.png" width="70%" style="display: block; margin: auto;" /&gt;
 .center[
 .small[
 Drawing by Allison Horst of nominal (left), ordinal (middle) and binary (right) categorical variables.
@@ -171,13 +171,13 @@ Some golden rules for effective visualization
 
 
 ```r
-ggplot(data = renfe, 
-       aes(x = forcats::fct_infreq(classe))) + 
+ggplot(data = renfe,
+       aes(x = forcats::fct_infreq(classe))) +
   geom_bar() +
   geom_text(stat='count', aes(label=..count..), vjust=-0.5) +
-  labs(x = "class", 
+  labs(x = "class",
        y = "count")  +
-  scale_y_continuous(expand = c(.125, 0)) + 
+  scale_y_continuous(expand = c(.125, 0)) +
   theme(panel.grid.major.x = element_blank())
 ```
 .small[
@@ -189,7 +189,7 @@ ggplot(data = renfe,
 .panel[.panel-name[**SAS** graph]
 
 
-&lt;img src="img/EDA/EDA_sas_g1.png" width="55%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/EDA/EDA_sas_g1.png" width="55%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -227,12 +227,12 @@ run;
 
 ```r
 renfe %&gt;% subset(fare == "Promo") %&gt;%
-  ggplot(aes(x = price)) + 
+  ggplot(aes(x = price)) +
     geom_histogram(aes(y = ..density..), bins = 30) +
-    geom_density() + 
-    geom_rug(sides = "b") + 
-    labs(x = "price of Promo tickets (in euros)", 
-         y = "density") 
+    geom_density() +
+    geom_rug(sides = "b") +
+    labs(x = "price of Promo tickets (in euros)",
+         y = "density")
 ```
 
 ]
@@ -240,7 +240,7 @@ renfe %&gt;% subset(fare == "Promo") %&gt;%
 
 .panel[.panel-name[**SAS** graph]
 
-&lt;img src="img/EDA/EDA_sas_g2.png" width="55%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/EDA/EDA_sas_g2.png" width="55%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -286,9 +286,9 @@ Renfe data: box-and-whiskers plot of Promo tickets price as a function of class
 
 ```r
 renfe %&gt;% subset(fare == "Promo") %&gt;%
-    ggplot(aes(y = price, x = class, col = type)) + 
-    geom_boxplot() + 
-    labs(y = "price (in euros)", col = "train type") + 
+    ggplot(aes(y = price, x = class, col = type)) +
+    geom_boxplot() +
+    labs(y = "price (in euros)", col = "train type") +
     theme(legend.position = "bottom") +
     scale_colour_viridis_d()
 ```
@@ -304,7 +304,7 @@ renfe %&gt;% subset(fare == "Promo") %&gt;%
 
 .panel[.panel-name[**SAS** graph]
 
-&lt;img src="img/EDA/EDA_sas_g3.png" width="55%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/EDA/EDA_sas_g3.png" width="55%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -345,11 +345,11 @@ Renfe data: scatterplot of ticket price as a function of travel time for high sp
 
 ```r
 renfe %&gt;% subset(type != "REXPRESS") %&gt;%
-    ggplot(aes(x = duration, y = price, col = type)) + 
-    geom_point() + 
-    labs(y = "price (in euros)", 
+    ggplot(aes(x = duration, y = price, col = type)) +
+    geom_point() +
+    labs(y = "price (in euros)",
          x = "travel duration (in minutes)",
-         col = "train type") + 
+         col = "train type") +
     theme(legend.position = "bottom") +
     scale_colour_viridis_d()
 ```
@@ -365,7 +365,7 @@ How could we fix the graph?
 
 .panel[.panel-name[**SAS** graph]
 
-&lt;img src="img/EDA/EDA_sas_g4.png" width="55%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/EDA/EDA_sas_g4.png" width="55%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -401,7 +401,7 @@ Your graphic must be standalone with the legend.
 - some visualization choices are more effective/adequate than others
 - include both variable name **and** units if ambiguous
 - add a description in the text and cross-reference
-- pay attention to scale (adequate font size for legibility) 
+- pay attention to scale (adequate font size for legibility)
 
 ---
 
@@ -429,28 +429,12 @@ Avoid junk chart
 - Look for answers using graphs
 - Infirm or confirm your intuitions
 - Refine questions based on preliminary findings
-- Rince and repeat
+- Rinse and repeat
 - Write a summary of key findings
 
 
 ---
 
-.discussion[]
-
-Perform and exploratory data analysis of the `diamonds` dataset in small groups.
-
-.pull-left[
-### Questions
-
-.can-edit[-]
-]
-.pull-right[
-### Summary
-
-.can-edit[-]
-
-]
----
 ### References
 
 - [*Fundamentals of Data Visualization* par Claus O. Wilke](https://serialmentor.com/dataviz/)

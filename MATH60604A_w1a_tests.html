@@ -11,7 +11,7 @@
     <script src="libs/tile-view/tile-view.js"></script>
     <link href="libs/panelset/panelset.css" rel="stylesheet" />
     <script src="libs/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x2cccdec18024a879ac0984d8dcbe362","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x215994e50bc4c98bec3cbd34f099a8e","expires":14}</script>
     <script src="libs/himalaya/himalaya.js"></script>
     <script src="libs/js-cookie/js.cookie.js"></script>
     <link href="libs/editable/editable.css" rel="stylesheet" />
@@ -62,7 +62,7 @@ layout: true
 
 .center[**Trial analogy**]
 
-&lt;img src="img/tests/01-intro-12_Angry_Men_scene.jpg" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/tests/01-intro-12_Angry_Men_scene.jpg" width="65%" style="display: block; margin: auto;" /&gt;
 .figcaption[Screenshot of the courtoom drama _Twelve Angry Men_ (1957)]
 
 ---
@@ -86,7 +86,7 @@ Below are the different steps to undertake:
 ### Tech3Lab
 
 
-&lt;img src="img/tests/01-intro-Tech3.png" width="85%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/tests/01-intro-Tech3.png" width="85%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -94,13 +94,13 @@ Below are the different steps to undertake:
 ### Texting while walking: a dangerous habit?
 
 
-&lt;img src="img/tests/01-intro-texter.jpg" width="85%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/tests/01-intro-texter.jpg" width="85%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 ### Study details
 
-- 35 participants took part in the study. 
+- 35 participants took part in the study.
 - Each person had to walk on a treadmill in front of a screen where obstacles were projected.
 - In one of the sessions, the subjects walked while talking on a cell
 phone, whereas in another session, they walked while texting.
@@ -145,15 +145,15 @@ Express the hypothesis in terms of the difference of means
 
 ---
 
-### \#3.Choose the test statistic 
+### \#3.Choose the test statistic
 
 We compare the difference of the mean reaction time
 
-- one-sample _t_-test for `\(\texttt{t}-\texttt{c}\)` (paired _t_-test) 
+- one-sample _t_-test for `\(\texttt{t}-\texttt{c}\)` (paired _t_-test)
 `\begin{align*}
 T_D=\frac{\overline{D}-\mu_0}{\mathsf{se}(\overline{D})}
 \end{align*}`
-- `\(\overline{D}\)` is the mean difference in the sample. 
+- `\(\overline{D}\)` is the mean difference in the sample.
 - Under `\(\mathscr{H}_0: \mu_0=\mu_{\texttt{t}}-\mu_{\texttt{c}}=0\)`.
 - The standard error of `\(\overline{D}\)` is `\(\mathsf{se}(\overline{D})=S_D/\sqrt{n}\)`, where `\(S_D\)` is the standard deviation of the variables `\(D_i\)` and `\(n\)` the sample size.
 
@@ -173,10 +173,10 @@ run;
 ]
 .panel[.panel-name[**SAS** output]
 .pull-left[
-&lt;img src="img/tests/tests_sas_g1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/tests/tests_sas_g1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 .pull-right[
-&lt;img src="img/tests/tests_sas_g2.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/tests/tests_sas_g2.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 ]
@@ -185,7 +185,7 @@ run;
 ```r
 data(distraction, package = "hecstatmod")
 with(distraction,
-     t.test(t-c, alternative = "greater", mu = 0) 
+     t.test(t-c, alternative = "greater", mu = 0)
      )
 ```
 ]
@@ -215,7 +215,7 @@ with(distraction,
 
 ### \#4. Compare the statistic with the null distribution
 
-The null distribution is Student-_t_ with 34 degrees of freedom, `\(\mathsf{St}_{34}\)`. 
+The null distribution is Student-_t_ with 34 degrees of freedom, `\(\mathsf{St}_{34}\)`.
 
 We are only interested in the probability that `\(T_D &gt; 2.91\)` under `\(\mathscr{H}_0\)`.
 
@@ -230,7 +230,6 @@ The _p_-value is `\(0.0032\)`, which is smaller than `\(\alpha=5\%\)`.
 We reject `\(\mathscr{H}_0\)`, meaning that the reaction time is significantly higher when texting than talking on the cellphone while walking.
 
 The estimated mean difference is `\(0.313\)` seconds.
-
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

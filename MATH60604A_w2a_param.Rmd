@@ -335,7 +335,7 @@ run;
 proc glm data=statmod.intention; 
 ods select ParameterEstimates;
 class educ(ref="3"); 
-model intention=educ; 
+model intention=educ / ss3 solution; 
 run;
 ```
 

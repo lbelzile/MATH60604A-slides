@@ -11,7 +11,7 @@
     <script src="libs/tile-view/tile-view.js"></script>
     <link href="libs/panelset/panelset.css" rel="stylesheet" />
     <script src="libs/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xcb805ba43794247bc4f04bd1eebd404","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"c6f662701a5e4ff595173a1284e66baa","expires":14}</script>
     <script src="libs/himalaya/himalaya.js"></script>
     <script src="libs/js-cookie/js.cookie.js"></script>
     <link href="libs/editable/editable.css" rel="stylesheet" />
@@ -59,7 +59,7 @@ layout: true
 
 When we perform an hypothesis test, we need to know the behaviour of the statistic under the null hypothesis in order to draw a conclusion (reject/fail to reject `\(\mathscr{H}_0\)`)
 
-The test statistic is often 
+The test statistic is often
 - a Wald statistic (mean or maximum likelihood estimator)
 
 Under regularity conditions and for `\(n\)` sufficiently large, the null distribution is approximately normal. Why?
@@ -96,13 +96,13 @@ where `\(\Phi(y)\)` is the distribution function of `\(\mathsf{No}(0, 1)\)`.
 
 Let's represent graphically the central limit theorem by drawing samples repeatedly from the following distribution (left truncated, multimodal, etc.)
 
-&lt;img src="img/CLT/densite.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/CLT/densite.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 Let's draw `\(20\)` random samples of size `\(n=10\)`.
 
-&lt;img src="img/CLT/clt_mean_10.gif" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/CLT/clt_mean_10.gif" width="40%" style="display: block; margin: auto;" /&gt;
 
 .center[
 .midi[
@@ -114,7 +114,7 @@ Dot plot of random sample of size `\(n=10\)` and sample mean (vertical red line)
 
 If we increase the sample size to `\(n=100\)`, the variability of the sample mean decreases.
 
-&lt;img src="img/CLT/clt_mean_100.gif" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/CLT/clt_mean_100.gif" width="40%" style="display: block; margin: auto;" /&gt;
 
 .center[
 .midi[
@@ -126,7 +126,7 @@ Dot plot of random sample of size `\(n=100\)` and sample mean (vertical red line
 
 Same thing, this time with `\(n=1000\)` observations per sample.
 
-&lt;img src="img/CLT/clt_mean_1000.gif" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/CLT/clt_mean_1000.gif" width="40%" style="display: block; margin: auto;" /&gt;
 .center[
 .midi[
 Dot plot of random sample of size `\(n=1000\)` and sample mean (vertical red line)
@@ -137,7 +137,7 @@ Dot plot of random sample of size `\(n=1000\)` and sample mean (vertical red lin
 
 If we draw an histogram of the means (vertical red lines), what do we obtain?
 
-&lt;img src="img/CLT/densmean10.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/CLT/densmean10.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 .center[
 .midi[
@@ -148,7 +148,7 @@ Histogram of the empirical distribution of sample means of `\(n=10\)` observatio
 
 The quality of the CLT approximation improves when the sample size `\(n\)` increases
 
-&lt;img src="img/CLT/densmean100.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/CLT/densmean100.png" width="60%" style="display: block; margin: auto;" /&gt;
 .center[
 .midi[
 Histogram of the empirical distribution of sample means of `\(n=100\)` observations and CLT normal approximation.
@@ -158,7 +158,7 @@ Histogram of the empirical distribution of sample means of `\(n=100\)` observati
 ---
 
 Convergence is faster near the mean than in the tails of the distribution.
-&lt;img src="img/CLT/densmean1000.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/CLT/densmean1000.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 .center[
 .midi[
@@ -169,7 +169,7 @@ Histogram of the empirical distribution of sample means of `\(n=1000\)` observat
 
 The variance of the sample mean `\(\overline{Y}_n\)` when `\(\mathsf{Va}(Y_i)=\sigma^2 (i=1, \ldots, n)\)` is roughly `\(\sigma^2/n\)`.
 
-&lt;img src="img/CLT/densmeansupp.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/c1/CLT/densmeansupp.png" width="60%" style="display: block; margin: auto;" /&gt;
 .center[
 .midi[
 Normal approximation of the mean for different sample sizes.

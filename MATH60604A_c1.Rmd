@@ -53,7 +53,7 @@ xaringanExtra::use_xaringan_extra(c("tile_view", "editable","panelset", "tachyon
 
 .pull-left-narrow[
 ```{r fig.align="center", echo=FALSE, alt="Leo", out.width="80%"}
-knitr::include_graphics("img/c1/intro/leo_belzile_photo.png")
+knitr::include_graphics("img/intro/leo_belzile_photo.png")
 ```
 ]
 .pull-right-wide[
