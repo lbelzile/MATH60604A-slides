@@ -367,3 +367,10 @@ The results are identical to those obtained by creating the indicator variables 
 -  The estimated means of each of the three groups are $8.77, 8.71$, and $7.11$ for education groups $\texttt{1}$, $\texttt{2}$ and $\texttt{3}$, respectively.
 -  We can see that the mean of $\texttt{intention}$ is $1.65$ points higher for $\texttt{educ}=\texttt{1}$ than for $\texttt{educ}=\texttt{3}$, etc.
 -  To get the comparison between $\texttt{educ}=\texttt{1}$ and $\texttt{educ}=\texttt{2}$, we would need to refit the model after changing the reference category (exercise).
+
+---
+
+## Comments about `class`
+
+- In **SAS**, the levels of the categorical variable are case sensitive within `class`, e.g., `class rank(ref="AssistantProf")`
+- **SAS** does not print the coefficient table if you use `class` unless the `/ solution` to the `model` call.

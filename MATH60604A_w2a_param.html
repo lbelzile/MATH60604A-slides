@@ -4,19 +4,19 @@
     <title>Statistical modelling</title>
     <meta charset="utf-8" />
     <meta name="author" content="    Dr. Léo Belzile   HEC Montréal" />
-    <script src="libs/header-attrs/header-attrs.js"></script>
-    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
-    <script src="libs/tile-view/tile-view.js"></script>
-    <link href="libs/panelset/panelset.css" rel="stylesheet" />
-    <script src="libs/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xd31f5a9062349f78812138b61537561","expires":14}</script>
-    <script src="libs/himalaya/himalaya.js"></script>
-    <script src="libs/js-cookie/js.cookie.js"></script>
-    <link href="libs/editable/editable.css" rel="stylesheet" />
-    <script src="libs/editable/editable.js"></script>
-    <script src="libs/xaringanExtra-webcam/webcam.js"></script>
+    <script src="libs/header-attrs-2.3/header-attrs.js"></script>
+    <link href="libs/tile-view-0.2.3/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view-0.2.3/tile-view.js"></script>
+    <link href="libs/panelset-0.2.3/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset-0.2.3/panelset.js"></script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"a67a5c27e49541cc8b27b124866adfd4","expires":14}</script>
+    <script src="libs/himalaya-1.1.0/himalaya.js"></script>
+    <script src="libs/js-cookie-3.0.0/js.cookie.js"></script>
+    <link href="libs/editable-0.2.3/editable.css" rel="stylesheet" />
+    <script src="libs/editable-0.2.3/editable.js"></script>
+    <script src="libs/xaringanExtra-webcam-0.0.1/webcam.js"></script>
     <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
-    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link href="libs/xaringanExtra-extra-styles-0.2.3/xaringanExtra-extra-styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="slides-style.css" type="text/css" />
   </head>
@@ -345,6 +345,13 @@ The results are identical to those obtained by creating the indicator variables 
 -  The estimated means of each of the three groups are `\(8.77, 8.71\)`, and `\(7.11\)` for education groups `\(\texttt{1}\)`, `\(\texttt{2}\)` and `\(\texttt{3}\)`, respectively.
 -  We can see that the mean of `\(\texttt{intention}\)` is `\(1.65\)` points higher for `\(\texttt{educ}=\texttt{1}\)` than for `\(\texttt{educ}=\texttt{3}\)`, etc.
 -  To get the comparison between `\(\texttt{educ}=\texttt{1}\)` and `\(\texttt{educ}=\texttt{2}\)`, we would need to refit the model after changing the reference category (exercise).
+
+---
+
+## Comments about `class`
+
+- In **SAS**, the levels of the categorical variable are case sensitive within `class`, e.g., `class rank(ref="AssistantProf")`
+- **SAS** does not print the coefficient table if you use `class` unless the `/ solution` to the `model` call.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
