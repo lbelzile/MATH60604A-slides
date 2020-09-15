@@ -3,7 +3,7 @@
 \usepackage{HECbeamer} 
 % \usepackage{pgfpages}
 % \pgfpagesuselayout{4 on 1}[letterpaper, landscape, border shrink=5mm]
-\title[\color{white}{MATH60604A Tests for linear models}]{\texorpdfstring{MATH60604A \\Statistical modelling \\ \S 2.d - Tests for linear models}{MATH60604A \\Statistical modelling \\ \S~2.d - Tests for linear models}}
+\title[\color{white}{MATH60604A Tests for linear models}]{\texorpdfstring{MATH60604A \\Statistical modelling \\ \S 2d - Tests for linear models}{MATH60604A \\Statistical modelling \\ \S~2d - Tests for linear models}}
 \author{Léo Belzile}
 \institute{HEC Montréal\\
 Department of Decision Sciences}
@@ -132,7 +132,7 @@ Compare the \alert{\textbf{mean}} (amount of money individuals are willing to sp
 \bi
 \item 
 In \SASlang, confidence intervals can be obtained by adding the option \code{clparm} to the \code{model} call. The default confidence level is $\alpha=5\%$.
-\item The following code shows this for the simple linear regression model 
+\item The following code shows this for the simple linear regression model with the \code{intention} data.
 \ei
 \begin{align*}
 \code{intention}_i = \beta_0 + \beta_1 \code{fixation}_i + \eps_i.
@@ -246,24 +246,45 @@ We reject $\Hy_0: \beta_1 = 0$ ($p$-values less than $10^{-6}$) in the two leftm
 \end{frame}
 \begin{frame}[fragile]
 \frametitle{Sum of square decomposition}
- \bi \item It is important to note that model comparisons for continuous/categorical variables are done using \textbf{type 3 sum of squares}.
- \bi \item This means that we consider two models, the reduced model includes all but one of the explanatory variable.
- \ei \item In contrast, the type 1 sum of squares consist in testing against the model with covariates in the order in which they entered (e.g., if your first explanatory variable in the model statement is the variable of interest, the comparison is between a model with only this variable, compared to the intercept-only null model).
- \item To avoid confusion, we add for \code{ss3} in the \SASlang call, viz.\verb+ / solution ss3+.
+ \bi \item It is important to note that model comparisons for continuous/categorical variables are done using \textbf{Type III sum of squares}.
+ \bi \item this means that the reduced model includes all but one of the explanatory variables.
+ \ei \item In contrast, the Type I sum of squares table performs \textbf{sequential comparisons} with effect of covariates relative to those already included (in the order in which they entered)
+ \bi \item e.g., if your first explanatory variable in the model statement is the variable of interest, the comparison is between a model with only this variable, compared to the intercept-only null model.
+ \ei
+ \item To avoid confusion, add \code{ss3} in the \SASlang call.
  \ei 
 \end{frame}
 
 
 \begin{frame}[fragile]
 \frametitle{Global $F$-test for categorical variables}
-{\small 
+\small 
 \bi
 % \item \SASlang also reports global tests for each of the variables.
 \item When the $j$th explanatory is continuous or binary, the $F$-test is the \alert{same} as the $t$-test for $\beta_j=0$. These variables have \code{DF=1}.
-\item When the variable is categorical (as defined through \code{class} in \SASlang), the output is different, e.g., the global test for \code{educ} corresponds to the hypothesis $\Hy_0: \beta_{\code{educ}_1}=\beta_{\code{educ}_2}=0$, i.e.,  tests the absence of an effect of education once other covariates are accounted for.
-\item The degrees of freedom for \code{revenue} and \code{educ} are equal to two, since each variable has three levels.
+\item When the variable is categorical (as defined through \code{class} in \SASlang), the output is different, e.g., the global test for a categorical variable \code{cat} with $k$ levels corresponds to the hypothesis $\Hy_0: \beta_{\code{cat}_1}=\cdots = \beta_{\code{cat}_{k-1}}=0$
+\bi \item compare the model with and without the explanatory variable once other covariates are accounted for.
+\ei 
+\ei 
+\end{frame}
+\begin{frame}[fragile]
+Suppose we fit a linear regression model with all the covariates for the \code{intention} data.
+\begin{tcolorbox}[colback=white, colframe=hecblue, title=\SASlang code to fit the full linear model]
+\begin{verbatim}
+proc glm data=infe.intention noprint;
+class sex educ revenue;
+model intention= fixation emotion 
+    sex age revenue educ / ss3 solution;
+run;
+\end{verbatim}
+\end{tcolorbox}
+\end{frame}
+\begin{frame}
+
+\bi \item 
+The degrees of freedom for \code{revenue} and \code{educ} are equal to two, since each variable has three levels.
+\item e.g., the $F$-test compares the model with all covariates to the one with all explanatories, but education, i.e., $\beta_{\code{educ}_1} = \beta_{\code{educ}_2}=0$.
 \ei
-}
 \begin{center}
 \includegraphics[width = 0.7\linewidth]{img/c2/slides3-e10.png}
 \end{center}

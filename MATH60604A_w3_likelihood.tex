@@ -3,7 +3,7 @@
 \usepackage{HECbeamer} 
 % \usepackage{pgfpages}
 % \pgfpagesuselayout{4 on 1}[letterpaper, landscape, border shrink=5mm]
-\title[\color{white}{MATH60604A Maximum likelihood estimation}]{\texorpdfstring{MATH60604A \\Statistical modelling \\ \S 3.a - Maximum likelihood estimation}{MATH60604A \\Statistical modelling \\ \S~3.a - Maximum likelihood estimation}}
+\title[\color{white}{MATH60604A Maximum likelihood estimation}]{\texorpdfstring{MATH60604A \\Statistical modelling \\ \S 3 - Maximum likelihood estimation}{MATH60604A \\Statistical modelling \\ \S~3 - Maximum likelihood estimation}}
 \author{Léo Belzile}
 \institute{HEC Montréal\\
 Department of Decision Sciences}
@@ -24,9 +24,24 @@ Department of Decision Sciences}
 % \end{tcolorbox}
 % \end{frame}
 \section{Likelihood function}
-
 \begin{frame}
-\frametitle{Introduction to likelihood}
+\frametitle{Likelihood}
+\bi
+
+\item The \alert{likelihood} $L(\bs{\theta})$ is a function of the \textbf{parameters} of the distribution, say $\bs{\theta}$.
+
+\bi \item The likelihood  gives the probability of observing a sample under a postulated distribution whose parameters are $\bs{\theta}$.
+\item The likelihood treats the observations as fixed.
+\ei
+
+\item The \alert{maximum likelihood} estimator $\hat{\bs{\theta}}$ is the value of $\bs{\theta}$ that maximizes the likelihood.
+\bi \item the value that makes the observed sample the most \alert{likely} or \alert{plausible}. 
+\item scientific thinking: whatever we observe, we have expected to observe.
+\ei
+\ei
+\end{frame}
+\begin{frame}
+\frametitle{Bernoulli trials}
 \bi
 \item Suppose we want to estimate the probability that an event occurs, which we assume is constant.
 \item For example, whether a customer buys a product or not, whether a study participant completes a task or not, etc.
@@ -47,31 +62,17 @@ Department of Decision Sciences}
 \end{align*}
 Since the observations are independent, the joint probability of a given result is the product of the probabilities for each observation,
 \begin{align*}
-\P{X_1=x_1, \ldots, X_n=x_n \mid p}&=\prod_{i=1}^n \P{X_i=x_i  \mid p}\\&=\prod_{i=1}^n  p^{x_i} (1-p)^{1-x_i}.
+\P{X_1=x_1, \ldots, X_n=x_n \mid p}&=\prod_{i=1}^n \P{X_i=x_i  \mid p}
+\\&=\prod_{i=1}^n  p^{x_i} (1-p)^{1-x_i}.
 \end{align*}
 \end{frame}
 
-\begin{frame}
-\frametitle{Likelihood}
-\bi
 
-\item The \alert{likelihood} $L(\bs{\theta})$ is a function of the \textbf{parameters} of the distribution, say $\bs{\theta}$.
-
-\bi \item The likelihood  gives the probability of observing a sample under a postulated distribution whose parameters are $\bs{\theta}$.
-\item The likelihood treats the observations as fixed.
-\ei
-
-\item The \alert{maximum likelihood} estimator $\hat{\bs{\theta}}$ is the value of $\bs{\theta}$ that maximizes the likelihood.
-\bi \item the value that makes the observed sample the most \alert{likely} or \alert{plausible}. 
-\item scientific thinking: whatever we observe, we have expected to observe.
-\ei
-\ei
-\end{frame}
 \begin{frame}[fragile]
 \frametitle{Likelihood of the Bernoulli model}
-The likelihood for a random sample is 
+The likelihood for the random sample is 
 \begin{align*}
-L(p; \bs{X}) \equiv L(p; \bs{X})&=\prod_{i=1}^n p^{X_i} (1-p)^{(1-X_i)}\\&= p^{\Sigma_{i=1}^n X_i}(1-p)^{n-\Sigma_{i=1}^n X_i}.
+L(p; \bs{X}) &=\prod_{i=1}^n p^{X_i} (1-p)^{(1-X_i)}\\&= p^{\Sigma_{i=1}^n X_i}(1-p)^{n-\Sigma_{i=1}^n X_i}.
 \end{align*}
 % \item The \textbf{likelihood function} is a function of the parameters, treating the observations as fixed.
 % \item For a given value of $p$ and fixed $\bs{x}$, $L(p)$ is the \alert{probability of observing this sample}. 
@@ -84,14 +85,13 @@ L(p; \bs{X}) \equiv L(p; \bs{X})&=\prod_{i=1}^n p^{X_i} (1-p)^{(1-X_i)}\\&= p^{\
 % \begin{frame}[fragile]
 % \frametitle{Numerical example}
 % \bi 
-This likelihood is (up to normalizing constant) the probability of a binomial sample of size $n$ with probability of success $p$.
+This likelihood is (up to normalizing constant) the same as that of a binomial sample of size $n$ with probability of success $p$.
 \bi
-\item It is easy to see that the likelihood only depends on the number of ones observed, regardless of the ordering.
-\item The maximum likelihood estimator is  the observed proportion of ones in the sample.
+\item the likelihood only depends on the number of successes, regardless of the ordering.
 \ei
  Suppose that we have $n=10$ observations, eight of which are successes.
  \bi
-\item The likelihood is $L(p)=p^8(1-p)^2$ and the maximum likelihood estimate $\hat{p}$ is $0.8$.
+\item The likelihood is $L(p)=p^8(1-p)^2$. %and the maximum likelihood estimate $\widehat{p}$ is $0.8$.
 \ei
 \end{frame}
 
@@ -101,38 +101,36 @@ This likelihood is (up to normalizing constant) the probability of a binomial sa
 \begin{center}
 \includegraphics[width = \linewidth]{img/c3/05-likelihood.pdf}
 \end{center}
-
-
 \end{frame}
+\begin{frame}
+\frametitle{Log-likelihood for Bernoulli sample}
+\bi
+\item The log-likelihood function is
+\begin{align*}
+\ell(p)=\sum_{i=1}^n \ln\left\{p^{x_i}(1-p)^{1-xi}\right\}
+\end{align*}
+\item Using the property $\ln(a^b)=b\ln(a)$, rewrite
+\begin{align*}
+\ell(p)=\ln(p)\sum_{i=1}^n x_i + \ln(1-p) \left(n-\sum_{i=1}^n x_i\right).
+\end{align*}
+\item In our numerical example, with eight ones and two zeros, the log-likelihood is $\ell(p)=8 \ln(p) + 2 \ln(1-p)$.
+\ei
+\end{frame}
+
 % 
 % \begin{frame}
 % \frametitle{Log-likelihood}
 % \bi
 % \item Maximization of the likelihood is sometimes numerically unstable, since we deal with a \textbf{product} of small numbers between zero and one.
-% \item Since logarithm is a strictly increasing function, maximizing the natural logarithm $\ln \equiv \log$ of the likelihood is equivalent to maximizing the likelihood.
+% \item Since logarithm is a strictly increasing function, maximizing the natural logarithm $\ln \equiv \ln$ of the likelihood is equivalent to maximizing the likelihood.
 % \bi 
 % \item The log of a product is equal to the sum of logs, that is, 
-% $\log(ab) =\log(a) +\log(b)$, so the product over $n$ terms becomes a sum.
+% $\ln(ab) =\ln(a) +\ln(b)$, so the product over $n$ terms becomes a sum.
 % \item It is usually easier to work with sums rather than products. 
 % \ei 
-%  \item We call the function $\ell(\bs{\theta}) = \log\{L(\bs{\theta})\}$ the \alert{\textbf{log-likelihood}} function.
+%  \item We call the function $\ell(\bs{\theta}) = \ln\{L(\bs{\theta})\}$ the \alert{\textbf{log-likelihood}} function.
 % \ei
 % \end{frame}
-
-\begin{frame}
-\frametitle{Log-likelihood for Bernoulli sample}
-\bi
-\item In our example, the log-likelihood function is
-\begin{align*}
-\ell(p)=\sum_{i=1}^n \log\left\{p^{x_i}(1-p)^{1-xi}\right\}
-\end{align*}
-\item Using the property $\log(a^b)=b\log(a)$, rewrite
-\begin{align*}
-\ell(p)=\log(p)\sum_{i=1}^n x_i + \log(1-p) \left(n-\sum_{i=1}^n x_i\right).
-\end{align*}
-\item In our numerical example, with eight ones and two zeros, the log-likelihood is $\ell(p)=8 \log(p) + 2 \log(1-p)$.
-\ei
-\end{frame}
 
 \begin{frame}
 \frametitle{Plot of the log-likelihood function $\ell(p)$}
@@ -145,7 +143,7 @@ This likelihood is (up to normalizing constant) the probability of a binomial sa
 
 \begin{frame}
 \frametitle{Maximum likelihood estimator}
-Differentiating $\ell( p)$ with respect to $p$,
+Differentiating $\ell(p)$ with respect to $p$,
 \begin{align*}
 \frac{\mathrm{d}}{\mathrm{d}p} \ell(p)=\frac{1}{p} \sum_{i=1}^n x_i-\frac{1}{(1-p)}\left(n-\sum_{i=1}^n x_i \right).
 \end{align*}
@@ -156,11 +154,70 @@ Solving the score equation $U(p)=\d \ell(p)/\d p
 \end{align*}
 The second derivative,
 \begin{align*}
-  \frac{\d^2 \ell(p)}{\d p^2} = -\frac{1}{p^2} \sum_{i=1}^n x_i-\frac{1}{(1-p)^2}\left(n-\sum_{i=1}^n x_i \right),
+  \frac{\d^2 \ell(p)}{\d p^2} &= -\frac{1}{p^2} \sum_{i=1}^n x_i-\frac{1}{(1-p)^2}\left(n-\sum_{i=1}^n x_i \right),   
 \end{align*}
 is negative, so $L(p)$ thus achieves a maximum at $\widehat{p}$ and the maximum likelihood estimator of $p$ is the sample \textbf{proportion of ones}.
-
 \end{frame}
+
+\begin{frame}
+ \frametitle{Information}
+ The observed information $j(p) = - \d^2 \ell(p)/\d p^2$ and 
+ \begin{align*}
+j(\widehat{p}) &= \frac{n}{\overline{x}} + \frac{n}{(1-\overline{x})} = \frac{n}{\overline{x}(1-\overline{x})}  
+\end{align*}
+so, the estimated variance of $\widehat{p}$ is $j^{-1}(\widehat{p}) = 0.016$ and the standard error $0.1265$.
+
+The Fisher information is 
+\[
+i(\theta) = \frac{n}{p(1-p)}.
+\]
+\bi \item For independent and identically distributed data, the total information in the sample is $n$ times that of an individual observation (information accumulates linearly).
+\ei
+\end{frame}
+
+\begin{frame}
+ \frametitle{Testing procedure and confidence interval}
+ Suppose we are interested in the two-sided hypothesis 
+ \[\Hy_0: p_0 = 0.5 \qquad \text{ versus } \qquad \Hy_a: p_0 \neq 0.5.\]
+ 
+ The three likelihood-based tests for this hypothesis are:
+ \bi \item 
+ the Wald test 
+  \[W(p_0) = \frac{(\widehat{p} - p_0)^2}{\Va{\widehat{p}}} = \frac{(\widehat{p}-p_0)^2}{\widehat{p}(1-\widehat{p})/n}\]
+  \item  the score test 
+  \[S(p_0) = \frac{U^2(p_0)}{i(p_0)} = \frac{(\widehat{p}-p_0)^2}{p_0(1-p_0)/n}\]
+ \item the likelihood ratio test
+ \begin{align*}
+  R(p_0) &= 2\{\ell(\widehat{p}) - \ell(p_0)\} 
+  \\&= 2 \left\{ y\ln \pfrac{\widehat{p}}{p_0} + (n-y)\ln\pfrac{1-\widehat{p}}{1-p_0}\right\}
+ \end{align*}
+\ei
+ \end{frame}
+  \begin{frame}
+ \frametitle{Illustration of likelihood-based tests}
+ \begin{center}
+  \includegraphics[width = \linewidth]{img/c3/likelihood_tests}
+ \end{center}
+\end{frame}
+ \begin{frame}[fragile]
+ \frametitle{Numerical results and confidence intervals}
+ \bi 
+ \item With 8 successes out of 10 trials, the statistics equal $W=5.62$, $S=3.6$, $R = 3.855$;
+ \item we compare these values with the $0.95$ quantile of the $\chi^2_1$ distribution, $3.84$.
+ \ei
+ \bi \item 
+In small sample size or when the sampling distribution is strongly asymmetric, the Wald test is \alert{unreliable}.
+\item 
+ Inverting the Wald statistic gives a 95\% confidence interval \[\widehat{p} \pm \mathfrak{z}_{1-\alpha/2}\sqrt{\frac{\widehat{p}(1-\widehat{p})}{n}}\]
+ \item The 95\% Wald-based confidence interval is $0.8 \pm 1.96 \cdot 0.1265 = [0.55, 1.048]$!
+ \item Compare with 
+ \bi \item the likelihood ratio test confidence interval is $[0.5005, 0.964]$.
+ \item the score test confidence interval is $[0.49, 0.943]$.
+  \ei 
+  \ei 
+  {\footnotesize Solve $\{p: S(p) \leq 3.84\}$ and $\{p: R(p) \leq 3.84\}$ via root finding.}
+\end{frame}
+
 
 % \begin{frame}
 % \frametitle{General definition of likelihood}
@@ -199,7 +256,7 @@ L(\bs{\theta})=&\prod_{i=1}^n\frac{1}{({2\pi \sigma^2})^{1/2}}\exp\left\{-\frac{
 \end{align*}
 \item The log-likelihood is
 \begin{align*}
-\ell(\bs{\theta})=-\frac{n}{2}\log(2\pi) -\frac{n}{2}\log(\sigma^2)-\frac{1}{2\sigma^2}\sum_{i=1}^n (x_i-\mu)^2.
+\ell(\bs{\theta})=-\frac{n}{2}\ln(2\pi) -\frac{n}{2}\ln(\sigma^2)-\frac{1}{2\sigma^2}\sum_{i=1}^n (x_i-\mu)^2.
 \end{align*}
 % \item This is a function of two variables, $\mu$ and $\sigma^2$. \alert{The ML estimators are obtained by finding the values of $\mu$ and $\sigma^2$ that maximize this function.}
 \ei
@@ -259,7 +316,7 @@ where the errors $ \eps_i\simiid \Cn(0, \sigma^2)$.
 \item The linear model has $p+2$ parameters: $\beta_0, \beta_1, \ldots, \beta_p $ and $ \sigma^2$. 
 \item The log-likelihood is 
 \begin{align*}
-\ell(\bs{\theta})&=-\frac{n}{2} \log(2\pi)-\frac{n}{2} \log (\sigma^2)\\& \quad -\frac{1}{2\sigma^2}\sum_{i=1}^n \left(Y_i-\beta_0-\sum_{j=1}^p \beta_j\mathrm{X}_{ij}\right)^2.
+\ell(\bs{\theta})&=-\frac{n}{2} \ln(2\pi)-\frac{n}{2} \ln (\sigma^2)\\& \quad -\frac{1}{2\sigma^2}\sum_{i=1}^n \left(Y_i-\beta_0-\sum_{j=1}^p \beta_j\mathrm{X}_{ij}\right)^2.
 \end{align*}
 \ei
 \end{frame}
@@ -385,12 +442,7 @@ where $p+1$ is the number of $\beta$'s and $\mathsf{SS}_e $, the sum of squared 
 % % \ei
 % % \end{frame}
 % 
-%  \begin{frame}
-%  \frametitle{Illustration of likelihood-based tests}
-%  \begin{center}
-%   \includegraphics[width = \linewidth]{figures/05-likelihood_tests}
-%  \end{center}
-% \end{frame}
+
 % 
 % 
 % 
@@ -514,7 +566,7 @@ where $p+1$ is the number of $\beta$'s and $\mathsf{SS}_e $, the sum of squared 
 % \AIC{} and \BIC{} are information criteria measuring how well the model fits the data, while \alert{penalizing models with more parameters}, 
 % \begin{align*}
 % \AIC{}&=-2\ell(\hat{\bs{\theta}})+2k \\
-% \BIC{}&=-2\ell(\hat{\bs{\theta}})+k\log(n),
+% \BIC{}&=-2\ell(\hat{\bs{\theta}})+k\ln(n),
 % \end{align*}
 % where $k$ is the number of parameters in the model.
 % \bi 
