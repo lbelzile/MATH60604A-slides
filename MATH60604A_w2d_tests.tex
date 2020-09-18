@@ -112,7 +112,7 @@ Compare the \alert{\textbf{mean}} (amount of money individuals are willing to sp
 \frametitle{Linear regression with the \code{tickets} data}
 % \begin{tcolorbox}[colback=white,colframe=hecblue,title=\SASlang code to fit the regression model with the \code{glm} procedure ]
 % \begin{verbatim}
-% proc glm data=infe.tickets;
+% proc glm data=statmod.tickets;
 % model offer=group / ss3 solution clparm;
 % run;
 % \end{verbatim}
@@ -140,7 +140,7 @@ In \SASlang, confidence intervals can be obtained by adding the option \code{clp
 
 \begin{tcolorbox}[colback=white, colframe=hecblue, title=\SASlang code to fit the regression model with the \code{glm} procedure]
 \begin{verbatim}
-proc glm data=infe.intention;
+proc glm data=statmod.intention;
 model intention=fixation / clparm;
 run;
 \end{verbatim}
@@ -271,10 +271,10 @@ We reject $\Hy_0: \beta_1 = 0$ ($p$-values less than $10^{-6}$) in the two leftm
 Suppose we fit a linear regression model with all the covariates for the \code{intention} data.
 \begin{tcolorbox}[colback=white, colframe=hecblue, title=\SASlang code to fit the full linear model]
 \begin{verbatim}
-proc glm data=infe.intention noprint;
+proc glm data=statmod.intention noprint;
 class sex educ revenue;
 model intention= fixation emotion 
-    sex age revenue educ / ss3 solution;
+    sex age revenue educ statut / ss3 solution;
 run;
 \end{verbatim}
 \end{tcolorbox}

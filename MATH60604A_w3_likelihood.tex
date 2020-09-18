@@ -3,7 +3,7 @@
 \usepackage{HECbeamer} 
 % \usepackage{pgfpages}
 % \pgfpagesuselayout{4 on 1}[letterpaper, landscape, border shrink=5mm]
-\title[\color{white}{MATH60604A Maximum likelihood estimation}]{\texorpdfstring{MATH60604A \\Statistical modelling \\ \S 3 - Maximum likelihood estimation}{MATH60604A \\Statistical modelling \\ \S~3 - Maximum likelihood estimation}}
+\title[\color{white}{MATH60604A Likelihood-based inference}]{\texorpdfstring{MATH60604A \\Statistical modelling \\ \S 3 - Likelihood-based inference}{MATH60604A \\Statistical modelling \\ \S~3 - Likelihood-based inference}}
 \author{Léo Belzile}
 \institute{HEC Montréal\\
 Department of Decision Sciences}
@@ -176,7 +176,7 @@ i(\theta) = \frac{n}{p(1-p)}.
 \end{frame}
 
 \begin{frame}
- \frametitle{Testing procedure and confidence interval}
+ \frametitle{Testing procedure}
  Suppose we are interested in the two-sided hypothesis 
  \[\Hy_0: p_0 = 0.5 \qquad \text{ versus } \qquad \Hy_a: p_0 \neq 0.5.\]
  
@@ -210,9 +210,9 @@ In small sample size or when the sampling distribution is strongly asymmetric, t
 \item 
  Inverting the Wald statistic gives a 95\% confidence interval \[\widehat{p} \pm \mathfrak{z}_{1-\alpha/2}\sqrt{\frac{\widehat{p}(1-\widehat{p})}{n}}\]
  \item The 95\% Wald-based confidence interval is $0.8 \pm 1.96 \cdot 0.1265 = [0.55, 1.048]$!
- \item Compare with 
- \bi \item the likelihood ratio test confidence interval is $[0.5005, 0.964]$.
- \item the score test confidence interval is $[0.49, 0.943]$.
+ \item Compare with the 95\% confidence intervals based on
+ \bi \item the likelihood ratio statistic, $[0.5005, 0.964]$.
+ \item the score statistic, $[0.49, 0.943]$.
   \ei 
   \ei 
   {\footnotesize Solve $\{p: S(p) \leq 3.84\}$ and $\{p: R(p) \leq 3.84\}$ via root finding.}
@@ -227,134 +227,134 @@ In small sample size or when the sampling distribution is strongly asymmetric, t
 % 
 % \ei
 % \end{frame}
-\begin{frame}
-\frametitle{Estimating the mean and variance of a normal sample}
+% \begin{frame}
+% \frametitle{Estimating the mean and variance of a normal sample}
+% % 
+% % Illustration: \textbf{Understanding Maximum Likelihood} by Kristoffer Magnusson, \url{https://rpsychologist.com/d3/likelihood/}
 % 
-% Illustration: \textbf{Understanding Maximum Likelihood} by Kristoffer Magnusson, \url{https://rpsychologist.com/d3/likelihood/}
-
-\bi
-\item Suppose we have an independent normal sample of  size $n$ with mean $\mu$ and variance $\sigma^2$, where
-\begin{align*}
-X_i \simiid \mathcal{N}(\mu, \sigma^2).
-\end{align*}
-\item The vector of parameters is $\bs{\theta}=(\mu, \sigma^2)$. 
-\item Recall that the density of the normal distribution is
-
-\begin{align*}
-f(x \mid \bs{\theta})=\frac{1}{(2\pi \sigma^2)^{1/2}}\exp\left\{-\frac{1}{2\sigma^2}(x-\mu)^2\right\}, \qquad x \in \R.
-\end{align*}
-\ei
-\end{frame}
-
-\begin{frame}
-\frametitle{Example : estimating the mean and variance of a normally-distributed population}
-\bi
-\item For a sample $\bs{X}=\bs{x}$, the likelihood is 
-\begin{align*}
-L(\bs{\theta})=&\prod_{i=1}^n\frac{1}{({2\pi \sigma^2})^{1/2}}\exp\left\{-\frac{1}{2\sigma^2}(x_i-\mu)^2\right\}\\
-=&(2\pi \sigma^2)^{-n/2}\exp\left\{-\frac{1}{2\sigma^2}\sum_{i=1}^n(x_i-\mu)^2\right\}.
-\end{align*}
-\item The log-likelihood is
-\begin{align*}
-\ell(\bs{\theta})=-\frac{n}{2}\ln(2\pi) -\frac{n}{2}\ln(\sigma^2)-\frac{1}{2\sigma^2}\sum_{i=1}^n (x_i-\mu)^2.
-\end{align*}
-% \item This is a function of two variables, $\mu$ and $\sigma^2$. \alert{The ML estimators are obtained by finding the values of $\mu$ and $\sigma^2$ that maximize this function.}
-\ei
-\end{frame}
-
-\begin{frame}
-\frametitle{Analytic expression for MLE of normal sample}
-This is another example for which we're able to find the maximum likelihood estimator analytically. The \alert{score equations} are
-\begin{align*}
-\frac{\partial}{\partial \mu} \ell(\bs{\theta})=0 , \qquad \frac{\partial}{\partial \sigma^2} \ell(\bs{\theta})=0.
-\end{align*}
-One can show that 
-\begin{align*}
-\hat{\mu}=\overline{X}=\frac{1}{n} \sum_{i=1}^n X_i, \qquad \hat{\sigma}^2=\frac{1}{n}\sum_{i=1}^n (X_i-\overline{X})^2,
-\end{align*}
-are the maximum likelihood estimators for the two parameters.
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Estimating the mean and variance of a normal distribution}
-\bi
-\item Intuitively, we would expect the estimator of the theoretical mean $\mu$ to just be the sample mean. 
-\item However, the estimator of $\sigma^2$ is not the sample variance estimator,
-\begin{align*}
-S^2=\frac{1}{n-1} \sum_{i=1}^n (X_i-\overline{X})^2
-\end{align*}
-\item In one case we divide by $n$ (maximum likelihood estimator); in the other we divide by $(n -1)$. 
-\item The two estimators are \textbf{consistent}, i.e., the estimate will get arbitrarily close to the true value $\sigma^2$ as $n \to \infty$.
-\ei
-\end{frame}
-
-\begin{frame}
-\frametitle{Unbiasedness}
-\bi
-\item An estimator of $\theta_i$ is \textbf{unbiased} if its expectation is equal to $\theta_i$.
-\bi \item On average, the estimate is centered at the true value, regardless of the sample size $n$.\ei
-\item The maximum likelihood estimator for the mean of a normal distribution is \alert{unbiased}, meaning that
-\begin{align*}
-\E{\hat{\mu}}=\mu
-\end{align*}
-\item One can show that $\E{S^2}=\sigma^2$ and so the sample variance estimator is unbiased.
-\item Since $\hat{\sigma}^2=(n-1)/n S^2$, it follows that the maximum likelihood estimator of $\sigma^2$ is \textbf{biased}. 
-\ei
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Ordinary linear regression}
-Assuming normality of the errors,  the least square estimators of $\bs{\beta}$ coincide with the maximum likelihood estimator of $\bs{\beta}$.
-\bi \item 
-Recall the linear regression model, 
-\begin{align*}
-Y_i=\beta_0+\beta_1 \mathrm{X}_{i1}+\beta_2 \mathrm{X}_{i2}+\ldots +\beta_p \mathrm{X}_{ip} + \eps_i, \qquad  (i=1, \ldots, n),
-\end{align*}
-where the errors $ \eps_i\simiid \Cn(0, \sigma^2)$.
-\item The linear model has $p+2$ parameters: $\beta_0, \beta_1, \ldots, \beta_p $ and $ \sigma^2$. 
-\item The log-likelihood is 
-\begin{align*}
-\ell(\bs{\theta})&=-\frac{n}{2} \ln(2\pi)-\frac{n}{2} \ln (\sigma^2)\\& \quad -\frac{1}{2\sigma^2}\sum_{i=1}^n \left(Y_i-\beta_0-\sum_{j=1}^p \beta_j\mathrm{X}_{ij}\right)^2.
-\end{align*}
-\ei
-\end{frame}
-
-
-\begin{frame}
- \frametitle{Least squares and maximum likelihood estimator}
-\bi
-\item Maximizing the log-likelihood with respect to $\beta_0, \ldots, \beta_p$ is equivalent to
-minimizing the sum of squared errors,
-\begin{align*}
-\sum_{i=1}^n \left(Y_i-\beta_0-\sum_{j=1}^p \beta_j\mathrm{X}_{ij}\right)^2.
-\end{align*}
-\item This objective function is the same as that of least squares.
-\item The least-square estimator $\hat{\bs{\beta}}$ of $\bs{\beta}$ is the maximum likelihood estimator.
-\ei
-\end{frame}
-
-
-
-\begin{frame}
-\frametitle{Maximum likelihood estimator of the variance in linear regression}
-\bi
-\item The maximum likelihood estimator (MLE) of the variance $\sigma^2$ is
-\begin{align*}
-\hat{\sigma}^2=\frac{1}{n} \sum_{i=1}^n \left(Y_i-\hat{\beta}_0-\hat{\beta}_1\mathrm{X}_{i1}-\cdots-\hat{\beta}_p\mathrm{X}_{ip}\right)^2
-\end{align*}
-\item The usual estimator of  $\sigma^2$ is
-\begin{align*}
-S^2=\frac{\mathsf{SS}_e}{n -p-1},
-\end{align*}
-where $p+1$ is the number of $\beta$'s and $\mathsf{SS}_e $, the sum of squared residuals, is
-\begin{align*}
-\mathsf{SS}_e = \sum_{i=1}^n e_i^2= \sum_{i=1}^n \left(Y_i-\hat{\beta}_0-\hat{\beta}_1\mathrm{X}_{i1}-\cdots-\hat{\beta}_p\mathrm{X}_{ip}\right)^2.
-\end{align*} 
-\item $S^2$ is unbiased for $\sigma^2$, unlike $\hat{\sigma}^2$. Both estimators are consistent.
-\ei
-\end{frame}
+% \bi
+% \item Suppose we have an independent normal sample of  size $n$ with mean $\mu$ and variance $\sigma^2$, where
+% \begin{align*}
+% X_i \simiid \mathcal{N}(\mu, \sigma^2).
+% \end{align*}
+% \item The vector of parameters is $\bs{\theta}=(\mu, \sigma^2)$. 
+% \item Recall that the density of the normal distribution is
+% 
+% \begin{align*}
+% f(x \mid \bs{\theta})=\frac{1}{(2\pi \sigma^2)^{1/2}}\exp\left\{-\frac{1}{2\sigma^2}(x-\mu)^2\right\}, \qquad x \in \R.
+% \end{align*}
+% \ei
+% \end{frame}
+% 
+% \begin{frame}
+% \frametitle{Example : estimating the mean and variance of a normally-distributed population}
+% \bi
+% \item For a sample $\bs{X}=\bs{x}$, the likelihood is 
+% \begin{align*}
+% L(\bs{\theta})=&\prod_{i=1}^n\frac{1}{({2\pi \sigma^2})^{1/2}}\exp\left\{-\frac{1}{2\sigma^2}(x_i-\mu)^2\right\}\\
+% =&(2\pi \sigma^2)^{-n/2}\exp\left\{-\frac{1}{2\sigma^2}\sum_{i=1}^n(x_i-\mu)^2\right\}.
+% \end{align*}
+% \item The log-likelihood is
+% \begin{align*}
+% \ell(\bs{\theta})=-\frac{n}{2}\ln(2\pi) -\frac{n}{2}\ln(\sigma^2)-\frac{1}{2\sigma^2}\sum_{i=1}^n (x_i-\mu)^2.
+% \end{align*}
+% % \item This is a function of two variables, $\mu$ and $\sigma^2$. \alert{The ML estimators are obtained by finding the values of $\mu$ and $\sigma^2$ that maximize this function.}
+% \ei
+% \end{frame}
+% 
+% \begin{frame}
+% \frametitle{Analytic expression for MLE of normal sample}
+% This is another example for which we're able to find the maximum likelihood estimator analytically. The \alert{score equations} are
+% \begin{align*}
+% \frac{\partial}{\partial \mu} \ell(\bs{\theta})=0 , \qquad \frac{\partial}{\partial \sigma^2} \ell(\bs{\theta})=0.
+% \end{align*}
+% One can show that 
+% \begin{align*}
+% \hat{\mu}=\overline{X}=\frac{1}{n} \sum_{i=1}^n X_i, \qquad \hat{\sigma}^2=\frac{1}{n}\sum_{i=1}^n (X_i-\overline{X})^2,
+% \end{align*}
+% are the maximum likelihood estimators for the two parameters.
+% 
+% \end{frame}
+% 
+% \begin{frame}
+% \frametitle{Estimating the mean and variance of a normal distribution}
+% \bi
+% \item Intuitively, we would expect the estimator of the theoretical mean $\mu$ to just be the sample mean. 
+% \item However, the estimator of $\sigma^2$ is not the sample variance estimator,
+% \begin{align*}
+% S^2=\frac{1}{n-1} \sum_{i=1}^n (X_i-\overline{X})^2
+% \end{align*}
+% \item In one case we divide by $n$ (maximum likelihood estimator); in the other we divide by $(n -1)$. 
+% \item The two estimators are \textbf{consistent}, i.e., the estimate will get arbitrarily close to the true value $\sigma^2$ as $n \to \infty$.
+% \ei
+% \end{frame}
+% 
+% \begin{frame}
+% \frametitle{Unbiasedness}
+% \bi
+% \item An estimator of $\theta_i$ is \textbf{unbiased} if its expectation is equal to $\theta_i$.
+% \bi \item On average, the estimate is centered at the true value, regardless of the sample size $n$.\ei
+% \item The maximum likelihood estimator for the mean of a normal distribution is \alert{unbiased}, meaning that
+% \begin{align*}
+% \E{\hat{\mu}}=\mu
+% \end{align*}
+% \item One can show that $\E{S^2}=\sigma^2$ and so the sample variance estimator is unbiased.
+% \item Since $\hat{\sigma}^2=(n-1)/n S^2$, it follows that the maximum likelihood estimator of $\sigma^2$ is \textbf{biased}. 
+% \ei
+% \end{frame}
+% 
+% 
+% \begin{frame}
+% \frametitle{Ordinary linear regression}
+% Assuming normality of the errors,  the least square estimators of $\bs{\beta}$ coincide with the maximum likelihood estimator of $\bs{\beta}$.
+% \bi \item 
+% Recall the linear regression model, 
+% \begin{align*}
+% Y_i=\beta_0+\beta_1 \mathrm{X}_{i1}+\beta_2 \mathrm{X}_{i2}+\ldots +\beta_p \mathrm{X}_{ip} + \eps_i, \qquad  (i=1, \ldots, n),
+% \end{align*}
+% where the errors $ \eps_i\simiid \Cn(0, \sigma^2)$.
+% \item The linear model has $p+2$ parameters: $\beta_0, \beta_1, \ldots, \beta_p $ and $ \sigma^2$. 
+% \item The log-likelihood is 
+% \begin{align*}
+% \ell(\bs{\theta})&=-\frac{n}{2} \ln(2\pi)-\frac{n}{2} \ln (\sigma^2)\\& \quad -\frac{1}{2\sigma^2}\sum_{i=1}^n \left(Y_i-\beta_0-\sum_{j=1}^p \beta_j\mathrm{X}_{ij}\right)^2.
+% \end{align*}
+% \ei
+% \end{frame}
+% 
+% 
+% \begin{frame}
+%  \frametitle{Least squares and maximum likelihood estimator}
+% \bi
+% \item Maximizing the log-likelihood with respect to $\beta_0, \ldots, \beta_p$ is equivalent to
+% minimizing the sum of squared errors,
+% \begin{align*}
+% \sum_{i=1}^n \left(Y_i-\beta_0-\sum_{j=1}^p \beta_j\mathrm{X}_{ij}\right)^2.
+% \end{align*}
+% \item This objective function is the same as that of least squares.
+% \item The least-square estimator $\hat{\bs{\beta}}$ of $\bs{\beta}$ is the maximum likelihood estimator.
+% \ei
+% \end{frame}
+% 
+% 
+% 
+% \begin{frame}
+% \frametitle{Maximum likelihood estimator of the variance in linear regression}
+% \bi
+% \item The maximum likelihood estimator (MLE) of the variance $\sigma^2$ is
+% \begin{align*}
+% \hat{\sigma}^2=\frac{1}{n} \sum_{i=1}^n \left(Y_i-\hat{\beta}_0-\hat{\beta}_1\mathrm{X}_{i1}-\cdots-\hat{\beta}_p\mathrm{X}_{ip}\right)^2
+% \end{align*}
+% \item The usual estimator of  $\sigma^2$ is
+% \begin{align*}
+% S^2=\frac{\mathsf{SS}_e}{n -p-1},
+% \end{align*}
+% where $p+1$ is the number of $\beta$'s and $\mathsf{SS}_e $, the sum of squared residuals, is
+% \begin{align*}
+% \mathsf{SS}_e = \sum_{i=1}^n e_i^2= \sum_{i=1}^n \left(Y_i-\hat{\beta}_0-\hat{\beta}_1\mathrm{X}_{i1}-\cdots-\hat{\beta}_p\mathrm{X}_{ip}\right)^2.
+% \end{align*} 
+% \item $S^2$ is unbiased for $\sigma^2$, unlike $\hat{\sigma}^2$. Both estimators are consistent.
+% \ei
+% \end{frame}
 % 
 % \begin{frame}
 % \frametitle{Linear regression}
