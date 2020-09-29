@@ -133,7 +133,7 @@ knitr::include_graphics('img/c2/slides3-e15.png')
 - Cook's distance plot (used to detect outliers)
 - Density and histogram of ordinary residuals (normality)
 
----
+### Conclusion
 
  In this example, the analysis of residual does not give us any reason to doubt the model assumptions. Therefore, we can be confident in the results of our analysis (hypothesis tests and confidence intervals).
  
@@ -285,7 +285,7 @@ run;
 
 ---
 
-## Linearity (2)
+## Homoscedasticity
 
 .panelset[
 .panel[.panel-name[**SAS** output (1)]
