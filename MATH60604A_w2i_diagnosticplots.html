@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Statistical modelling</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="    Dr. Léo Belzile   HEC Montréal" />
+    <script src="libs/header-attrs-2.3/header-attrs.js"></script>
+    <link href="libs/tile-view-0.2.3/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view-0.2.3/tile-view.js"></script>
+    <link href="libs/panelset-0.2.3/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset-0.2.3/panelset.js"></script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x957959fd2ab479d89d65452abeb5384","expires":14}</script>
+    <script src="libs/himalaya-1.1.0/himalaya.js"></script>
+    <script src="libs/js-cookie-3.0.0/js.cookie.js"></script>
+    <link href="libs/editable-0.2.3/editable.css" rel="stylesheet" />
+    <script src="libs/editable-0.2.3/editable.js"></script>
+    <script src="libs/xaringanExtra-webcam-0.0.1/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <link href="libs/xaringanExtra-extra-styles-0.2.3/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="slides-style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Statistical modelling
+## #2.i Diagnostic plots
+### <br> <br> Dr. Léo Belzile <br> HEC Montréal
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+## Model assumptions
+
+We postulate `\(\varepsilon_i \sim \mathsf{No}(0,\sigma^2)\)` are independent errors.
+
+- independence
+- linearity
+- homoscedasticity (equal variance)
+- normality
+
+
+---
+
+### Assumptions revisited
+
+1. **Independence**: the errors `\(\varepsilon_1, \ldots, \varepsilon_n\)` are independent (thus, so are the observations)
+2. **Linearity**: the expectation of the errors is `\(\mathsf{E}(\varepsilon_i)=0\)` for all `\(i=1, \ldots, n\)`.
+  - this implies that the mean model is correctly specified, so `\(\mathsf{E}(Y \mid  \mathbf{X})=\beta_0+\beta_1\mathrm{X}_1+\cdots + \beta_p \mathrm{X}_p\)`
+  - all the important explanatory variables have been included in the model
+  - and their effects (presumed linear) have been properly captured by the model.
+3. **Homoscedasticity**: the variance of the errors is **constant** `\(\mathsf{Va}(\varepsilon_i)=\sigma^2\)` for `\(i=1, \ldots, n\)`.
+  - the variance of `\(Y_i\)` is constant and does not depend on `\(\mathbf{X}\)`.
+3. **Normality**: the error terms `\(\boldsymbol{\varepsilon}\)` follows a normal distribution.
+
+---
+
+### Default graphics
+
+- Use options `plots=diagnostics residuals(smooth)` to get default residual diagnostic plots and plots of residuals against continuous explanatories.
+ 
+In **SAS**, we can save additional objects from the `glm` fit using the command `output`. 
+
+- In the code excerpt, we copy (names are user-specific)
+   - the fitted values `fitted`
+   - the ordinary residuals `ores`
+   - the jackknife studentized residuals `jsr` 
+in the temporary database `resid`.
+
+---
+
+.panelset[
+
+.panel[.panel-name[**SAS** code]
+
+```sas
+ods graphics on;
+proc glm data=infe.intention 
+    plots=diagnostics residuals;
+class sex marital educ revenue;
+model intention= fixation emotion marital
+    sex age revenue educ / ss3 solution;
+output out=resid predicted=fitted 
+    r=ores rstudent=jsr;
+run;
+```
+
+]
+
+.panel[.panel-name[**SAS** output (1)]
+&lt;img src="img/c2/slides3-e16.png" width="55%" style="display: block; margin: auto;" /&gt;
+]
+.panel[.panel-name[**SAS** output (2)]
+&lt;img src="img/c2/slides3-e15.png" width="45%" style="display: block; margin: auto;" /&gt;
+]
+
+]
+
+---
+
+### Review of graphs (clockwise from top left)
+
+- residual versus fitted values (linearity)
+- Jackknife studentized residuals against fitted values (heteroscedasticity)
+- Leverage plot (shows influence of observation on estimators)
+- quantile-quantile plot of residual (normality)
+- scatterplot of `\(Y_i\)` versus `\(\hat{Y}_i\)` (linearity, but depends on `\(R^2\)`)
+- Cook's distance plot (used to detect outliers)
+- Density and histogram of ordinary residuals (normality)
+
+---
+
+ In this example, the analysis of residual does not give us any reason to doubt the model assumptions. Therefore, we can be confident in the results of our analysis (hypothesis tests and confidence intervals).
+ 
+---
+
+## Creating plots by hand: correlogram (ACF)
+
+.panelset[
+
+.panel[.panel-name[Context]
+
+- The `airpassengers` data contains monthly observations of the air traffic in the 1960s.
+- We fit a linear model with month (categorical) and year (continuous) for log of the number of passengers.
+- The autocorrelation function (ACF) shows there is residual dependence at different lags, both monthly and yearly dependence.
+
+]
+.panel[.panel-name[Correlogram]
+&lt;img src="img/c2/diagplots_e7.png" width="55%" style="display: block; margin: auto;" /&gt;
+]
+.panel[.panel-name[**SAS** code]
+Only use this plot if you have a time series!
+
+
+```sas
+data airpassengers;
+set statmod.airpassengers;
+lnpassenger = log(passengers);
+run;
+
+proc glm data=airpassengers;
+model lnpassenger = month year;
+output out=airpassresid r=residuals;
+run;
+
+proc timeseries data=airpassresid plots=acf;
+var residuals;
+run;
+```
+]
+]
+
+---
+
+## Linearity assumption
+
+Many potential graphs of ordinary residuals...
+
+- against fitted values
+- against explanatories
+- against omitted covariates (not included in the mean model)
+- added-variable plots
+
+---
+
+### Insurance data
+
+Consider a linear model with `age`, `sex`, `region` and the interaction between `smoker`/`obesity` and `bmi`.
+
+- The plots show that our model is inadequate, but this can lead to wrong diagnostics: 
+  - because of unexplained (abnormally high) charges, the line for e.g., non smoker is too high.
+  - most data are well captured, but this impact quantile-quantile plot.
+  - a log-transformation could reduce the impact of these abnormal values (smaller differences), or else robust regression
+
+---
+
+
+.panelset[
+
+## Linearity
+
+.panel[.panel-name[**SAS** output]
+
+&lt;img src="img/c2/diagplots_e1.png" width="55%" style="display: block; margin: auto;" /&gt;
+]
+.panel[.panel-name[**SAS** code]
+
+
+
+```sas
+proc glm data=insurance;
+class smobese sex region;
+model charges = smobese|bmi age sex region / solution ss3;
+output out=resid predicted=fitted 
+    r=ores rstudent=jsr;
+run;
+    
+*Plot ordinary residuals against fitted values;
+proc sgplot data=resid noautolegend;
+scatter y=ores x=fitted;
+loess y=ores x=fitted; 
+xaxis label="fitted values";
+yaxis label="ordinary residuals";
+run;
+```
+]
+]
+
+---
+
+## Linearity
+
+.panelset[
+.panel[.panel-name[**SAS** output (1)]
+
+&lt;img src="img/c2/diagplots_e2.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+No structure in the residual against body mass index.
+
+]
+
+.panel[.panel-name[**SAS** output (2)]
+
+&lt;img src="img/c2/diagplots_e3.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+A trend (linear?) with the number of children, but scarse data above 4 children.
+
+]
+.panel[.panel-name[**SAS** code]
+
+
+
+```sas
+
+/* Plot ordinary residuals against body mass index */
+proc sgpanel data=resid noautolegend;
+panelby smoker / uniscale=row;
+scatter y=ores x=bmi;
+loess y=ores x=bmi; 
+rowaxis label="ordinary residuals";
+colaxis label ="body mass index";
+run;
+
+/* Plot residuals against omitted variable */
+proc sgpanel data=resid noautolegend;
+panelby sex / uniscale=row;
+vbox  ores / category=children;
+scatter  x=children y=ores / jitter transparency=0.6;
+colaxis label="number of children";
+rowaxis label="ordinary residuals"; 
+run;
+```
+]
+]
+
+---
+
+## Linearity (2)
+
+.panelset[
+.panel[.panel-name[**SAS** output (1)]
+
+&lt;img src="img/c2/diagplots_e4.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+No evidence of increase in variance
+
+]
+
+.panel[.panel-name[**SAS** output (2)]
+
+&lt;img src="img/c2/diagplots_e5.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+No group heteroscedasticity (but more unexplained records for non-smokers).
+]
+.panel[.panel-name[**SAS** code]
+
+
+
+```sas
+data resid;
+set resid;
+ajsr = abs(jsr);
+run;
+
+proc sgplot data=resid noautolegend;
+scatter y=ajsr x = fitted;
+loess y=ajsr x = fitted;
+yaxis label = "|jackknife studentized residuals|";
+xaxis label = "fitted values";
+run;
+
+proc sgplot data=resid noautolegend;
+vbox jsr / category=smobese;
+yaxis label = "jackknife studentized residuals";
+xaxis label = "smoker/obese status";
+run;
+```
+]
+]
+
+---
+
+### Quantile-quantile plots
+
+
+To create a quantile-quantile plot manually
+
+- sort the data (jackknife studentized residuals)
+- compute plotting positions `\(i/(n+1)\)`, `\(i=1, \ldots, n\)`
+- calculate inverse transform `\(F^{-1}\{i/(n+1)\}\)`, where `\(F^{-1}\)` is the quantile function of the postulated distribution. 
+- add approximate pointwise confidence bands (computed using order statistics)
+    - `\(U_{(j)} \sim \mathsf{Be}(j, n+1-j)\)`
+    - therefore pick `\(0.025\)` and `\(0.975\)` quantiles of `\(\mathsf{Be}(j, n+1-j)\)`
+    - back-transform to Student
+    - detrend
+
+---
+
+
+### Normality
+
+.panelset[
+
+.panel[.panel-name[**SAS** output]
+
+&lt;img src="img/c2/diagplots_e6.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+
+]
+.panel[.panel-name[**SAS** code (1)]
+
+
+
+```sas
+data residqq; 
+set resid;
+keep jsr;
+run;
+
+proc sort data=residqq;
+by jsr; 
+run;
+
+data residqq;
+set residqq nobs=nobs;
+pp = _N_  / (nobs + 1);
+pplow = quantile("beta", 0.025, _N_, nobs + 1 - _N_);
+pphigh = quantile("beta", 0.975, _N_, nobs + 1 - _N_);
+q = quantile("t", pp, 1329);
+qlow = quantile("t", pplow, 1329);
+qhigh = quantile("t", pphigh, 1329);
+qdet = jsr - q;
+qdethigh = qhigh - q;
+qdetlow = qlow - q;
+run;
+```
+
+]
+.panel[.panel-name[**SAS** code (2)]
+
+
+```sas
+proc sgplot data=residqq noautolegend; 
+band x=q upper=qdethigh lower=qdetlow / 
+  fill transparency=.5 
+  legendlabel="pointwise confidence intervals";
+lineparm x=0 y=0 slope=0; 
+scatter x=q y=qdet;
+xaxis label="theoretical Student quantiles" grid; 
+yaxis label="jackknife studentized residuals (detrended)" grid;
+run;
+```
+]
+]
+
+---
+
+## Quantile-quantile plots
+
+- `proc univariate` also supports a limited number of distributions, including the normal distribution.
+- You could use the normal approximation to the Student-t distribution  provided the degrees of freedom parameter `\(n-p-2\)` are large (greater than 20).
+
+
+```sas
+/* Histogram of jackknife studentized residuals
+	with density estimate */
+proc sgplot data=resid;
+histogram jsr;
+density jsr / type=kernel;
+keylegend / position=bottom;
+run;
+
+proc univariate data=resid noprint;
+qqplot jsr / normal(mu=est sigma=est l=2)
+square;
+run;
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": null,
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"slideNumberFormat": "<div class=\"progress-bar-container\">   <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">   </div> </div>"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
