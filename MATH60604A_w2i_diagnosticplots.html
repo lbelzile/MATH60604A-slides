@@ -9,7 +9,7 @@
     <script src="libs/tile-view-0.2.3/tile-view.js"></script>
     <link href="libs/panelset-0.2.3/panelset.css" rel="stylesheet" />
     <script src="libs/panelset-0.2.3/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"ae598fe6dfb14523a39831414009eccb","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x0a1acd508ce42e6b2fed4d7ab582f8c","expires":14}</script>
     <script src="libs/himalaya-1.1.0/himalaya.js"></script>
     <script src="libs/js-cookie-3.0.0/js.cookie.js"></script>
     <link href="libs/editable-0.2.3/editable.css" rel="stylesheet" />
@@ -86,7 +86,7 @@ in the temporary database `resid`.
 
 ```sas
 ods graphics on;
-proc glm data=infe.intention 
+proc glm data=statmod.intention 
     plots=diagnostics residuals;
 class sex marital educ revenue;
 model intention= fixation emotion marital
@@ -98,10 +98,10 @@ run;
 
 ]
 
-.panel[.panel-name[**SAS** output (1)]
+.panel[.panel-name[**SAS** output(1)]
 &lt;img src="img/c2/slides3-e16.png" width="55%" style="display: block; margin: auto;" /&gt;
 ]
-.panel[.panel-name[**SAS** output (2)]
+.panel[.panel-name[**SAS** output(2)]
 &lt;img src="img/c2/slides3-e15.png" width="45%" style="display: block; margin: auto;" /&gt;
 ]
 
@@ -125,13 +125,15 @@ run;
  
 ---
 
-## Creating plots by hand: correlogram (ACF)
+## Independence
 
 .panelset[
 
 .panel[.panel-name[Context]
 
-- The `airpassengers` data contains monthly observations of the air traffic in the 1960s.
+### Correlogram for time series
+
+- The `airpassengers` data contains monthly observations of the air traffic in the 1950s.
 - We fit a linear model with month (categorical) and year (continuous) for log of the number of passengers.
 - The autocorrelation function (ACF) shows there is residual dependence at different lags, both monthly and yearly dependence.
 
@@ -206,7 +208,7 @@ output out=resid predicted=fitted
     r=ores rstudent=jsr;
 run;
     
-*Plot ordinary residuals against fitted values;
+/* Plot ordinary residuals against fitted values */
 proc sgplot data=resid noautolegend;
 scatter y=ores x=fitted;
 loess y=ores x=fitted; 
@@ -230,7 +232,7 @@ No structure in the residual against body mass index.
 
 ]
 
-.panel[.panel-name[**SAS** output (2)]
+.panel[.panel-name[**SAS** output(2)]
 
 &lt;img src="img/c2/diagplots_e3.png" width="55%" style="display: block; margin: auto;" /&gt;
 
@@ -269,7 +271,7 @@ run;
 ## Homoscedasticity
 
 .panelset[
-.panel[.panel-name[**SAS** output (1)]
+.panel[.panel-name[**SAS** output(1)]
 
 &lt;img src="img/c2/diagplots_e4.png" width="55%" style="display: block; margin: auto;" /&gt;
 
@@ -277,7 +279,7 @@ No evidence of increase in variance
 
 ]
 
-.panel[.panel-name[**SAS** output (2)]
+.panel[.panel-name[**SAS** output(2)]
 
 &lt;img src="img/c2/diagplots_e5.png" width="55%" style="display: block; margin: auto;" /&gt;
 

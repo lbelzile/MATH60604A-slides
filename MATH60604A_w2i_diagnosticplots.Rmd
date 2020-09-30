@@ -96,7 +96,7 @@ in the temporary database `resid`.
 .panel[.panel-name[**SAS** code]
 ```{sas eval=FALSE}
 ods graphics on;
-proc glm data=infe.intention 
+proc glm data=statmod.intention 
     plots=diagnostics residuals;
 class sex marital educ revenue;
 model intention= fixation emotion marital
@@ -108,12 +108,12 @@ run;
 
 ]
 
-.panel[.panel-name[**SAS** output (1)]
+.panel[.panel-name[**SAS** output(1)]
 ```{r xvsresid_sas1, echo = FALSE, out.width="55%"}
 knitr::include_graphics('img/c2/slides3-e16.png')
 ```
 ]
-.panel[.panel-name[**SAS** output (2)]
+.panel[.panel-name[**SAS** output(2)]
 ```{r xvsresid_sas2, echo = FALSE, out.width="45%"}
 knitr::include_graphics('img/c2/slides3-e15.png')
 ```
@@ -139,13 +139,15 @@ knitr::include_graphics('img/c2/slides3-e15.png')
  
 ---
 
-## Creating plots by hand: correlogram (ACF)
+## Independence
 
 .panelset[
 
 .panel[.panel-name[Context]
 
-- The `airpassengers` data contains monthly observations of the air traffic in the 1960s.
+### Correlogram for time series
+
+- The `airpassengers` data contains monthly observations of the air traffic in the 1950s.
 - We fit a linear model with month (categorical) and year (continuous) for log of the number of passengers.
 - The autocorrelation function (ACF) shows there is residual dependence at different lags, both monthly and yearly dependence.
 
@@ -222,7 +224,7 @@ output out=resid predicted=fitted
     r=ores rstudent=jsr;
 run;
     
-*Plot ordinary residuals against fitted values;
+/* Plot ordinary residuals against fitted values */
 proc sgplot data=resid noautolegend;
 scatter y=ores x=fitted;
 loess y=ores x=fitted; 
@@ -248,7 +250,7 @@ No structure in the residual against body mass index.
 
 ]
 
-.panel[.panel-name[**SAS** output (2)]
+.panel[.panel-name[**SAS** output(2)]
 
 ```{r insurance_childrenores, echo = FALSE, out.width="55%"}
 knitr::include_graphics('img/c2/diagplots_e3.png')
@@ -288,7 +290,7 @@ run;
 ## Homoscedasticity
 
 .panelset[
-.panel[.panel-name[**SAS** output (1)]
+.panel[.panel-name[**SAS** output(1)]
 
 ```{r insurance_jsr, echo = FALSE, out.width="55%"}
 knitr::include_graphics('img/c2/diagplots_e4.png')
@@ -298,7 +300,7 @@ No evidence of increase in variance
 
 ]
 
-.panel[.panel-name[**SAS** output (2)]
+.panel[.panel-name[**SAS** output(2)]
 
 ```{r insurance_boxplot, echo = FALSE, out.width="55%"}
 knitr::include_graphics('img/c2/diagplots_e5.png')
