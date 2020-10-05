@@ -1,0 +1,299 @@
+
+
+\documentclass{beamer}
+\usepackage{HECbeamer}
+% \usepackage{pgfpages}
+% \pgfpagesuselayout{4 on 1}[letterpaper, landscape, border shrink=5mm]
+\title[\color{white}{MATH 60604A \S~4a - Generalized linear models}]{\texorpdfstring{MATH 60604A \\Statistical modelling \\ \S~4a - Generalized linear models}{MATH 60604A \\Statistical modelling \\ \S~4a - Generalized linear models}}
+\author{Léo Belzile}
+\institute{HEC Montréal\\
+Department of Decision Sciences}
+\date{} 
+
+\begin{document}
+\frame{\titlepage}
+\begin{frame}
+\frametitle{Introduction}
+\bi
+\item Linear models are only suitable for data that are (approximately) normally distributed. 
+\item However, there are many settings where we may wish to analyse a response variable which is not necessarily continuous, including when
+\bi
+\item $Y$ is \alert{binary}, 
+\item $Y$ is a \alert{count} variable, 
+\item $Y$ is \alert{continuous, but non-negative}, 
+\ei
+\item We consider particular distributions for binary/proportion and counts data, in order to do likelihood-based inference.
+\ei
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Binary response variables}
+\bi
+\item If the response variable $Y$ takes values in $\{0, 1\}$, we may assume that $Y$ follows a \alert{Bernoulli} distribution, meaning
+\begin{align*}
+\P{Y=y} = \pi^y (1-\pi)^{1-y}, \quad y=0, 1.
+\end{align*}
+\item For Bernoulli random variables, $\E{Y}=\pi$ and $\Va{Y}=\pi(1-\pi)$.
+\item By convention, failures (no) are zeros and  successes (yes) ones.
+\item Potential research questions with binary responses include
+\bi
+\item Did a potential client respond favourably to a promotional offer?
+\item Is the client satisfied with service provided post-purchase?
+\item Will a company declare bankruptcy in the next three years?
+\item Did a study participant successfully complete a task?
+\ei
+\ei
+\end{frame}
+
+\begin{frame}
+\frametitle{Aggregated binary response variables}
+If the data are aggregated independent binary events with Bernoulli distribution, 
+the distribution of the number of successes $Y$ out of $m$ trials is Binomial, denoted $\mathsf{Bin}(m, \pi)$ with mass function
+\begin{align*}
+\P{Y=y} = \binom{m}{y}\pi^y (1-\pi)^{m-y}, \quad y=0, 1, \ldots, m.
+\end{align*}
+The likelihood is the same (up to a normalizing constant that does not depend on $\pi$) 
+as that of $m$ independent Bernoulli random variables and $\E{Y}=m \pi$, $\Va{Y}=m\pi(1-\pi)$.
+\end{frame}
+\begin{frame}
+\frametitle{Count response variables}
+\bi
+\item \alert{If the probability of an event is \textbf{rare}}, we often assume that the number of successes in a given time interval $Y$ follows a \alert{Poisson} distribution,
+\begin{align*}
+\P{Y=y} = \frac{\exp(-\mu)\mu^y}{\Gamma(y+1)}, \quad y=0, 1, 2, \ldots
+\end{align*}
+\item The parameter $\mu$ of the Poisson distribution characterizes both its mean and variance, meaning $\E{Y}=\Va{Y}=\mu$.
+\item Examples of response variables include the number of 
+ 
+\bi
+\item insurance claims made by a policyholder over a year,
+\item  purchases made by a client over a month on a website,
+ \item number tasks completed by a study participant in a given time frame.
+\ei
+\ei
+\end{frame} 
+% \begin{frame}
+% \frametitle{Generalized linear models}
+% \bi
+% \item Generalized linear models (GLMs) combine a model for the conditional mean with a distribution for the response variable and a link function tying predictors and parameters.
+% % including the kinds of non-continuous variables we just described. 
+% \bi
+% \item Linear regression (with normal errors) is a \alert{special case} of a generalized linear model.
+% \ei
+% \item In this chapter, we will give an introduction to generalized linear models and focus in particular on logistic regression and Poisson regression.
+% \item We will only discuss the case of independent observations. 
+% \bi
+%  
+% \item Extensions of generalized linear models for correlated and longitudinal (the so-called \alert{generalized linear mixed models} (GLMMs), are covered in MATH80621.
+% \ei
+% \ei
+% \end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Notation for generalized linear models}
+\bi
+\item The starting point is the same as for linear regression:
+\bi
+ 
+\item We have a random sample of independent observations 
+\begin{align*}
+(Y_i, \mathrm{X}_{i1}, \ldots, \mathrm{X}_{ip}), \quad i=1, \ldots, n
+\end{align*}
+where $Y$ is the response variable and $\mathrm{X}_1, \ldots, \mathrm{X}_p$ are $p$ explanatory variables or covariates which are assumed fixed (non-random).
+\item The goal is to model the response variable as a function of the explanatory variables.
+\ei
+\item Let $\mu_i$ denote the (conditional) \alert{mean} of $Y_i$ given covariates,
+\begin{align*}
+\mu_i=\E{Y_i \mid  \mathrm{X}_{i1}, \ldots, \mathrm{X}_{ip}}.
+\end{align*}
+\item Let $\eta_i$ denote the \alert{linear combination} of the covariates that will be used to model the response variable, 
+\begin{align*}
+\eta_i=\beta_0 + \beta_1 \mathrm{X}_{i1} + \cdots + \beta_p \mathrm{X}_{ip}.
+\end{align*}
+\ei
+\end{frame}
+
+\begin{frame}
+\frametitle{Definition of generalized linear model}
+\bi
+\item There are three building blocks to the generalized linear model:
+\bi
+
+\item A probability distribution for the outcome $Y$ that is a member of the exponential family (normal, binomial, Poisson, gamma, \ldots). 
+\item The linear predictors $\boldsymbol{\eta} = \mathbf{X}\boldsymbol{\beta}$.
+\item A function $g$, called \alert{link function}, that \alert{links} the mean of $Y_i$ to the predictor variables, $g(\mu_i)=\eta_i$.
+% \bi \item In the case of linear regression, the model has the form $\mu_i = \eta_i$\ei
+\ei 
+% \item The link between the mean of $Y$ and the regression ``line'' is
+% \begin{align*}
+% g\left\{\E{Y\mid \mathrm{X}_1, \ldots, \mathrm{X}_p}\right\}=\beta_0 + \beta_1 \mathrm{X}_{1} + \cdots + \beta_p \mathrm{X}_{p}.
+% \end{align*}
+
+\ei
+\end{frame}
+% 
+% \begin{frame}
+% \frametitle{Generalized linear model: definition}
+% Distribution of responses:
+% \medskip
+% 
+% \bi
+% \item In the GLM framework, the distribution of the responses $Y_i$ are assumed to be part of the exponential family with density 
+% \begin{align*}
+% f(y_i \mid  \theta_i, \phi) = \exp \left\{ \frac{y_i \theta_i - b(\theta_i) }{a(\phi)} +c(y_i, \phi) \right\}
+% \end{align*}
+% where $a(\cdot)$, $b(\cdot)$ and $c(\cdot)$ are specific functions and $\theta_i, \phi$ are  model parameters.
+% \item It can be shown that the mean and variance are given by
+% \small{
+% \begin{align*}
+% \E{Y_i} &= \mu_i = b^{\prime} (\theta_i) \\
+% \Va{Y_i} &= a(\phi) b^{\prime \prime} (\theta_i) = a(\phi) V(\mu_i)
+% \end{align*}}
+% where $b^{\prime}(\theta) = \frac{\partial}{\partial \theta}\, b(\theta)$, $b^{\prime \prime}(\theta) = \frac{\partial^2}{\partial \theta^2}\, b(\theta)$ 
+% \item There is a mean-variance relationship, $\Va{Y_i} = a(\phi) V(\mu_i)$.
+% \ei
+% \end{frame}
+% 
+% \begin{frame}
+% \frametitle{Generalized linear model: definition}
+% \bi
+% \item There are many distributions that are members of the exponential family, namely
+% \bi
+%  
+% \item the Bernoulli distribution with parameter $\pi$, 
+% \footnotesize{
+% \begin{align*}
+% \E{Y} = \pi, \quad \Va{Y} = \pi(1-\pi)                                      \end{align*}
+% }
+% %\footnotesize{
+% %\begin{align*}
+% %\theta &= \ln\left( \frac{\pi}{1-\pi} \right) \\
+% %b(\theta) &= log(1+e^{\theta}) \\
+% %a(\phi) &= 1 \\
+% %\E{Y} &= \mu = \pi= b^{\prime}(\theta) = \frac{e^{\theta}}{1+e^{\theta}} \\
+% %\Va{Y} &= a(\phi) b^{\prime \prime}(\theta) = \frac{e^{\theta}}{(1+e^{\theta})^2} = \mu (1-\mu) \\
+% %V(\mu) &= \mu (1-\mu)
+% %\end{align*}
+% %}
+% \item Poisson distribution with parameter $\lambda$
+% \footnotesize{
+% \begin{align*}
+% \E{Y} = \lambda, \quad \Va{Y} = \lambda                                       \end{align*}
+% }
+% \item normal distribution with parameters $\mu, \sigma^2$
+% \footnotesize{
+% \begin{align*}
+% \E{Y} = \mu, \quad \Va{Y} = \sigma^2                                    \end{align*}
+% }
+% \item and many more!
+% \ei
+% \ei
+% \end{frame}
+
+\begin{frame}
+\frametitle{Link function}
+\medskip
+
+\bi
+\item The \alert{link function} connects the mean to the explanatory variables, 
+\small{
+\begin{align*}
+g(\mu_i) & = \eta_i = \beta_0 + \beta_1 \mathrm{X}_{i1} + \cdots + \beta_p \mathrm{X}_{ip} \\
+\quad \Leftrightarrow \quad \mu_i & = g^{-1}(\eta_i) = g^{-1}(\beta_0 + \beta_1 \mathrm{X}_{i1} + \cdots + \beta_p \mathrm{X}_{ip}).
+\end{align*}
+}
+\item In the ordinary linear regression model, we do not impose constraints on the mean $\mu_i$ and $\hat{\mu}_i = \hat{\beta}_0 + \hat{\beta}_1 \mathrm{X}_{i1} + \cdots + \hat{\beta}_p \mathrm{X}_{ip}$ can take on any value in $(-\infty, \infty)$. 
+\item For some response variables, we would need to impose constraints on the mean.
+\bi
+ 
+\item For Bernoulli responses, the mean $\mu=\pi$ must lie in the interval $(0, 1)$.
+\item For Poisson responses, the mean $\mu$ must be positive.
+\ei
+\item An appropriate choice of link function sets $\mu_i$ equal to a transformation of the linear combination $\eta_i$ so as to avoid any parameter constraints on $\bs{\beta}$.
+\ei
+\end{frame}
+
+\begin{frame}
+\frametitle{Choice of link function}
+
+Certain choices of the link function facilite interpretation or make the likelihood function convenient for optimization.  
+\bi
+\item For the Bernoulli and binomial distributions, an appropriate link function is the \alert{logit} function, 
+\begin{align*}
+\logit(\mu)\coloneqq  
+\ln \left( \frac{\mu}{1-\mu} \right) = \eta \quad \Leftrightarrow \quad \mu = \frac{\exp(\eta)}{1+\exp(\eta)}.
+\end{align*}
+
+\item For the Poisson distribution, an appropriate link function is the \alert{natural logarithm},
+\begin{align*}
+\ln (\mu) = \eta  \quad \Leftrightarrow \quad \mu = \exp(\eta).                                                  \end{align*}
+
+\item For the normal distribution, an appropriate link function is the \alert{identity} function, $\mu = \eta$.
+
+% In particular, the \textbf{canonical link} function is such that $\theta = \eta$.
+\ei
+\end{frame}
+
+
+%\begin{frame}
+%\frametitle{Generalized linear model: definition}
+%\bi
+%\item The generalized linear model allows for the mean of $Y$ to be modelled as a function of the covariates
+%\item In this model, a the mean of $Y$ is a \alert{function} of a linear combination of the covariates:
+%\begin{align*}
+%g\left(E[Y\mid \mathrm{X}_1, \ldots, \mathrm{X}_p]\right)=\beta_0+ \beta_1 \mathrm{X}_{1} + \cdots + \beta_p \mathrm{X}_{p}
+%\end{align*}
+%\item[] or equivalently:
+%\begin{align*}
+%E[Y\mid \mathrm{X}_1, \ldots, \mathrm{X}_p]=g^{-1}(\beta_0+ \beta_1 \mathrm{X}_{1} + \cdots + \beta_p \mathrm{X}_{p})
+%\end{align*}
+%\item We can see that the mean of $Y$ is a \alert{function} of the linear combination of the covariates $\eta$
+%%\bi
+%% 
+%%\item Ex: in the ordinary linear regression model, the estimates $\hat{\beta}$ can take on any value and hence the linear combination $\hat{\eta}_i$ can take on any value\ldots but if we have a binary response variable, we would have to impose constraints on the estimators $\hat{\beta}$ to ensure that $\hat{\eta}_i$ falls in the interval $(0, 1)$\ldots
+%%\ei
+%\ei
+%\end{frame}
+
+
+%\begin{frame}
+%\frametitle{Special cases of the generalized linear model}
+%\bi
+%\item Linear regression ($Y$ continuous)
+%\item Logistic regression ($Y$ binary)
+%\item Poisson or negative binomial regression ($Y$ count-based)
+%\ei
+%\end{frame}
+
+\begin{frame}
+\frametitle{Generalized linear model: linear regression}
+\bi
+\item Ordinary linear regression is a special case of generalized linear models, with
+\begin{align*}
+Y_i = \beta_0+ \beta_1 \mathrm{X}_{i1}+\ldots+\beta_p \mathrm{X}_{ip} + \varepsilon_i, \qquad (i=1, \ldots, n)
+\end{align*}
+where $\varepsilon_i \simiid \Cn(0, \sigma^2)$, i.e., $\eps_1, \ldots, \eps_n$ are independent and identically distribution normal random variables with mean $0$ and variance $\sigma^2$.
+\item This is equivalent to stating
+\begin{align*}
+Y_i\mid \mathbf{X}_i \stackrel{\mathsf{ind}}{\sim} \mathsf{No}(\beta_0+ \beta_1 \mathrm{X}_{i1}+\ldots+\beta_p \mathrm{X}_{ip}, \sigma^2)
+\end{align*}
+% \item Thus, we have:
+% \begin{align*}
+% \E{Y_i\mid \mathbf{X}_i}=\beta_0+ \beta_1 \mathrm{X}_{i1} + \cdots + \beta_p \mathrm{X}_{ip}.
+% \end{align*}
+\item Linear regression is a generalized linear model with
+\bi
+ 
+\item a normal distribution for the response and
+\item the identity function as link function.
+\ei 
+\ei
+\end{frame} 
+\end{document}
+
+
+

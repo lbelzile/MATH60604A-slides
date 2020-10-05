@@ -1,0 +1,22 @@
+\frametitle{Likelihood ratio test (non-regular)}
+This shows how to to the calculations by hand using the output from the tables.
+\bi \item The ``\textbf{Full Log Likelihood}'' give the fitted likelihood of the model, $-174.6250$ for the negative binomial model and $-186.1639$ for the Poisson model.
+\item The difference is $11.5389$ and the likelihood ratio statistic is $23.08$.
+\item The probability that a  $\chi^2_1$ is larger than $23.08$ is $1.55 \times 10^{-7}$.
+\item Since the problem is non-regular, we halve this probability and so our $p$-value is $7.7 \times 10^{-8}$.
+\ei
+\begin{tcolorbox}[colback=white, colframe=hecblue, title=SAS code for likelihood ratio test (non-regular)]
+{\small
+\begin{verbatim}
+data pval;
+pval=(1-CDF('CHISQ',23.08,1))/2;
+run;
+proc print data=pval;
+run;
+\end{verbatim}
+}
+\end{tcolorbox}
+{\footnotesize There is overwhelming evidence that the negative binomial model is preferable.
+
+}
+
