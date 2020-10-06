@@ -46,7 +46,7 @@ for $y=0, 1, 2, 3, \ldots$, where $\Gamma$ denotes the gamma function. Both para
 \item Negative binomial regression usually assumes that the response variable $Y$ 
 follows a \alert{negative binomial} distribution and that the \alert{link function} is the logarithmic function 
 \begin{align*}
-g\{\E{Y_i}\}=\log\{\E{Y_i}\}=\beta_0+\beta_1\mathrm{X}_{i1}+\ldots+\beta_p\mathrm{X}_{ip}.
+g\{\E{Y_i}\}=\ln\{\E{Y_i}\}=\beta_0+\beta_1\mathrm{X}_{i1}+\ldots+\beta_p\mathrm{X}_{ip}.
 \end{align*}
 \item Equivalently, we assume that each observation $Y_i$ follows a negative binomial distribution with mean
 \begin{align*}
@@ -148,12 +148,8 @@ Practical aspect: if we do not observe $\hat{k}=0$, we calculate the $p$-value a
 \end{frame}
 \begin{frame}[fragile]
 \frametitle{Likelihood ratio test (non-regular)}
-This shows how to to the calculations by hand using the output from the tables.
-\bi \item The ``\textbf{Full Log Likelihood}'' give the fitted likelihood of the model, $-174.6250$ for the negative binomial model and $-186.1639$ for the Poisson model.
-\item The difference is $11.5389$ and the likelihood ratio statistic is $23.08$.
-\item The probability that a  $\chi^2_1$ is larger than $23.08$ is $1.55 \times 10^{-7}$.
-\item Since the problem is non-regular, we halve this probability and so our $p$-value is $7.7 \times 10^{-8}$. 
-\ei
+This shows how to to the calculations by hand using the output.
+
 \begin{tcolorbox}[colback=white, colframe=hecblue, title=SAS code for likelihood ratio test (non-regular)]
 {\small 
 \begin{verbatim}
@@ -165,10 +161,15 @@ run;
 \end{verbatim}
 }
 \end{tcolorbox}
-{\footnotesize There is overwhelming evidence that the negative binomial model is preferable.
 
-}
-
+\end{frame}
+\begin{frame}
+\bi \item The ``\textbf{Full Log Likelihood}'' give the fitted likelihood of the model, $-174.6250$ for the negative binomial model and $-186.1639$ for the Poisson model.
+\item The difference is $11.5389$ and the likelihood ratio statistic is $23.08$.
+\item The probability that a  $\chi^2_1$ is larger than $23.08$ is $1.55 \times 10^{-7}$.
+\item Since the problem is non-regular, we halve this probability and so our $p$-value is $7.7 \times 10^{-8}$. 
+\item There is overwhelming evidence that the negative binomial model is preferable.
+\ei
 \end{frame}
 
 

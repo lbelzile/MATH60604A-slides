@@ -52,7 +52,7 @@ If we model rates with the Poisson model, the latter is adequate \textbf{only} i
 
 \begin{frame}[fragile]
 \frametitle{Car accident example}
-The National Highway Traffic Safety Administration (NHTSA) compiles statistics about road traffic deaths in the Fatality Analysis Reporting System. The yearly mortality counts for $2010$ and $2018$ are given in \code{crash}  according to whether the accident occured during daytime or nightime (\code{time}), and according to the NHTSA-defined geographic area (\code{region}).
+The National Highway Traffic Safety Administration (NHTSA) compiles statistics about road traffic deaths in the Fatality Analysis Reporting System. The yearly mortality counts for $2010$ and $2018$ are given in \code{crash}  according to whether the accident occured during daytime or nighttime (\code{time}), and according to the NHTSA-defined geographic area (\code{region}).
 
 \bi
 \item Let $Y_i$ denotes the number of death in a given year in region $i$;
@@ -72,16 +72,16 @@ The goal is to estimate the relationship between the number of fatal car crash a
 \bi
 \item If we ignore the size of the population, the Poisson regression model (or negative binomial) would be
 \begin{align*}
-\log(\mu_i)=\log\{\E{Y_i}\}=\beta_0 + \beta_1 \code{time} + \beta_2 \code{year}
+\ln(\mu_i)=\ln\{\E{Y_i}\}=\beta_0 + \beta_1 \code{time} + \beta_2 \code{year}
 \end{align*}
 \item If we want to account for the size of the population in a given region, we would model $Y_i/N_i$ instead of $Y_i$.
 \item This amounts to setting 
 \begin{align*}
-\log\left\{\frac{\E{Y_i}}{N_i}\right\}&=\beta_0 +\beta_1 \code{time} + \beta_2 \code{year}
+\ln\left\{\frac{\E{Y_i}}{N_i}\right\}&=\beta_0 +\beta_1 \code{time} + \beta_2 \code{year}
 \intertext{or equivalently}
-\log\left\{\E{Y_i}\right\}&=\beta_0 + \beta_1 \code{time} + \beta_2 \code{year}+\log( N_i)
+\ln\left\{\E{Y_i}\right\}&=\beta_0 + \beta_1 \code{time} + \beta_2 \code{year}+\ln( N_i)
 \end{align*}
-\item The term $\log(N_i)$ is called an \alert{\textbf{offset}} since it is included as a covariate, but there is no $\beta$ coefficient to estimate (unity).
+\item The term $\ln(N_i)$ is called an \alert{\textbf{offset}} since it is included as a covariate, but there is no $\beta$ coefficient to estimate (unity).
 \ei
 \end{frame}
 
@@ -121,7 +121,7 @@ The option \texttt{offset} could also be included for a Poisson model.
  \includegraphics[width = 0.99\linewidth]{img/c4/slides8-e10}
 \end{center}
 {\small 
-\bi \item Since the variable $\log(N)$ is included as an offset, it doesn't appear in the table.
+\bi \item Since the variable $\ln(N)$ is included as an offset, it doesn't appear in the table.
 \item The deviance statistic (output not shown) is $40.269$ for $37$ degrees of freedom (ratio of $1.0884$). The corresponding $p$-value is $0.327$, so there is no evidence that our fitted model is inadequate.
 \item In this setting, $\exp(\hat{\beta}_0)=\exp(-10.9062)$ corresponds to the estimated mortality rate during daytime in $2010$, which is $1.83/100000$, i.e., a rate of $1.83$ per $100\,000$ inhabitants (with 95\% confidence interval [$1.60  \times 10^{-5}, 2.12 \times 10^{-5}]$).
 \item There is a $\exp(0.23)$ change in mortality from $2010$ to $2018$, corresponding to a $26$\% increase in road casualties.
