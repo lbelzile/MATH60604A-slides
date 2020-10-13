@@ -36,7 +36,7 @@ where \code{sex} is a binary variable taking value unity for female and zero for
 \ei
 \begin{tcolorbox}[colback=white,colframe=hecblue,title=\SASlang code to fit a linear model]
 \begin{verbatim}
-proc glm data=infe.interaction;
+proc glm data=statmod.interaction;
 class sex(ref="0");
 model intention=sex fixation / ss3 solution;
 run;
@@ -98,7 +98,7 @@ effect of the continuous variable \code{fixation} is \alert{the same} for the tw
 \begin{tcolorbox}[colback=white,colframe=hecblue,title=\SASlang code to fit a linear model with an interaction]
 {\small 
 \begin{verbatim}
-proc glm data=infe.interaction;
+proc glm data=statmod.interaction;
 class sex(ref="0");
 model intention=sex fixation fixation*sex 
     / ss3 solution;
