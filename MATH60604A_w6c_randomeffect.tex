@@ -1,0 +1,165 @@
+\documentclass{beamer}
+\usepackage{HECbeamer}
+% \usepackage{pgfpages}
+% \pgfpagesuselayout{4 on 1}[letterpaper, landscape, border shrink=5mm]
+\title[\color{white}{MATH 60604A \S~6c - Random effects}]{\texorpdfstring{MATH 60604A \\Statistical modelling \\ \S~6c -Random effects}{MATH 60604A \\Statistical modelling \\ \S~6c - Random effects}}
+\author{Léo Belzile}
+\institute{HEC Montréal\\
+Department of Decision Sciences}
+\date{} 
+
+\begin{document}
+\frame{\titlepage}
+
+
+
+\begin{frame}
+\frametitle{Introduction to random effects models}
+ Random effects give another way of accounting for within-group correlation and allows prediction of group-level effects in addition to population-level effects.
+ \bi \item The main characteristic of the \alert{linear mixed model} is to allow certain variables to have \alert{random effects}, i.e., \alert{to have parameters that vary from one group to another} (from one person to another in repeated measures data). 
+\item While each group is allowed an individual effect, the overall average of these effects is zero.
+\ei
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Random effects models}
+\bi
+% \item  As mentioned earlier, mixed models allow us to include random effects. 
+\item When an explanatory variable is modeled with a random effect, we assume that \alert{the total effect of this variable is a combination of}
+\be
+
+\item a \alert{common effect} for the entire population and  
+\item a \alert{within-group effect}. 
+\ee
+\item For example, when considering repeated measures from the same individuals, the effect of a variable can be split into a common effect for all individuals in the population, and a unique effect for each individual. 
+\item In the example of worker motivation, the effect of years of service could be split up into a common effect for all employees (in all units) and a unique effect in each unit for employees.
+\ei
+\end{frame}
+\begin{frame}
+ \frametitle{Linear mixed model as hierarchical model}
+The linear mixed effect model is 
+ \begin{align*}
+  \bs{Y}_i \mid \bs{\mathcal{B}}_i =\bs{b}_i &\sim \mathsf{No}_{n_i}\left( \mathbf{X}_i \bs{\beta} + \mathbf{Z}_i\bs{b}_i, \mathbf{R}_i\right) \\
+  \bs{\mathcal{B}}_i & \sim \mathsf{No}_{q}( \bs{0}_q, \bs{\Omega})
+ \end{align*}
+
+ \bi \item 
+ The response for group $i$, $\bs{Y}_i$ follows a multivariate normal distribution given \textbf{random effects} $\bs{b}_i$.
+ \item 
+ We term the coefficients $\bs{\beta}$ associated to the model matrix $\mathbf{X}_i$ \textbf{fixed effects}.
+ \ei 
+\end{frame}
+
+
+\begin{frame}\frametitle{Linear mixed models: fixed effects}
+
+
+We can write the linear mixed model as
+\begin{align*}
+[\bs{Y}_i \mid \bs{\mathcal{B}}_i=\bs{b}_i]= \mathbf{X}_i \bs{\beta} + \mathbf{Z}_i \bs{b}_i + \bs{\eps}_i, \qquad i = 1, \ldots, m.
+\end{align*} 
+where
+\bi
+\item $\bs{Y}_i=(Y_{i1},\ldots,Y_{in_i})^{\top}$ is the $n_i$ vector of responses of group $i$.
+
+\item $\mathbf{X}_i$ is the $n_i \times (p+1)$ matrix of explanatory variables for group $i$, whose $i$th row is $\mathbf{X}_{ij}=(1,\mathrm{X}_{ij1},\ldots,\mathrm{X}_{ijp})^{\top}$. 
+\bi 
+\item The first column correspond to the intercept and all its entries are one.
+\item The other columns of $\mathbf{X}_i$ each represent an explanatory variable.
+\ei
+\item $\bs{\beta}$ is a $(p+1)$ vector of \textbf{fixed} effects parameters.
+\ei
+
+
+\end{frame}
+
+\begin{frame}\frametitle{Linear mixed models: random effects}
+We can write the model
+\begin{align*}
+[\bs{Y}_i \mid \bs{\mathcal{B}}_i=\bs{b}_i]= \mathbf{X}_i \bs{\beta} + \mathbf{Z}_i b_i + \bs{\eps}_i, \qquad i = 1, \ldots, m.
+\end{align*} 
+where
+\bi
+\item $\mathbf{Z}_i$ is a $n_i \times q$ matrix consisting of a subset of the columns of $\mathbf{X}_i$. 
+\bi \item The columns of $\mathbf{Z}_i$ are those of the variables with \textbf{random effects}. 
+\item If there are no random effects, $q=0$ and we retrieve the linear model.
+\ei
+\item  $\bs{\mathcal{B}}_i=\bs{b}_i$ is a $q$ vector of random effects for group $i$
+\item $\bs{\eps}_i$ is the $n_i$ vector of errors of group $i$.
+\ei
+
+\end{frame}
+
+\begin{frame}
+\frametitle{General form: random effects models}
+In the linear mixed model, both $\bs{\mathcal{B}}_i$ and $\bs{\eps}_i$ are random vectors and 
+\bi
+\item the random effects $\bs{\mathcal{B}}_i$ and $\bs{\mathcal{B}}_j$ $(i \neq j)$ are independent.
+\item the random effects are independent from the errors
+\item the $\bs{\eps}_i$ are independent from one another and don't depend on the explanatory variables
+\item both $\bs{\mathcal{B}}_i$ and $\bs{\eps}_i$ have mean zero, meaning \[\E{\bs{\mathcal{B}}_i}=\bs{0}_{n_i}, \qquad \E{\bs{\eps}_i \mid \mathbf{X}_i}=\bs{0}_{n_i}\]
+\ei
+\end{frame}
+\begin{frame}
+\frametitle{Conditional and marginal mean and variance}
+We specify covariance models for the random effects and the errors,
+\begin{align*}
+\Co{\bs{\mathcal{B}}_i}=\bs{\Omega}, \quad \Co{\bs{\eps}_i}=\mathbf{R}_i, \quad i=1, \ldots, m
+\end{align*}
+The \alert{conditional} mean and variance of $\bs{Y}_i$ are
+\begin{align*}
+\E{\bs{Y}_i \mid \mathbf{X}_i,\bs{\mathcal{B}}_i=\bs{b}_i} = \mathbf{X}_i \bs{\beta} + \mathbf{Z}_i \bs{b}_i, \qquad \Co{\bs{Y}_i \mid \mathbf{X}_i, \bs{\mathcal{B}}_i=\bs{b}_i} = \mathbf{R}_i
+\end{align*}
+whereas the \alert{marginal} mean and variance of $\bs{Y}_i$ are
+\begin{align*}
+\E{\bs{Y}_i \mid \mathbf{X}_i} = \mathbf{X}_i \bs{\beta}, \qquad \Co{\bs{Y}_i \mid \mathbf{X}_i} = \bs{\Sigma}_i=\mathbf{Z}_i \bs{\Omega}\mathbf{Z}_i^\top+\mathbf{R}_i.
+\end{align*}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{Random effects models}
+The \alert{parameters} of the models which we will \textbf{estimate} are
+\bi \item the vector of coefficients of the fixed effects, $\boldsymbol{\beta}$
+\item the covariance parameters of the errors and of the random effects.
+\ei
+
+\bi
+\item With a linear mixed model, we can estimate the conditional mean $\E{Y_{ij}\mid \mathbf{X}_i, \bs{b}_i}$  which can be thought of as a \alert{prediction} of the value of $Y_{ij}$ after accounting for the group-specific effects. 
+\item In repeated measures data, this allows us to predict an individual's trajectory
+while accounting for specific effects of the individual.
+\item when we add a random effect for the group variable, we can still estimate effects of variables that are fixed within a group.
+\ei
+\end{frame}
+
+\begin{frame}{Prediction}
+\bi
+\item We can predict $\bs{\mathcal{B}}_i$ by its conditional mean given $\bs{Y}_i$. 
+\item If the covariance parameters are known, 
+\begin{align*}
+\E{\bs{\mathcal{B}}_i\mid  \bs{Y}_i}&=\bs{\Omega}\mathbf{Z}_i^\top \bs{\Sigma}_i^{-1}(\bs{Y}_i-\mathbf{X}_i\hat{\bs{\beta}})
+\shortintertext{where }
+\bs{\Sigma}_i&=\mathbf{Z}_i \bs{\Omega}\mathbf{Z}_i^\top+\mathbf{R}_i.
+\end{align*}
+
+\item We can plug-in covariance parameters estimates to obtain a prediction of the random effect,
+\begin{align*}
+\hat{\bs{b}}_i= \hat{\bs{\Omega}}\mathbf{Z}_i^\top \hat{\bs{\Sigma}}_i^{-1}(\bs{Y}_i-\mathbf{X}_i\hat{\beta})
+\end{align*}
+\ei
+\end{frame}
+
+
+\begin{frame}
+ \frametitle{Fixed or random effect?}
+ \bi \item There is no universal definition of fixed and random effects\ldots 
+ \item Loosely speaking, the main difference between fixed and random effects is 
+ \bi 
+%  \item At the population level, we assume that the average random effect is zero (or else captured by a fixed effect coefficient).
+ \item \textbf{fixed effects} for group are used when we have few groups and lots of replicates and we care about the effect of the group (small $m$, large $n_i$).
+ \item \textbf{random effects} are used when there are enough levels of the factor group to estimate the variance $\sigma^2_b$ reliably; we are not interested in the effects per say (large $m$, small $n_i$).
+ \ei
+ \item Testing whether a random effect is needed or not is equivalent to testing if the variance of the random effect $\sigma^2_b=0$; this is a non-standard testing problem\ldots 
+ \ei
+\end{frame}
+
+
+\end{document}

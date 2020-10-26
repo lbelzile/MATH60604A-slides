@@ -1,0 +1,159 @@
+\documentclass{beamer}
+\usepackage{HECbeamer}
+% \usepackage{pgfpages}
+% \pgfpagesuselayout{4 on 1}[letterpaper, landscape, border shrink=5mm]
+\title[\color{white}{MATH 60604A \S~5g - Selection of the covariance structure}]{\texorpdfstring{MATH 60604A \\Statistical modelling \\ \S~5g - Selection of the covariance structure}{MATH 60604A \\Statistical modelling \\ \S~5g - Selection of the covariance structure}}
+\author{Léo Belzile}
+\institute{HEC Montréal\\
+Department of Decision Sciences}
+\date{} 
+
+\begin{document}
+\frame{\titlepage}
+
+
+
+% 
+% \begin{frame}
+% \frametitle{Fixed effects}
+% \begin{center}
+% \includegraphics[scale=0.3]{Figures/long40.pdf}
+% \includegraphics[scale=0.3]{Figures/long41.pdf}
+% \end{center}
+% \bi
+% \item The $\beta$ parameters are similar to those from the previous models. 
+% \item The variable \code{sex} is not significant (but only just).
+% \ei
+% \end{frame}
+% 
+% 
+
+
+\begin{frame}[fragile]
+\frametitle{Review of the covariance models covered}
+\bi
+\item We have seen how to fit five kinds of covariance structures on the errors in the regression model:
+\bi
+
+\item The \alert{CS} (exchangeable) structure: each pair of observations has the same correlation
+\item The \alert{$\mathsf{AR}(1)$} structure: the correlation between two observations decreases the further apart they are in time. 
+\item The \alert{$\mathsf{ARH}(1)$} structure: same thing as $\mathsf{AR}(1)$, but allows a different variance at each measurement time.
+\item The  \alert{unstructured} model, which allows a different covariance for each pair of observations in time.
+\ei
+\ei
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Covariance structure selection using information criteria}
+\begin{center}
+\begin{footnotesize}
+\begin{tabular}{l c c c}
+\toprule 
+\textbf{Model} & $-2\ell_{\textrm{reml}}$ & \textbf{AIC} & \textbf{BIC} \\ \midrule
+Ordinary Regression & 776.7 & 778.7 & 782.6 \\ 
+Compound Symmetry & 709.4 & 713.4 & 718.2 \\ 
+$\mathsf{AR}(1)$ & 681.8 & \alert{685.8} & \alert{690.5} \\ 
+$\mathsf{ARH}(1)$ & 675.3 & 687.3 & 701.6 \\ 
+Unstructured & 659.3 & 689.3 & 725.0 \\ \bottomrule
+\end{tabular}
+\end{footnotesize}
+\end{center}
+\bi
+\item  Both AIC and BIC criteria point towards the $\mathsf{AR}(1)$ model as the ``best'' model. 
+\item This is a parsimonious model (only two parameters on the covariance structure) which seems to do a good job in accounting for within-subject correlation.
+\item What's even more reassuring is that, no matter what covariance structure we used, the conclusions for the predictor variables remain unchanged.
+\ei
+\end{frame}
+
+\begin{frame}
+\frametitle{A word of caution  regarding tests for REML estimation}
+\bi
+\item There is a small technical detail here. If we want to compare models using the AIC or BIC and the REML estimation method is used, we must compare models with the  \alert{same fixed effect variables}, that is, the same predictor variables. 
+\item The AIC and BIC coming from models with different fixed effects, and which were estimated using REML, are not comparable. They can, however, be compared using the maximum likelihood estimator.
+
+\ei
+\end{frame}
+
+% \begin{frame}
+% \frametitle{Chapter overview}
+% 
+
+
+\begin{frame}[fragile]
+\frametitle{Covariance as a nuisance parameter}
+\bi
+\item Most of the time, research questions concern the $\bs{\beta}$ parameters modelling the mean of the model. 
+\item For correlated data, we now know that the covariance must be adequately modelled in order for model inference to be valid. 
+\item Choosing the covariance structure based on criteria such as AIC and BIC is reasonable. We can, however, perform formal hypothesis tests on the covariance structure.
+\ei
+\end{frame}
+% 
+% \begin{frame}
+% \frametitle{Hypothesis testing for covariance structure}
+% \bi
+% \item \SASlang{} provides a test on the covariance parameter $\tau$ for the CS structure and a test for the correlation parameter $\rho$ in the $\mathsf{AR}(1)$ and $\mathsf{ARH}(1)$ models. 
+% \item \SASlang{} uses a \alert{Wald test} in \code{proc mixed} for the covariance parameters.
+% \item This test is far from ideal  --- it is not the most powerful, and \alert{it's not reliable for small sample sizes}.
+% \item A more powerful test for this kind of situation is the likelihood ratio test.
+% \item Take-home message: don't use the Wald tests if you can avoid it.
+% \ei
+% \end{frame}
+
+\begin{frame}
+\frametitle{Reminder on restricted likelihood ratio test}
+
+\bi
+\item The test compares the restricted log-likelihood of the ``complete'' model (under $\Hy_1$) with that of the ``reduced'' \alert{\textbf{nested}} model (under $\Hy_0$).
+\item The null hypothesis is that the reduced model is an adequate simplification of the complete model.
+\item The likelihood ratio test statistic is
+\begin{align*}
+D=2\{\ell_{\textrm{reml}}(\hat{\bs{\theta}})- \ell_{\textrm{reml}}(\hat{\bs{\theta}}_0)\} \end{align*}
+\item Under $\Hy_0$, $D \stackrel{\cdot}{\sim}\chi^2_k$, where the degrees of freedom $k$ is the difference in the number of parameters in the two models. 
+\item We calculate the $p$-value for this test by using the $\chi^2_k$ distribution.
+\ei
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{Likelihood ratio test for covariance structures}
+\bi
+\item It's possible to test hypotheses involving complex models using the likelihood ratio test. 
+\item For example, we can test if it's necessary to have different variances in the model for an $\mathsf{AR}(1)$.
+\item In this case, we would want to test if the $\mathsf{AR}(1)$ model is adequate or if the $\mathsf{ARH}(1)$ model is necessary.
+\item The hypotheses are $
+\Hy_0: \sigma_1^2=\sigma_2^2=\cdots=\sigma_5^2$ against the alternative that at least two variances are different.
+\item The \alert{complete model} is thus the model with $\mathsf{ARH}(1)$ structure ($\Hy_1$) and the \alert{reduced model} is that with the $\mathsf{AR}(1)$ structure ($\Hy_0$).
+\ei
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Likelihood ratio test to compare $\mathsf{AR}(1)$ and $\mathsf{ARH}(1)$}
+\bi
+\item Based on the tables reported previously, the difference in restricted log-likelihood $-2\ell_{\textrm{reml}}$ for these two models is  $681.8-675.3=6.5$.
+\item There are \textbf{four} additional parameters in the complete model. 
+
+We compare to a $\chi^2_4$, whose $95$\% quantile is $9.48$.
+
+\begin{tcolorbox}[colback=white,colframe=hecblue,title=\SASlang{} code to compute $p$-value using the $\chi^2_4$ null distribution]
+\begin{verbatim}
+data pval;
+pval=1-CDF('CHISQ',6.5,4);
+run;
+proc print data=pval;
+run;
+\end{verbatim}
+\end{tcolorbox}
+\item We obtain a $p$-value of $0.165$. Thus, we fail to reject $\Hy_0$ and conclude that the $\mathsf{AR}(1)$ model seems adequate.
+\ei
+\end{frame}
+
+\begin{frame}
+\frametitle{Final remark}
+\bi
+\item We used REML throughout for estimating the variance parameters (default option of \code{proc mixed}). 
+\item Many models are nested so use formal likelihood ratio tests whenever possible for comparisons.
+\bi \item e.g., independence $\prec$ $\mathsf{AR}(1)$ $\prec$ $\mathsf{ARH}(1)$ $\prec$ unstructured.
+\ei
+\item Using AIC or BIC to compare models is valid \textbf{provided} the mean model includes the \textbf{same} variables, as was the case for the models so far in this chapter.
+\item If we wanted to use the AIC and BIC to compare models with different variables for the mean, then we would need to use maximum likelihood, rather than REML.
+\ei
+\end{frame}
+\end{document}
