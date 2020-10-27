@@ -13,9 +13,9 @@ Department of Decision Sciences}
 \begin{frame}
 \frametitle{Prediction}
 \bi
-\item According to the model specification presented in the last section, the terms, $\bs{b}$, are \alert{random variables} and not parameters (i.e., fixed quantities but unknown). 
+\item The random effects $\bs{b}$, are \alert{random variables} and not parameters (parameters are fixed,  but unknown quantities). 
 \item We can always get \alert{predictions} for these random variables. 
-\item Once we have predicted values for the $\bs{b}$ terms and estimates for the fixed effect parameters, $\beta$, we can predict the outcome variables $\bs{Y}$ by its conditional mean. 
+\item Once we have predicted values for the $\bs{b}$ terms and estimates for the fixed effect parameters, $\bs{\beta}$, we can predict the outcome variables $\bs{Y}$ by its conditional mean. 
 \ei
 \end{frame}
 
@@ -68,7 +68,7 @@ run;
 \end{small}
 \end{tcolorbox}
 \begin{small} The option \code{solution} in the command \code{random} is used to get predictions of the random effects. The command \code{ods output}
-saves these in order to make diagnostic plots for the random effets.\end{small}
+saves these in order to make diagnostic plots for the random effects.\end{small}
 \end{frame}
 
 \begin{frame}
@@ -171,7 +171,8 @@ run;
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Population mean of the two new subject (file \texttt{mean})}
+\frametitle{Population mean of the two new subject}
+Output in file \code{mean}:
 \begin{center}
 \includegraphics[width = 0.4\linewidth]{img/c6/slides7-e21}
 \end{center}
@@ -181,8 +182,9 @@ run;
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Predictions for the two new subjects (file \texttt{prediction})}
+\frametitle{Predictions for the two new subjects}
 
+Output in file \texttt{prediction}:
 \begin{center}
 \includegraphics[width = 0.4\linewidth]{img/c6/slides7-e22}
 \end{center}

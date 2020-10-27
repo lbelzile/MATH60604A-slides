@@ -2,7 +2,7 @@
 \usepackage{HECbeamer}
 % \usepackage{pgfpages}
 % \pgfpagesuselayout{4 on 1}[letterpaper, landscape, border shrink=5mm]
-\title[\color{white}{MATH 60604A \S~6d - Random intercept model}]{\texorpdfstring{MATH 60604A \\Statistical modelling \\ \S~6d -Random intercept model}{MATH 60604A \\Statistical modelling \\ \S~6d - Random intercept model}}
+\title[\color{white}{MATH 60604A \S~6d - Random intercept model}]{\texorpdfstring{MATH 60604A \\Statistical modelling \\ \S~6d  -Random intercept model}{MATH 60604A \\Statistical modelling \\ \S~6d - Random intercept model}}
 \author{Léo Belzile}
 \institute{HEC Montréal\\
 Department of Decision Sciences}
@@ -18,12 +18,11 @@ Department of Decision Sciences}
 \frametitle{Random intercept linear model}
 \bi
 \item The simplest random effects model is one with only a group-specific random intercept. 
-\item The equation of the linear regression model is
+\item The equation of the linear mixed model is
 \begin{align*}
-Y_{ij}=\beta_0 + (\beta_0+b_i) \mathrm{X}_{ij1}+\beta_2\mathrm{X}_{ij2}+\cdots+\beta_p\mathrm{X}_{ijp} + \varepsilon_{ij}
+Y_{ij}=\beta_0 + b_i + \beta_1 \mathrm{X}_{ij1}+\cdots+\beta_p\mathrm{X}_{ijp} + \varepsilon_{ij}, \qquad  \bs{\varepsilon}_{i} \sim \mathsf{No}(\bs{0}, \mathbf{R}_i)
 \end{align*}
 for $i=1, \ldots, m$ and $j=1, \ldots, n_i$ and where $Y_{ij}$ is observation $j$ from group $i$.
-\item Assume for now that the $\varepsilon_{ij} \simiid \Cn(0,\sigma^2)$. 
 \item The intercept specific to group $i$ is $\beta_0+b_i$. It consists of
 \bi
 
@@ -52,19 +51,19 @@ The model equation is
 Y_{ij}=(\beta_0+b_i)+ \beta_1 \mathrm{X}_{ij1}+\beta_2\mathrm{X}_{ij2}+\cdots+\beta_p\mathrm{X}_{ijp} + \varepsilon_{ij}
 \end{align*}
 \bi
-\item The $b_1, \ldots, b_m$ quantities are assumed to be \alert{independent} random variables (and also independent from the $\varepsilon$ terms and the explanatory variables).
-\item We assume both random intercepts and errors are normally distributed,
-\bi \item $b_i\sim \Cn(0, \sigma^2_b)$ for all $i$ ($i=1, \ldots, m)$.
-\item $\varepsilon_{ij}\sim \Cn(0, \sigma^2)$.
+\item The random effects $b_1, \ldots, b_m$ are assumed to be \alert{independent} from the $\varepsilon$ terms and the explanatory variables).
+\item We assume for the time being
+\bi \item $b_{i\phantom{j}}\simiid \mathsf{No}(0, \sigma^2_b)$ $(i=1, \ldots, m)$.
+\item $\varepsilon_{ij}\simiid \mathsf{No}(0, \sigma^2)$  $(i=1, \ldots, m; j = 1, \ldots, n_i)$.
 \ei
-\item The $\varepsilon_{ij}$ terms could be correlated within group $i$, but they are assumed independent for the time being.
+% \item The $\varepsilon_{ij}$ terms could be correlated within group $i$, but they are assumed independent for the time being.
 \ei
 \end{frame}
 
 
 
 \begin{frame}[fragile]
-\frametitle{Random effects models: variance/covariance}
+\frametitle{Random effects models: covariance}
 
 Since it's random, the term $b_i$ introduces a \alert{within-group correlation in the model}. Because $\eps_{ij}$ is independent of $b_i$ for all $i, j$, the (conditional) variance of an observation is
 \begin{align*}
@@ -87,7 +86,7 @@ Both  $\beta_j$ and explanatories are assumed non-random, thus
   \Co{Y_{ij}, Y_{ik} \mid \mathbf{X}_i} &= \mathsf{Co}\left(\beta_0 +b_i + \beta_1\mathrm{X}_{ij1}+\cdots + \eps_{ij},\right.\\
   & \quad \qquad \left.\beta_0 +b_i + \beta_1\mathrm{X}_{ik1}+\cdots + \eps_{ik} \mid \mathbf{X}_i\right)
   \\&= \Co{b_i+ \eps_{ij}, b_i + \eps_{ik}}
-  \\&= \Va{b_i} + \Co{\eps_{ij}, \eps_{ik}} = \sigma^2_b +\sigma^2\I{j=k}.
+  \\&= \Va{b_i} + \Co{\eps_{ij}, \eps_{ik}} \\&= \sigma^2_b +\sigma^2\I{j=k}.
 \end{align*}
 where the last step follows from independence of $b_i$ and $\eps$'s and because $\Co{Y_{ij},Y_{ij}}=\Va{Y_{ij}}$.
 
@@ -124,9 +123,14 @@ Alternatively,
 \frametitle{Compound symmetry correlation induced by the random intercept model}
 \bi
 \item We can see that introducing a random effect for the intercept implies that the observations within the same group are correlated, and the correlation is the same regardless of which individuals are considered (equicorrelation).
+\item \textbf{Adding a random intercept is the same as using the compound symmetry structure.}
+\ei
+\end{frame}
+\begin{frame}
+\frametitle{Compound symmetry}
+\bi
 \item The difference is that now the correlation must be non-negative, since $\sigma^2_b$ is a variance whereas the correlation for the compound symmetry model was \[-\frac{1}{\max(n_i)+1} \leq \rho \leq 1.\]
 \item This limitation is not usually of consequence, because within-group correlations tend to be positive.
-\item \textbf{Adding a random intercept is the same as using the compound symmetry structure.}
 
 \ei
 \end{frame}
@@ -149,7 +153,7 @@ run;
 \end{verbatim}
 \end{small}
 \end{tcolorbox}
-{ \footnotesize   Including a random intercept \alert{naturally} induces a compound symmetry correlation structure.
+{ \footnotesize   Including a random intercept \alert{induces} a compound symmetry correlation structure.
 Therefore, we do not need to specify anything for the covariance structure of the errors.
 
 

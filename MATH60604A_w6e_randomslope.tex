@@ -2,7 +2,7 @@
 \usepackage{HECbeamer}
 % \usepackage{pgfpages}
 % \pgfpagesuselayout{4 on 1}[letterpaper, landscape, border shrink=5mm]
-\title[\color{white}{MATH 60604A \S~6e - Random slope model}]{\texorpdfstring{MATH 60604A \\Statistical modelling \\ \S~6d -Random slope model}{MATH 60604A \\Statistical modelling \\ \S~6e - Random slope model}}
+\title[\color{white}{MATH 60604A \S~6e - Random slope model}]{\texorpdfstring{MATH 60604A \\Statistical modelling \\ \S~6e - Random slope model}{MATH 60604A \\Statistical modelling \\ \S~6e - Random slope model}}
 \author{Léo Belzile}
 \institute{HEC Montréal\\
 Department of Decision Sciences}
@@ -28,10 +28,10 @@ The columns of $\mathbf{Z}_i$ typically include  as covariates
 \frametitle{Random effects on the predictor variables}
 Suppose the matrix $\mathbf{Z}_i = [\bs{1}_{n_i}, \mathbf{X}_{1i}]$. 
 \begin{align*}
-Y_{ij}=(\beta_0 +\alert{b_i}) + (\beta_1+\alert{b_{1i}})\mathrm{X}_{ij1}+\beta_2\mathrm{X}_{ij2}+\cdots+\beta_p\mathrm{X}_{ijp} + \varepsilon_{ij}.
+Y_{ij}=(\beta_0 +\alert{b_{0i}}) + (\beta_1+\alert{b_{1i}})\mathrm{X}_{ij1}+\beta_2\mathrm{X}_{ij2}+\cdots+\beta_p\mathrm{X}_{ijp} + \varepsilon_{ij}.
 \end{align*}
 \bi
-\item The effect of the variable $\mathrm{X}_1$ \alert{for group $i$} is $\beta_1 + b_{1i}$
+\item The conditional effect of the variable $\mathrm{X}_1$ \alert{for group $i$} is $\beta_1 + b_{1i}$
 \item The parameter $\beta_1$ is the ``slope'' of $\mathrm{X}_1$ averaged over the entire population.
 \item $\beta_1+b_{1i}$ is the effect of $\mathrm{X}_1$ specific to group $i$.
 \ei
@@ -44,7 +44,7 @@ Y_{ij}=(\beta_0 +\alert{b_i}) + (\beta_1+\alert{b_{1i}})\mathrm{X}_{ij1}+\beta_2
 \begin{align*}
 \Va{Y_{ij}\mid \mathbf{X}_i}=\omega_{11}+\mathrm{X}_{ij1}^2 \omega_{22} + 2\mathrm{X}_{ij1} \omega_{12}+\sigma^2_{\varepsilon}.
 \end{align*}
-\item If we assume that the residuals are independent, the covariance between two observations in the same group $(j\neq k)$ is
+\item With independent errors, the covariance between two observations in the same group is
 \begin{align*}
 \Co{Y_{ij}, Y_{ik}\mid \mathbf{X}_i}=\omega_{11}+\mathrm{X}_{ij1}\mathrm{X}_{1ik}\omega_{22}+(\mathrm{X}_{ij1}+\mathrm{X}_{1ik})\omega_{12}.
 \end{align*}
@@ -53,7 +53,7 @@ Y_{ij}=(\beta_0 +\alert{b_i}) + (\beta_1+\alert{b_{1i}})\mathrm{X}_{ij1}+\beta_2
 \end{frame}
 
 \begin{frame}[fragile]
-\begin{tcolorbox}[colback=white, colframe=hecblue, title=\SASlang{} code for random intercept model]
+\begin{tcolorbox}[colback=white, colframe=hecblue, title=\SASlang{} code for random slope model]
 \begin{verbatim}
 proc mixed data=statmod.revenge;
 model revenge = sex age vc wom t 
@@ -87,7 +87,9 @@ The variance of the random intercept is $\omega_{11}=0.3064$
 \begin{frame}
 \frametitle{Testing for correlation between random effects}
 \bi
-\item We can test whether $\Hy_0: \omega_{12}=0$ versus $\Hy_a: \omega_{12} \neq 0$ by fitting the model with diagonal covariance and performing a likelihood ratio test (REML, since they have the same fixed effects) \bi 
+\item We can test whether $\Hy_0: \omega_{12}=0$ versus $\Hy_a: \omega_{12} \neq 0$ by fitting the model with diagonal covariance and performing a likelihood ratio test (REML, since they have the same fixed effects) 
+\bi
+\item in \SASlang{}, change \code{type=un} to \code{type=vc} (default option)
 \item the test statistic is $R=8.98$ 
 \item its null distribution is $\chi^2_1$ (regular problem, covariance can be negative)
 \item the $p$-value is $0.002$:
@@ -97,8 +99,10 @@ The variance of the random intercept is $\omega_{11}=0.3064$
 \begin{frame}
 \frametitle{Model comparison}
 \bi \item 
- We can do similar comparisons with the random intercept-only model, but the null distribution is $\frac{1}{2} \chi^2_1 + \frac{1}{2} \chi^2_2$ and the asymptotic approximation is poor \ldots probably better to use information criteria.
- \item 
+ We can do similar comparisons with the random intercept-only model,
+ \bi \item this corresponds to $\Hy_0: \omega_{12} =\omega_{22}=0$
+ \item the asymptotic null distribution is $\frac{1}{2} \chi^2_1 + \frac{1}{2} \chi^2_2$ \item but this approximation is poor \ldots probably better to use information criteria.
+ \ei
  \ei
 \end{frame}
 

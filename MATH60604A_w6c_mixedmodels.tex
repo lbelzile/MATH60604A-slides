@@ -2,7 +2,7 @@
 \usepackage{HECbeamer}
 % \usepackage{pgfpages}
 % \pgfpagesuselayout{4 on 1}[letterpaper, landscape, border shrink=5mm]
-\title[\color{white}{MATH 60604A \S~6c - Random effects}]{\texorpdfstring{MATH 60604A \\Statistical modelling \\ \S~6c -Random effects}{MATH 60604A \\Statistical modelling \\ \S~6c - Random effects}}
+\title[\color{white}{MATH 60604A \S~6c - Linear mixed models}]{\texorpdfstring{MATH 60604A \\Statistical modelling \\ \S~6c -Linear mixed models}{MATH 60604A \\Statistical modelling \\ \S~6c - Linear mixed models}}
 \author{Léo Belzile}
 \institute{HEC Montréal\\
 Department of Decision Sciences}
@@ -69,14 +69,12 @@ where
 \ei
 \item $\bs{\beta}$ is a $(p+1)$ vector of \textbf{fixed} effects parameters.
 \ei
-
-
 \end{frame}
 
 \begin{frame}\frametitle{Linear mixed models: random effects}
 We can write the model
 \begin{align*}
-[\bs{Y}_i \mid \bs{\mathcal{B}}_i=\bs{b}_i]= \mathbf{X}_i \bs{\beta} + \mathbf{Z}_i b_i + \bs{\eps}_i, \qquad i = 1, \ldots, m.
+[\bs{Y}_i \mid \bs{\mathcal{B}}_i=\bs{b}_i]= \mathbf{X}_i \bs{\beta} + \mathbf{Z}_i \bs{b}_i + \bs{\eps}_i, \qquad i = 1, \ldots, m.
 \end{align*} 
 where
 \bi
@@ -119,13 +117,15 @@ whereas the \alert{marginal} mean and variance of $\bs{Y}_i$ are
 \frametitle{Random effects models}
 The \alert{parameters} of the models which we will \textbf{estimate} are
 \bi \item the vector of coefficients of the fixed effects, $\boldsymbol{\beta}$
-\item the covariance parameters of the errors and of the random effects.
+\item the parameters $\bs{\psi}$ of the marginal covariance $\bs{\Sigma}$ of $\bs{Y}$, which arises from the covariance structure of the errors and of the random effects.
 \ei
-
+\end{frame}
+\begin{frame}
+\frametitle{Random group effects}
 \bi
-\item With a linear mixed model, we can estimate the conditional mean $\E{Y_{ij}\mid \mathbf{X}_i, \bs{b}_i}$  which can be thought of as a \alert{prediction} of the value of $Y_{ij}$ after accounting for the group-specific effects. 
-\item In repeated measures data, this allows us to predict an individual's trajectory
-while accounting for specific effects of the individual.
+ \item With a linear mixed model,  the conditional mean $\E{Y_{ij}\mid \mathbf{X}_i, \bs{b}_i}$  can be thought of as a \alert{prediction} of the value of $Y_{ij}$ after accounting for the group-specific effects. 
+% \item In repeated measures data, this allows us to predict an individual's trajectory
+% while accounting for specific effects of the individual.
 \item when we add a random effect for the group variable, we can still estimate effects of variables that are fixed within a group.
 \ei
 \end{frame}
@@ -133,16 +133,16 @@ while accounting for specific effects of the individual.
 \begin{frame}{Prediction}
 \bi
 \item We can predict $\bs{\mathcal{B}}_i$ by its conditional mean given $\bs{Y}_i$. 
-\item If the covariance parameters are known, 
+\item If the parameters ($\bs{\beta}, \bs{\psi})$ were known, 
 \begin{align*}
-\E{\bs{\mathcal{B}}_i\mid  \bs{Y}_i}&=\bs{\Omega}\mathbf{Z}_i^\top \bs{\Sigma}_i^{-1}(\bs{Y}_i-\mathbf{X}_i\hat{\bs{\beta}})
+\E{\bs{\mathcal{B}}_i\mid  \bs{Y}_i}&=\bs{\Omega}\mathbf{Z}_i^\top \bs{\Sigma}_i^{-1}(\bs{Y}_i-\mathbf{X}_i\bs{\beta})
 \shortintertext{where }
 \bs{\Sigma}_i&=\mathbf{Z}_i \bs{\Omega}\mathbf{Z}_i^\top+\mathbf{R}_i.
 \end{align*}
 
-\item We can plug-in covariance parameters estimates to obtain a prediction of the random effect,
+\item We can plug-in parameters estimates $(\widehat{\bs{\beta}}, \widehat{\bs{\psi}})$ to obtain predictions of the random effect,
 \begin{align*}
-\hat{\bs{b}}_i= \hat{\bs{\Omega}}\mathbf{Z}_i^\top \hat{\bs{\Sigma}}_i^{-1}(\bs{Y}_i-\mathbf{X}_i\hat{\beta})
+\hat{\bs{b}}_i= \hat{\bs{\Omega}}\mathbf{Z}_i^\top \hat{\bs{\Sigma}}_i^{-1}(\bs{Y}_i-\mathbf{X}_i\hat{\bs{\beta}})
 \end{align*}
 \ei
 \end{frame}
@@ -157,7 +157,7 @@ while accounting for specific effects of the individual.
  \item \textbf{fixed effects} for group are used when we have few groups and lots of replicates and we care about the effect of the group (small $m$, large $n_i$).
  \item \textbf{random effects} are used when there are enough levels of the factor group to estimate the variance $\sigma^2_b$ reliably; we are not interested in the effects per say (large $m$, small $n_i$).
  \ei
- \item Testing whether a random effect is needed or not is equivalent to testing if the variance of the random effect $\sigma^2_b=0$; this is a non-standard testing problem\ldots 
+%  \item Testing whether a random effect is needed or not is equivalent to testing if the variance of the random effect $\sigma^2_b=0$; this is a non-standard testing problem\ldots 
  \ei
 \end{frame}
 

@@ -23,6 +23,11 @@ Department of Decision Sciences}
  \item So far, we have only accounted for group structure by modelling the within-group correlation.
  \item We may also want to include a \alert{group effect} in the mean model, i.e., a different intercept for each group.
  \item This is done by adding the categorical group variable \texttt{g} as explanatory variable in the mean model, which translates into $m-1$ indicator variables $\I{\code{g}=i}$ for $i=1, \ldots, m-1$ if there are $m$ groups. 
+ \ei
+ \end{frame}
+ \begin{frame}
+ \frametitle{Equation for group effect}
+ \bi
  \item Suppose that we only include the categorical variable \code{g} representing groups,
  \[ Y_{ij}= \beta_0 + \sum_{i=1}^{m-1} \beta_i\I{\code{g}=i} + \eps_{ij},\]
  \bi \item for the baseline (group $m$), the intercept is $\beta_0$,
