@@ -225,13 +225,13 @@ The derivation is more complex with ties, but automatic adjustments are made by 
 \item Consider two individuals who are similar in all ways, except that their $\mathrm{X}_j$ values differ by one unit. 
 \begin{itemize}
 \vp \vp
-\item For individual $i$ with  $\mathrm{X}_{ij}=\mathbf{x}_j+1$, the hazard rate is  
+\item For individual $i$ with  $\mathrm{X}_{ij}=\mathrm{x}_j$, the hazard rate is  
 \begin{align*}
-h(t; \mathbf{x}_i) = h_0(t) \exp(\beta_1 \mathrm{x}_1 + \cdots + \beta_j (\mathrm{x}_j+1)+\cdots + \beta_p \mathrm{x}_p)
+h(t; \mathbf{x}_i) = h_0(t) \exp(\beta_1 \mathrm{x}_1 + \cdots + \beta_j \mathrm{x}_j+\cdots + \beta_p \mathrm{x}_p)
 \end{align*}
-\item For individual $k$ with $\mathrm{X}_{kj}=\mathbf{x}_j+1$, the hazard rate is 
+\item For individual $k$ with $\mathrm{X}_{kj}=\mathrm{x}_j+1$, the hazard rate is 
 \begin{align*}
-h(t; \mathbf{x}_k) = h_0(t) \exp(\beta_1 \mathrm{x}_1 + \cdots + \beta_j \mathrm{x}_j+\cdots + \beta_p \mathrm{x}_p)
+h(t; \mathbf{x}_k) = h_0(t) \exp(\beta_1 \mathrm{x}_1 + \cdots + \beta_j (\mathrm{x}_j+1)+\cdots + \beta_p \mathrm{x}_p)
 \end{align*}
 \end{itemize}
 \item The \alert{hazard ratio} is
@@ -313,7 +313,7 @@ The \code{melanoma} data contains survival time of patients with malignant melan
 \frametitle{Descriptive statistics for  \code{melanoma} data}
 \begin{center}
 \includegraphics[width = 0.7\textwidth]{img/c7/slides7e10}
-\includegraphics[width = 0.5\textwidth]{img/c7/slides7e09}
+\includegraphics[width = 0.5\textwidth]{img/c7/slides7e11}
 \end{center}
 \end{frame}
 
@@ -328,7 +328,7 @@ h(t) = h_0(t) \exp( \beta_1 \code{sex} + \beta_2 \code{age} + \beta_3 \code{thic
 \begin{tcolorbox}[colback=white,colframe=hecblue,title=\SASlang{} code for fitting a proportional hazard model]
 {\footnotesize 
 \begin{verbatim}
-prod phreg data=statmod.melanoma;
+proc phreg data=statmod.melanoma;
 model time*status(0) = sex age thickness ulcer / ties=exact;
 run;
 \end{verbatim}
