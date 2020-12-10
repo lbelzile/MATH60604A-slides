@@ -56,8 +56,8 @@ Y_{ij}=(\beta_0 +\alert{b_{0i}}) + (\beta_1+\alert{b_{1i}})\mathrm{X}_{ij1}+\bet
 \begin{tcolorbox}[colback=white, colframe=hecblue, title=\SASlang{} code for random slope model]
 \begin{verbatim}
 proc mixed data=statmod.revenge;
-model revenge = sex age vc wom t 
-    / ddfm=kenwardroger solution;
+class id;
+model revenge = sex age vc wom t / solution;
 random intercept t / subject=id type=un v=1 vcorr=1;
 run;
 \end{verbatim}
