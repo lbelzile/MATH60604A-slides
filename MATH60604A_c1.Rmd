@@ -10,11 +10,7 @@ output:
       highlightLines: true
       countIncrementalSlides: false
       ratio: "16:9"
-      slideNumberFormat: |
-        <div class="progress-bar-container">
-          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
-          </div>
-        </div>
+      slideNumberFormat: "%current%/%total%"
 
 ---
 
@@ -114,7 +110,6 @@ We will practice Breakout rooms, which are small group session.
 
 --
 
-
 # Question and answer (Q&A) period
 
 - Raise your hand to ask a question.
@@ -130,7 +125,6 @@ We will practice Breakout rooms, which are small group session.
 
 Statistical inference is about drawing conclusion for population based on a representative sample.
 
---
 
 - Postulate a model (often implicitly)
 - Fix hypotheses
@@ -156,6 +150,8 @@ Single variable:
 
 - continuous: .can-edit[ -]
 - categorical: .can-edit[ -]
+
+--
 
 Two variables:
 

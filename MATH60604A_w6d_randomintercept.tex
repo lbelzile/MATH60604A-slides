@@ -121,10 +121,11 @@ Alternatively,
 
 \begin{frame}[fragile]
 \frametitle{Compound symmetry correlation induced by the random intercept model}
-\bi
-\item We can see that introducing a random effect for the intercept implies that the observations within the same group are correlated, and the correlation is the same regardless of which individuals are considered (equicorrelation).
-\item \textbf{Adding a random intercept is the same as using the compound symmetry structure.}
-\ei
+When the error terms $\bs{\eps}_i$ are independent with $\Va{\bs{\eps}_i}=\sigma^2\mathbf{I}_{n_i}$, introducing a random effect $b_0$ for the intercept implies that the within-group correlation is the same.
+
+\vp\vp\vp\vp
+In that particular case, the conditional covariance matrix of $\boldsymbol{Y}_i$ is thus the same as if we considered a linear regression model with no random effect and a compound symmetry model for $\Va{\bs{\eps}_i}$.
+
 \end{frame}
 \begin{frame}
 \frametitle{Compound symmetry}
