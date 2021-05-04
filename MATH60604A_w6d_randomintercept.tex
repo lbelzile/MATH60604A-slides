@@ -3,7 +3,7 @@
 % \usepackage{pgfpages}
 % \pgfpagesuselayout{4 on 1}[letterpaper, landscape, border shrink=5mm]
 \title[\color{white}{MATH 60604A \S~6d - Random intercept model}]{\texorpdfstring{MATH 60604A \\Statistical modelling \\ \S~6d  - Random intercept model}{MATH 60604A \\Statistical modelling \\ \S~6d - Random intercept model}}
-\author{Léo Belzile}
+\author{}
 \institute{HEC Montréal\\
 Department of Decision Sciences}
 \date{} 
@@ -121,20 +121,23 @@ Alternatively,
 
 \begin{frame}[fragile]
 \frametitle{Compound symmetry correlation induced by the random intercept model}
+
+\bi \item 
 When the error terms $\bs{\eps}_i$ are independent with $\Va{\bs{\eps}_i}=\sigma^2\mathbf{I}_{n_i}$, introducing a random effect $b_0$ for the intercept implies that the within-group correlation is the same.
-
-\vp\vp\vp\vp
+\item 
 In that particular case, the conditional covariance matrix of $\boldsymbol{Y}_i$ is thus the same as if we considered a linear regression model with no random effect and a compound symmetry model for $\Va{\bs{\eps}_i}$.
-
-\end{frame}
-\begin{frame}
-\frametitle{Compound symmetry}
-\bi
-\item The difference is that now the correlation must be non-negative, since $\sigma^2_b$ is a variance whereas the correlation for the compound symmetry model was \[-\frac{1}{\max(n_i)+1} \leq \rho \leq 1.\]
-\item This limitation is not usually of consequence, because within-group correlations tend to be positive.
-
+\item 
+The difference is that now the correlation must be non-negative, since $\sigma^2_b$ is a variance. This limitation is not usually of consequence, because within-group correlations tend to be positive.
 \ei
 \end{frame}
+% \begin{frame}
+% \frametitle{Compound symmetry}
+% \bi
+% \item The difference is that now the correlation must be non-negative, since $\sigma^2_b$ is a variance whereas the correlation for the compound symmetry model was \[-\frac{1}{\max(n_i)+1} \leq \rho \leq 1.\]
+% \item This limitation is not usually of consequence, because within-group correlations tend to be positive.
+% 
+% \ei
+% \end{frame}
 
 
 \begin{frame}[fragile]
